@@ -6,12 +6,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: JavaScript Linting
+    name: Frontend Linting
     steps:
       - uses: actions/checkout@v3
       - name: Run linting rules and tests
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm run build
-      - run: npm run lint
+      - run: cd frontend && npm install && npm run lint
+  build:
+    runs-on: ubuntu-latest
+    name: Backend Linting
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run linting rules and tests
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: cd frontend && npm install && npm run lint
