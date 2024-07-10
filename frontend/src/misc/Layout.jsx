@@ -4,14 +4,14 @@ import Navbar from '../components/Navbar';
 import ProfileIcon from '../components/ProfileIcon';
 import { Outlet } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div>
       <Navbar />
       <ProfileIcon />
       <div className="main-content">
         <div id="root">
-            <Outlet />
+          <Outlet />
         </div>
       </div>
     </div>

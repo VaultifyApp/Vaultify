@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import { Buffer } from 'buffer';
 
 const client_id = '18b9ce009b314b9eb359758d436b7b2b';
 const client_secret = 'fce85db5774a4140b97d2d939cbafa86';

@@ -1,12 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Chatbot = () => {
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate('/login');
-  };
 
   return (
     <div>

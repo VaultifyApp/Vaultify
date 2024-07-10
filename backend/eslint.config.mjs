@@ -6,7 +6,7 @@ import { fixupConfigRules } from "@eslint/compat";
 
 export default [
   {files: ["**/*.{js,mjs,cjs,jsx}"]},
-  { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
+  { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } }, globals: {...globals.node} } },
   {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   ...fixupConfigRules(pluginReactConfig),

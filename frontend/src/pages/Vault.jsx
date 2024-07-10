@@ -1,12 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Vault = () => {
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate('/login');
-  };
 
   return (
     <div>
