@@ -4,7 +4,7 @@ import { AuthProvider, AuthContext } from './misc/AuthContext';
 import Welcome from './pages/Welcome';
 import Login from './misc/Login';
 import Layout from './misc/Layout';
-import PlaylistMaker from './pages/PlaylistMaker';
+import PlaylistGenerator from './pages/PlaylistGenerator';
 import Vault from './pages/Vault';
 import AboutUs from './pages/AboutUs';
 import Home from './pages/Home';
@@ -33,7 +33,7 @@ const AppRoutes = () => {
           path="playlist-generator" 
           element={
             <ProtectedRoute>
-              <PlaylistMaker />
+              <PlaylistGenerator />
             </ProtectedRoute>
           } 
         />
