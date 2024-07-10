@@ -4,6 +4,7 @@
   "description": "Main Build Tools",
   "scripts": {
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "concurrently \"cd backend && npm install\" \"cd frontend && npm install\" \"npm install\"",
     "start": "npm run dev",
     "lint": "concurrently \"cd backend && npm run lint\" \"cd frontend && npm run lint\""
   },
