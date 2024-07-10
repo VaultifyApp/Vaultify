@@ -7,16 +7,13 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [ 14, 16, 18 ]
 
-    name: Node ${{ matrix.node }} sample
+    name: JavaScript Linting
     steps:
       - uses: actions/checkout@v3
       - name: Run linting rules and tests
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20
       - run: npm run build
       - run: npm run lint
