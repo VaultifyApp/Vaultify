@@ -1,7 +1,10 @@
 name: eslint
 
 on:
-  [ push ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   frontend:
@@ -13,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: cd frontend && npm run lint
+      - run: cd frontend && npm install && npm run lint
   backend:
     runs-on: ubuntu-latest
     name: Backend Linting
