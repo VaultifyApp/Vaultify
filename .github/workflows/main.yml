@@ -1,29 +1,39 @@
 name: eslint
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  frontend:
-    runs-on: ubuntu-latest
-    name: Frontend Linting
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run linting rules and tests
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: cd frontend && npm install && npm run lint
-  backend:
-    runs-on: ubuntu-latest
-    name: Backend Linting
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run linting rules and tests
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: cd frontend && npm install && npm run lint
+    formatting:
+        runs-on: ubuntu-latest
+        name: Format Check
+        steps:
+            - uses: actions/checkout@v3
+            - name: Run linting rules and tests
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - run: npm run format:check
+    frontend-linting:
+        runs-on: ubuntu-latest
+        name: Frontend Linting
+        steps:
+            - uses: actions/checkout@v3
+            - name: Run linting rules and tests
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - run: cd frontend && npm install && npm run lint
+    backend-linting:
+        runs-on: ubuntu-latest
+        name: Backend Linting
+        steps:
+            - uses: actions/checkout@v3
+            - name: Run linting rules and tests
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - run: cd frontend && npm install && npm run lint

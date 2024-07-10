@@ -1,120 +1,120 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  padding: 40px;
-  height: 100vh;
-  overflow-y: auto;
-  color: #ffffff; /* Update text color to match the image */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    padding: 40px;
+    height: 100vh;
+    overflow-y: auto;
+    color: #ffffff; /* Update text color to match the image */
 }
 
 h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-  margin-top: 70px;
+    font-size: 48px;
+    margin-bottom: 10px;
+    margin-top: 70px;
 }
 
 h2 {
-  font-size: 24px;
-  margin-bottom: 30px;
+    font-size: 24px;
+    margin-bottom: 30px;
 }
 
 .search-bar {
-  display: flex; /* Align items in a row */
-  justify-content: center;
-  margin: 20px;
-  margin-bottom: 70px;
-  width: 80%;
+    display: flex; /* Align items in a row */
+    justify-content: center;
+    margin: 20px;
+    margin-bottom: 70px;
+    width: 80%;
 }
 
 .search-bar input {
-  flex-grow: 1; /* Allow input to grow and fill available space */
-  padding: 15px;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 60px 0 0 60px; /* Rounded corners on the left side */
+    flex-grow: 1; /* Allow input to grow and fill available space */
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 60px 0 0 60px; /* Rounded corners on the left side */
 }
 
 .search-bar button {
-  padding: 15px;
-  font-size: 18px;
-  border: none;
-  border-radius: 0 60px 60px 0; /* Rounded corners on the right side */
-  background-color: #737373; /* Spotify green color */
-  color: rgb(255, 255, 255);
-  cursor: pointer;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 0 60px 60px 0; /* Rounded corners on the right side */
+    background-color: #737373; /* Spotify green color */
+    color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 .search-bar button:hover {
-  background-color: #232323; /* Slightly lighter green on hover */
+    background-color: #232323; /* Slightly lighter green on hover */
 }
 
 h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: left;
-  font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
 }
 
 p {
-  font-size: 18px;
-  line-height: 1.6;
-  text-align: left;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: left;
 }
 
 .playlists {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
 
 .playlists img {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
-  margin: 0 10px;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 0 10px;
 }
 
 .results {
-  width: 100%;
-  max-width: 800px;
-  margin-top: -20px;
-  margin-bottom: 40px;
+    width: 100%;
+    max-width: 800px;
+    margin-top: -20px;
+    margin-bottom: 40px;
 }
 
 .results ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  list-style-type: none;
-  padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
 }
 
 .results li {
-  background-color: #3e3e3e;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    background-color: #3e3e3e;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .results img {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
 }
 
 .results .track-info {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .results .track-info .track-name {
-  font-size: 16px;
-  font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .results .track-info .track-artists {
-  font-size: 14px;
+    font-size: 14px;
 }

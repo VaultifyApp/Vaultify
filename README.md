@@ -1,10 +1,11 @@
 # 🎵 Vaultify 🎵
 
-***Vaultify** is your **effortless solution** to automatically track and preserve your **monthly music journey** -- creating personalized playlists that capture your evolving taste without the hassle.*
+**\*Vaultify** is your **effortless solution** to automatically track and preserve your **monthly music journey** -- creating personalized playlists that capture your evolving taste without the hassle.\*
 
 **👥 Team Members:** Matthew Bui, Michael Lam, Dillon (Hongwei) Li, Michelle Li, Thomas Orifici
-- [Project Page](http://spotify.com/)
-- [Vaultify's GitHub Repository](https://github.com/misherelle/Vaultify)
+
+-   [Project Page](http://spotify.com/)
+-   [Vaultify's GitHub Repository](https://github.com/misherelle/Vaultify)
 
 ======================================================
 
@@ -20,9 +21,12 @@
 
 ## Resources
 
+All pull requests will be automatically linted and checked for formatting. To check your code locally, run
+`npm run lint` and `npm run format:check`. To fix formatting errors, run `npm run format:fix`.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+-   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
