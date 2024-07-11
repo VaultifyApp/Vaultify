@@ -1,22 +1,22 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const app = express();
-const port = process.env.PORT || 3002;
+import Model from './src/models/Model.js'
+import WebController from './src/controllers/WebController.js'
+import DateController from './src/controllers/DateController.js'
+
+const app = express()
+const port = process.env.PORT || 3001
 
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.DATABASE_URI;
-
-mongoose.connect(uri);
-const connection = mongoose.connection;
-connection.once("open", () => {
-    console.log("MongoDB database connection established successfully");
-});
-
 app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+    console.log(`Server is running on port: ${port}`)
+})
+
+const model = new Model()
+const web = new WebController()
+const date = new DateController()
