@@ -1,18 +1,46 @@
 import mongoose, { Schema, Document, Model, Connection } from "mongoose";
 
+// Define the IUser interface for user properties
+interface UserInterface extends Document {
+    name: string;
+    email: string;
+    refreshToken: string;
+    playlists: string[];
+}
+
 /**
  * The database facade is responsible for retrieving information from and updating the database.
  * This class decouples other code from the database implementation.
  */
 class DatabaseFacade {
+    // create user schema
+    private user: Model<UserInterface> = mongoose.model<UserInterface>(
+        "User",
+        new mongoose.Schema({
+            name: {
+                type: String,
+                required: true,
+            },
+            email: {
+                type: String,
+                required: true,
+            },
+            refreshToken: {
+                type: String,
+                required: true,
+            },
+            playlists: [
+                {
+                    type: String,
+                },
+            ],
+        })
+    );
+
+    // establishes database connection
     constructor() {
         this.connectToDatabase();
-        this.defineSchema();
-    }
-
-    // establishes DB connection
-    private connectToDatabase(): void {
-        const uri: string = process.env.DATABASE_URI || "N/a";
+        const uri: string = process.env.DATABASE_URI || "URI not found";
         try {
             mongoose.connect(uri);
         } catch (err) {
@@ -29,18 +57,6 @@ class DatabaseFacade {
         dbConnection.on("error", (err) => {
             console.error(`connection error: ${err}`);
         });
-    }
-
-    // defines the user schema that stores user information
-    private defineSchema(): void {
-        const userSchema: Schema = new mongoose.Schema({
-            name: String,
-            email: String,
-            refreshToken: String,
-            playlists: [String],
-        });
-
-        mongoose.model("User", userSchema);
     }
 
     public addUser(): void {}

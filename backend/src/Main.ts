@@ -7,8 +7,13 @@ import Model from "./models/Model.js";
 import WebController from "./controllers/WebController.js";
 import DateController from "./controllers/DateController.js";
 
+/**
+ * The Main class is responible for starting the server and constructing objects
+ * that the server needs to function, such as controllers and models.
+ */
 class Main {
     static main(): void {
+        // intialize server environment
         const app: Express = express();
         const port: number = Number(process.env.PORT) || 3001;
 
