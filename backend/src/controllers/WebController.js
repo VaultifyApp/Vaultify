@@ -1,5 +1,5 @@
 /**
- * The WebController class is responsible for responding to requests from the client by invoking the proper model methods.
+ * The WebController class is responsible for responding to requests from the client.
  */
 class WebController {
     contructor(model) {
