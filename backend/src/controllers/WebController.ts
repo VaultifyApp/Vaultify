@@ -1,8 +1,13 @@
+import Model from "../models/Model.js"
+
 /**
  * The WebController class is responsible for responding to requests from the client.
  */
 class WebController {
-    contructor(model) {
+
+    private model: Model;
+
+    constructor(model: Model) {
         this.model = model
     }
 }
