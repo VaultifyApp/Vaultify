@@ -5,6 +5,10 @@ import SpotifyFacade from '../facades/SpotifyFacade.js'
  * The Model class is responsible for
  */
 class Model {
+
+    private database: DatabaseFacade;
+    private spotify: SpotifyFacade;  
+
     constructor() {
         this.database = new DatabaseFacade()
         this.spotify = new SpotifyFacade()

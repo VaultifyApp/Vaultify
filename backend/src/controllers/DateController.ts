@@ -1,8 +1,13 @@
+import Model from "../models/Model.js"
+
 /**
  * The DateController class is responsible for automatically generating content for users on a monthly basic.
  */
 class DateController {
-    contructor(model) {
+
+    private model: Model;
+
+    constructor(model: Model) {
         this.model = model
     }
 }

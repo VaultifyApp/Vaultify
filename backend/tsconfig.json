@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "esModuleInterop": true,
+      "outDir": "./built", // Specify the output folder for compiled JavaScript
+    },
+    "include": ["./src/**/*.ts"] // Specify the path to your TypeScript files
+  }
