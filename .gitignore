@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 /backend/.env
+/backend/built
 
 node_modules
 dist
