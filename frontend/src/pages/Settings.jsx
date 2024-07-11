@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Settings = () => {
     return (
@@ -6,7 +6,7 @@ const Settings = () => {
             <h1>Settings</h1>
             <p>Manage your settings here.</p>
         </div>
-    )
-}
+    );
+};
 
-export default Settings
+export default Settings;

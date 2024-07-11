@@ -1,25 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
     Navigate,
-} from 'react-router-dom'
-import { AuthProvider, AuthContext } from './misc/AuthContext'
-import Welcome from './pages/Welcome'
-import Login from './misc/Login'
-import Layout from './misc/Layout'
-import PlaylistGenerator from './pages/PlaylistGenerator'
-import Vault from './pages/Vault'
-import AboutUs from './pages/AboutUs'
-import Home from './pages/Home'
-import Profile from './pages/Profile'
-import Settings from './pages/Settings'
-import ProtectedRoute from './misc/ProtectedRoute'
-import './App.css'
+} from "react-router-dom";
+import { AuthProvider, AuthContext } from "./misc/AuthContext";
+import Welcome from "./pages/Welcome";
+import Login from "./misc/Login";
+import Layout from "./misc/Layout";
+import PlaylistGenerator from "./pages/PlaylistGenerator";
+import Vault from "./pages/Vault";
+import AboutUs from "./pages/AboutUs";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import ProtectedRoute from "./misc/ProtectedRoute";
+import "./App.css";
 
 const AppRoutes = () => {
-    const { isLoggedIn } = useContext(AuthContext)
+    const { isLoggedIn } = useContext(AuthContext);
 
     return (
         <Routes>
@@ -90,8 +90,8 @@ const AppRoutes = () => {
                 />
             </Route>
         </Routes>
-    )
-}
+    );
+};
 
 const App = () => {
     return (
@@ -100,7 +100,7 @@ const App = () => {
                 <AppRoutes />
             </Router>
         </AuthProvider>
-    )
-}
+    );
+};
 
-export default App
+export default App;

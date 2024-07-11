@@ -8,7 +8,7 @@ body,
 }
 
 body {
-    font-family: 'Public Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: "Public Sans", system-ui, Avenir, Helvetica, Arial, sans-serif;
     background: linear-gradient(to bottom, #494949, #101010) !important;
 }
 
