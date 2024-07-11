@@ -1,18 +1,17 @@
-import DatabaseFacade from '../facades/DatabaseFacade.js'
-import SpotifyFacade from '../facades/SpotifyFacade.js'
+import DatabaseFacade from "../facades/DatabaseFacade.js";
+import SpotifyFacade from "../facades/SpotifyFacade.js";
 
 /**
  * The Model class is responsible for
  */
 class Model {
-
     private database: DatabaseFacade;
-    private spotify: SpotifyFacade;  
+    private spotify: SpotifyFacade;
 
     constructor() {
-        this.database = new DatabaseFacade()
-        this.spotify = new SpotifyFacade()
+        this.database = new DatabaseFacade();
+        this.spotify = new SpotifyFacade();
     }
 }
 
-export default Model
+export default Model;
