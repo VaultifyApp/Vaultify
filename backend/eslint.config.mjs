@@ -4,7 +4,7 @@ import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 import { fixupConfigRules } from "@eslint/compat";
 
 export default [
-    { files: ["**/*.{js,mjs,cjs,jsx}"] },
+    { files: ["**/*.{js,mjs,cjs,jsx,ts}"] },
     {
         languageOptions: {
             parserOptions: { ecmaFeatures: { jsx: true } },
