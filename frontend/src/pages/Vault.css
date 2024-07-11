@@ -1,0 +1,114 @@
+.vault-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 900px;
+    width: 750px;
+    background: linear-gradient(to bottom, #494949, #101010) !important;
+    perspective: 2000px; /* Add perspective to create a 3D effect */
+  }
+  
+  .vault-door {
+    position: relative;
+    width: 750px;
+    height: 900px;
+    background-color: #a9b7c0;
+    border: 2px solid #666;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 2s; /* Ensure smooth transition for the door opening */
+  }
+  
+  .vault-door::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translateZ(-1px);
+  }
+  
+  .vault-handle {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background-color: #777;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateZ(50px); /* Move the handle out from the door */
+  }
+  
+  .spokes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spoke {
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    background-color: #555;
+    transform-origin: center center;
+  }
+  
+  .spoke:nth-child(1) { transform: rotate(0deg); }
+  .spoke:nth-child(2) { transform: rotate(30deg); }
+  .spoke:nth-child(3) { transform: rotate(60deg); }
+  .spoke:nth-child(4) { transform: rotate(90deg); }
+  .spoke:nth-child(5) { transform: rotate(120deg); }
+  .spoke:nth-child(6) { transform: rotate(150deg); }
+  .spoke:nth-child(7) { transform: rotate(180deg); }
+  .spoke:nth-child(8) { transform: rotate(210deg); }
+  .spoke:nth-child(9) { transform: rotate(240deg); }
+  .spoke:nth-child(10) { transform: rotate(270deg); }
+  .spoke:nth-child(11) { transform: rotate(300deg); }
+  .spoke:nth-child(12) { transform: rotate(330deg); }
+  
+  /* Wheel turning animation */
+  .turning .spokes {
+    animation: turnWheel 2s linear;
+  }
+  
+  /* Door opening animation */
+  .vault-door.opening {
+    transform: rotateY(-90deg); /* Open the door by rotating around the Y-axis */
+  }
+  
+  .vault-contents {
+    text-align: center;
+    animation: fadeIn 1s forwards;
+  }
+  
+  /* Keyframes for wheel turning */
+  @keyframes turnWheel {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Keyframes for door opening */
+  @keyframes vaultOpen {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(-90deg); }
+  }
+  
+  /* Fade-in animation for vault contents */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
