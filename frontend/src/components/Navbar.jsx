@@ -1,8 +1,8 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import './Navbar.css'
-import logo from '../assets/logo.png'
-import settingsIcon from '../assets/settings.png'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import "./Navbar.css";
+import logo from "../assets/logo.png";
+import settingsIcon from "../assets/settings.png";
 
 const Navbar = () => {
     return (
@@ -17,7 +17,7 @@ const Navbar = () => {
                 <li>
                     <NavLink
                         to="/home"
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         Home
                     </NavLink>
@@ -25,7 +25,7 @@ const Navbar = () => {
                 <li>
                     <NavLink
                         to="/playlist-generator"
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         Playlist Generator
                     </NavLink>
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <li>
                     <NavLink
                         to="/vault"
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         Vault
                     </NavLink>
@@ -41,7 +41,7 @@ const Navbar = () => {
                 <li>
                     <NavLink
                         to="/about"
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         About Us
                     </NavLink>
@@ -53,7 +53,7 @@ const Navbar = () => {
                 </NavLink>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

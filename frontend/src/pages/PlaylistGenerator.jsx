@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const PlaylistGenerator = () => {
     return (
@@ -6,7 +6,7 @@ const PlaylistGenerator = () => {
             <h1>Playlist Maker</h1>
             <p>Automatically track and preserve your monthly music journey.</p>
         </div>
-    )
-}
+    );
+};
 
-export default PlaylistGenerator
+export default PlaylistGenerator;

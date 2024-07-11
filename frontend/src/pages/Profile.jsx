@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Profile = () => {
-    const profile = JSON.parse(localStorage.getItem('profile'))
+    const profile = JSON.parse(localStorage.getItem("profile"));
 
     return (
         <div>
@@ -12,7 +12,7 @@ const Profile = () => {
                     <p>User ID: {profile.id}</p>
                     <p>Email: {profile.email}</p>
                     <p>
-                        Spotify URI:{' '}
+                        Spotify URI:{" "}
                         <a href={profile.external_urls.spotify}>
                             {profile.uri}
                         </a>
@@ -21,7 +21,7 @@ const Profile = () => {
                         Link: <a href={profile.href}>{profile.href}</a>
                     </p>
                     <p>
-                        Profile Image:{' '}
+                        Profile Image:{" "}
                         <img
                             src={profile.images[0]?.url}
                             alt="Profile"
@@ -33,7 +33,7 @@ const Profile = () => {
                 <p>Loading...</p>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default Profile
+export default Profile;

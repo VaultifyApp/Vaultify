@@ -1,14 +1,14 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import logo from '../assets/logo.png'
-import './Welcome.css'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import "./Welcome.css";
 
 const Welcome = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleLogin = () => {
-        navigate('/login')
-    }
+        navigate("/login");
+    };
 
     return (
         <div id="welcome-container" className="welcome-container">
@@ -33,7 +33,7 @@ const Welcome = () => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Welcome
+export default Welcome;

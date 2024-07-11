@@ -1,10 +1,10 @@
-import React from 'react'
-import './AboutUs.css'
-import profile1 from '../assets/michelle.png'
-import profile2 from '../assets/thomas.png'
-import profile3 from '../assets/michael.png'
-import profile4 from '../assets/dillon.png'
-import profile5 from '../assets/matt.png'
+import React from "react";
+import "./AboutUs.css";
+import profile1 from "../assets/michelle.png";
+import profile2 from "../assets/thomas.png";
+import profile3 from "../assets/michael.png";
+import profile4 from "../assets/dillon.png";
+import profile5 from "../assets/matt.png";
 
 const AboutUs = () => {
     return (
@@ -44,7 +44,7 @@ const AboutUs = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AboutUs
+export default AboutUs;

@@ -1,8 +1,8 @@
 // src/components/Layout.jsx
-import React from 'react'
-import Navbar from '../components/Navbar'
-import ProfileIcon from '../components/ProfileIcon'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import Navbar from "../components/Navbar";
+import ProfileIcon from "../components/ProfileIcon";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
     return (
@@ -15,7 +15,7 @@ const Layout = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Layout
+export default Layout;

@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import './Home.css'
+import React, { useState } from "react";
+import axios from "axios";
+import "./Home.css";
 
 const Home = () => {
-    const [query, setQuery] = useState('')
-    const [results, setResults] = useState([])
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
 
     const handleSearch = async () => {
         try {
             const token =
-                'BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo'
+                "BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo";
             const response = await axios.get(
-                'https://api.spotify.com/v1/search',
+                "https://api.spotify.com/v1/search",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                     params: {
                         q: query,
-                        type: 'track',
+                        type: "track",
                         limit: 12,
                     },
                 }
-            )
+            );
 
-            setResults(response.data.tracks.items)
+            setResults(response.data.tracks.items);
         } catch (error) {
-            console.error('Error fetching data from Spotify API', error)
+            console.error("Error fetching data from Spotify API", error);
         }
-    }
+    };
 
     return (
         <div className="container">
@@ -54,10 +54,10 @@ const Home = () => {
                                     alt={track.name}
                                     width="50"
                                 />
-                                {track.name} by{' '}
+                                {track.name} by{" "}
                                 {track.artists
                                     .map((artist) => artist.name)
-                                    .join(', ')}
+                                    .join(", ")}
                             </li>
                         ))}
                     </ul>
@@ -80,7 +80,7 @@ const Home = () => {
                 make your first playlist.
             </p>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
