@@ -1,10 +1,11 @@
 import mongoose, { Schema, Document, Model, Connection } from "mongoose";
 
-// Define the IUser interface for user properties
+// Define the UserInterface to be used by the User schema
 interface UserInterface extends Document {
     name: string;
     email: string;
     refreshToken: string;
+    activeToken: string;
     playlists: string[];
 }
 
@@ -13,7 +14,7 @@ interface UserInterface extends Document {
  * This class decouples other code from the database implementation.
  */
 class DatabaseFacade {
-    // create user schema
+    // create the user schema
     private user: Model<UserInterface> = mongoose.model<UserInterface>(
         "User",
         new mongoose.Schema({
@@ -29,6 +30,10 @@ class DatabaseFacade {
                 type: String,
                 required: true,
             },
+            activeToken: {
+                type: String,
+                required: true,
+            },
             playlists: [
                 {
                     type: String,
@@ -39,7 +44,6 @@ class DatabaseFacade {
 
     // establishes database connection
     constructor() {
-        this.connectToDatabase();
         const uri: string = process.env.DATABASE_URI || "URI not found";
         try {
             mongoose.connect(uri);
@@ -59,7 +63,9 @@ class DatabaseFacade {
         });
     }
 
-    public addUser(): void {}
+    public addUser(): void {
+
+    }
 
     public getUser(): void {}
 }
