@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
@@ -20,13 +20,13 @@ class Main {
         app.use(cors());
         app.use(express.json());
 
+        let model: Model = new Model();
+        let web: WebController = new WebController(app, model);
+        let date: DateController = new DateController(app, model);
+
         app.listen(port, () => {
             console.log(`Server is running on port: ${port}`);
         });
-
-        const model: Model = new Model();
-        const web: WebController = new WebController(model);
-        const date: DateController = new DateController(model);
     }
 }
 
