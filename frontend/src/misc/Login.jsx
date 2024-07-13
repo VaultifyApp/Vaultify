@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 const clientId = "18b9ce009b314b9eb359758d436b7b2b";
-const redirectUri = "http://localhost:3003/login";
+const redirectUri = "http://localhost:3000/login";
 
 const Login = () => {
     const [profile, setProfileState] = useState(null);
