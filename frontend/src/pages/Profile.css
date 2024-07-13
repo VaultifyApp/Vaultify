@@ -8,7 +8,7 @@
 .profile-title {
     width: 100%;
     margin-bottom: 20px;
-    margin-top: 475px;
+    margin-top: 510px;
     text-align: left;
 }
 
@@ -132,10 +132,13 @@
 
 .playlist, .note, .achievement {
     margin: 10px;
+    text-align: center; /* Center the text for playlist titles */
 }
 
 .playlist img {
     border-radius: 10px;
+    display: block;
+    margin: 0 auto; /* Center the image */
 }
 
 .note {
