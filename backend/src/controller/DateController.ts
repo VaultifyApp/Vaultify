@@ -1,6 +1,6 @@
-import express, { Express, Request, Response } from "express";
+import { Express } from "express";
 
-import Model from "../models/Model.js";
+import Model from "../model/Model.js";
 
 /**
  * The DateController class is responsible for automatically generating content for users on a monthly basic.

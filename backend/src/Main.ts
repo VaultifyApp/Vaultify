@@ -1,11 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: "../../.env" });
 
-import Model from "./models/Model.js";
-import WebController from "./controllers/WebController.js";
-import DateController from "./controllers/DateController.js";
+import Model from "./model/Model.js";
+import WebController from "./controller/WebController.js";
+import DateController from "./controller/DateController.js";
 
 /**
  * The Main class is responible for starting the server and constructing objects
@@ -15,9 +15,23 @@ class Main {
     static main(): void {
         // intialize server environment
         const app: Express = express();
-        const port: number = Number(process.env.PORT) || 3001;
+        const port: number = Number(process.env.SERVER_PORT) || 3001;
 
-        app.use(cors());
+        const allowedOrigins = [
+            "https://accounts.spotify.com",
+            "http://localhost:3000",
+            "http://localhost:3001",
+        ];
+
+        app.use(
+            cors({
+                origin: allowedOrigins,
+                methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+                allowedHeaders: ["Content-Type", "Authorization"],
+                credentials: true,
+            })
+        );
+
         app.use(express.json());
 
         let model: Model = new Model();
