@@ -29,7 +29,7 @@ class DatabaseFacade {
         });
         // creates database model for users.
         this.UserModel = mongoose.model<User>(
-            "UserModel",
+            "User",
             new mongoose.Schema<User>({
                 username: {
                     type: String,
@@ -40,20 +40,12 @@ class DatabaseFacade {
                     required: true,
                     unique: true,
                 },
-                bio: {
-                    type: String,
-                    required: false,
-                },
                 accessToken: {
                     type: String,
                     required: true,
                 },
                 refreshToken: {
                     type: String,
-                    required: true,
-                },
-                playlists: {
-                    type: [String],
                     required: true,
                 },
                 href: {
@@ -72,14 +64,26 @@ class DatabaseFacade {
                             width: { type: Number, required: true },
                         },
                     ],
+                    required: true,
+                },
+                playlists: {
+                    type: [String],
                     required: false,
+                    default: [],
+                },
+                bio: {
+                    type: String,
+                    required: false,
+                    default: "",
                 },
             })
         );
     }
 
     /**
-     *
+     * @param user user to be added to the database
+     * @effects adds the given user to the database
+     * @throws error if user doesn't have required database fields
      */
     async addUser(user: User): Promise<void> {
         await new this.UserModel(user).save();

@@ -53,7 +53,6 @@ class WebController {
                 }
                 // sets query params for Spotify login
                 const scope: string = "user-read-private user-read-email";
-                const stateKey: string = "spotify_auth_state";
                 const queryParams: string = querystring.stringify({
                     client_id: process.env.CLIENT_ID,
                     response_type: "code",
@@ -62,7 +61,7 @@ class WebController {
                     scope: scope,
                 });
                 // redirects to OAuth
-                res.cookie(stateKey, state);
+                res.cookie("spotify_auth_state", state);
                 res.redirect(
                     `https://accounts.spotify.com/authorize?${queryParams}`
                 );

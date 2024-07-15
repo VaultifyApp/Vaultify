@@ -10,6 +10,10 @@ import User from "../User.js";
  * This class decouples other code from the Spotify Web API
  */
 class SpotifyFacade {
+    private CLIENT_ID: string = process.env.CLIENT_ID || "";
+    private CLIENT_SECRET: string = process.env.CLIENT_SECRET || "";
+    private REDIRECT_URI: string = process.env.REDIRECT_URI || "";
+
     constructor() {}
 
     /**
@@ -25,11 +29,11 @@ class SpotifyFacade {
             data: querystring.stringify({
                 grant_type: "authorization_code",
                 code: queryCode,
-                redirect_uri: process.env.REDIRECT_URI,
+                redirect_uri: this.REDIRECT_URI,
             }),
             headers: {
                 "content-type": "application/x-www-form-urlencoded",
-                Authorization: `Basic ${Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString("base64")}`,
+                Authorization: `Basic ${Buffer.from(`${this.CLIENT_ID}:${this.CLIENT_SECRET}`).toString("base64")}`,
             },
         });
         if (
@@ -45,7 +49,9 @@ class SpotifyFacade {
             accessToken: response.data.access_token,
             refreshToken: response.data.refresh_token,
         };
-        return await this.updateProfile(user);
+        user = await this.updateProfile(user);
+        user.playlists = [];
+        user.bio = "";
     }
 
     /**
@@ -68,7 +74,8 @@ class SpotifyFacade {
                 response.data.display_name &&
                 response.data.email &&
                 response.data.href &&
-                response.data.uri
+                response.data.uri &&
+                response.data.images
             )
         ) {
             throw new Error("Failed to retrieve profile information");
@@ -78,7 +85,6 @@ class SpotifyFacade {
         user.href = response.data.href;
         user.uri = response.data.uri;
         user.images = response.data.images;
-        user.playlists = [];
         return user;
     }
 
