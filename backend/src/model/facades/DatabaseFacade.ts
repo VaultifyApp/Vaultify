@@ -54,22 +54,25 @@ class DatabaseFacade {
                 },
                 playlists: {
                     type: [String],
+                    required: true,
                 },
                 href: {
                     type: String,
+                    required: true,
                 },
                 uri: {
                     type: String,
+                    required: true,
                 },
                 images: {
                     type: [
-                            {
-                                url: { type: String, required: true },
-                                height: { type: Number, required: true },
-                                width: { type: Number, required: true },
-                            },
-                          ],
-                    required: false
+                        {
+                            url: { type: String, required: true },
+                            height: { type: Number, required: true },
+                            width: { type: Number, required: true },
+                        },
+                    ],
+                    required: false,
                 },
             })
         );
@@ -88,7 +91,9 @@ class DatabaseFacade {
      * @throws Error if user not found
      */
     async getUser(_id: string): Promise<User> {
-        let user: User | null = await this.UserModel.findOne({ _id: _id }).lean();
+        let user: User | null = await this.UserModel.findOne({
+            _id: _id,
+        }).lean();
         if (user === null) {
             throw new Error("User not found");
         }

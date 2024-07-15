@@ -8,7 +8,7 @@ import SpotifyFacade from "./facades/SpotifyFacade.js";
 class Model {
     private db: DatabaseFacade;
     private spotify: SpotifyFacade;
-    
+
     constructor() {
         this.db = new DatabaseFacade();
         this.spotify = new SpotifyFacade();

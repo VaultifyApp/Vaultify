@@ -23,12 +23,13 @@ class WebController {
     }
 
     /**
-     * 
+     *
      * @param user
      * @returns user with tokens removed for client use
      */
     private removeTokens(user: User) {
-        const { href, uri, accessToken, refreshToken, ...userWithoutTokens } = user;
+        const { href, uri, accessToken, refreshToken, ...userWithoutTokens } =
+            user;
         return userWithoutTokens;
     }
 
@@ -66,11 +67,17 @@ class WebController {
                     `https://accounts.spotify.com/authorize?${queryParams}`
                 );
                 // handles spotify callback
-                this.app.get("/spotify-callback", async (req: Request, res: Response) => {
-                        if (!req.query.code || typeof req.query.code !== "string") {
-                            throw new Error("Invalid query code: can't retrieve token");
-                        }
-                        else {
+                this.app.get(
+                    "/spotify-callback",
+                    async (req: Request, res: Response) => {
+                        if (
+                            !req.query.code ||
+                            typeof req.query.code !== "string"
+                        ) {
+                            throw new Error(
+                                "Invalid query code: can't retrieve token"
+                            );
+                        } else {
                             const user: User = await this.model.addUser(
                                 req.query.code
                             );

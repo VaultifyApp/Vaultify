@@ -10,7 +10,6 @@ import User from "../User.js";
  * This class decouples other code from the Spotify Web API
  */
 class SpotifyFacade {
-
     constructor() {}
 
     /**
