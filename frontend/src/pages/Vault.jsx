@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Vault.css'; // Make sure to create and link this CSS file
+import './Vault.css';
 
 const Vault = () => {
   const navigate = useNavigate();
@@ -16,27 +16,35 @@ const Vault = () => {
       setTimeout(() => {
         setIsContentVisible(true);
       }, 2000); // Adjust timing as needed
-    }, 2000); // Adjust timing as needed
+    }, 700); // Adjust timing to match handle animation duration
   };
 
   return (
     <div className="vault-container">
       {!isContentVisible ? (
-        <div className={`vault-door ${isWheelTurning ? 'turning' : ''} ${isDoorOpening ? 'opening' : ''}`} onClick={handleOpenVault}>
-          <div className="vault-handle">
-            <div className={`spokes ${isWheelTurning ? 'turning' : ''}`}>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
-              <div className="spoke"></div>
+        <div className="vault-door-outer">
+          <div className="vault-hinges">
+            <div className="hinge"></div>
+            <div className="hinge"></div>
+          </div>
+          <div className="vault-viewhole"></div>
+          <div className={`vault-door-inner ${isWheelTurning ? 'turning' : ''} ${isDoorOpening ? 'opening' : ''}`} onClick={handleOpenVault}>
+            <div className="vault-inner-hinges">
+              <div className="hinge"></div>
+              <div className="hinge"></div>
+            </div>
+            <div className="vault-door-lock-wrapper">
+              <div className="vault-door-lock vault-door-circle"></div>
+              <div className="vault-door-lock vault-door-pistons">
+                <div className="piston piston1"></div>
+                <div className="piston piston2"></div>
+                <div className="piston piston3"></div>
+                <div className="piston piston4"></div>
+              </div>
+            </div>
+            <div className="vault-door-handle">
+              <div className="handle-bar bar1"></div>
+              <div className="handle-bar bar2"></div>
             </div>
           </div>
         </div>
