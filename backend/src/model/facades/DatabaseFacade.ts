@@ -87,14 +87,17 @@ class DatabaseFacade {
      */
     async addUser(user: User): Promise<User> {
         if (!(user.refreshToken && user.accessToken && user.email)) {
-            throw new Error("User must have required fields to be added to the database.");
+            throw new Error(
+                "User must have required fields to be added to the database."
+            );
         }
-        const existingUser = await this.UserModel.findOne({ email: user.email });
+        const existingUser = await this.UserModel.findOne({
+            email: user.email,
+        });
         if (!existingUser) {
             const added = await new this.UserModel(user).save();
             return added.toObject();
-        }
-        else {
+        } else {
             return existingUser.toObject();
         }
     }
