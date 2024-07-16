@@ -5,7 +5,8 @@ import green2 from "../assets/green2.jpg";
 
 const Profile = () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
-    const storedBio = localStorage.getItem("bio") || "Hello world! I’m new to Vaultify.";
+    const storedBio =
+        localStorage.getItem("bio") || "Hello world! I’m new to Vaultify.";
     const [bio, setBio] = useState(storedBio);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(storedBio);
@@ -13,32 +14,66 @@ const Profile = () => {
     const favoritePlaylists = [
         {
             title: "June 2024",
-            image: green1
+            image: green1,
         },
         {
             title: "May 2024",
-            image: green2
-        }
+            image: green2,
+        },
     ];
 
     const favoriteNotes = [
         "stooppp this song brings back so many memories!! it’s like i’m being transported back to late-night drives with friends ugh i love it",
-        "my girlssss slayyyyyyyed"
+        "my girlssss slayyyyyyyed",
     ];
 
     const achievements = [
         { name: "Leaping in!", description: "Make your first playlist." },
-        { name: "Mixer Maxer", description: "Make a playlist with more than one genre." },
-        { name: "Meow-meow-meow", description: "Have 'What Was I Made For?' included in a playlist." },
-        { name: "Groovy Guru", description: "Create a playlist with 10 or more songs." },
-        { name: "Genre Jumper", description: "Create a playlist with songs from at least 3 different genres." },
-        { name: "Ultimate Collector", description: "Save 50 or more playlists." },
-        { name: "Social Butterfly", description: "Share a playlist with a friend." },
-        { name: "Trendsetter", description: "Have 5 or more followers on your playlists." },
-        { name: "Mood Maker", description: "Create a playlist for each day of the week." },
-        { name: "DJ in the Making", description: "Remix a song using the app’s tools." },
-        { name: "Playlist Pro", description: "Create a playlist with over 100 songs." },
-        { name: "Themed Maestro", description: "Create a playlist with a specific theme." }
+        {
+            name: "Mixer Maxer",
+            description: "Make a playlist with more than one genre.",
+        },
+        {
+            name: "Meow-meow-meow",
+            description: "Have 'What Was I Made For?' included in a playlist.",
+        },
+        {
+            name: "Groovy Guru",
+            description: "Create a playlist with 10 or more songs.",
+        },
+        {
+            name: "Genre Jumper",
+            description:
+                "Create a playlist with songs from at least 3 different genres.",
+        },
+        {
+            name: "Ultimate Collector",
+            description: "Save 50 or more playlists.",
+        },
+        {
+            name: "Social Butterfly",
+            description: "Share a playlist with a friend.",
+        },
+        {
+            name: "Trendsetter",
+            description: "Have 5 or more followers on your playlists.",
+        },
+        {
+            name: "Mood Maker",
+            description: "Create a playlist for each day of the week.",
+        },
+        {
+            name: "DJ in the Making",
+            description: "Remix a song using the app’s tools.",
+        },
+        {
+            name: "Playlist Pro",
+            description: "Create a playlist with over 100 songs.",
+        },
+        {
+            name: "Themed Maestro",
+            description: "Create a playlist with a specific theme.",
+        },
     ];
 
     const handleEditBio = () => {
@@ -68,11 +103,17 @@ const Profile = () => {
                                 </div>
                                 <div className="profile-details">
                                     <div className="name-username">
-                                        <h2 className="profile-name">{profile.display_name}</h2>
-                                        <p className="profile-username">@{profile.id}</p>
+                                        <h2 className="profile-name">
+                                            {profile.display_name}
+                                        </h2>
+                                        <p className="profile-username">
+                                            @{profile.id}
+                                        </p>
                                     </div>
                                     <p className="profile-counters">
-                                        {favoritePlaylists.length} Playlists | {favoriteNotes.length} Notes | {achievements.length} Achievements
+                                        {favoritePlaylists.length} Playlists |{" "}
+                                        {favoriteNotes.length} Notes |{" "}
+                                        {achievements.length} Achievements
                                     </p>
                                     <div className="bio-section">
                                         {editing ? (
@@ -141,8 +182,12 @@ const Profile = () => {
                     <div className="achievements-list">
                         {achievements.map((achievement, index) => (
                             <div key={index} className="achievement">
-                                <div className="achievement-title">{achievement.name}</div>
-                                <div className="achievement-description">{achievement.description}</div>
+                                <div className="achievement-title">
+                                    {achievement.name}
+                                </div>
+                                <div className="achievement-description">
+                                    {achievement.description}
+                                </div>
                             </div>
                         ))}
                     </div>

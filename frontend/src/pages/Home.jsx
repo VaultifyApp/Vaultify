@@ -1,15 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import qs from "qs";
 import "./Home.css";
 
 const Home = () => {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
+    const [error, setError] = useState("");
+    const [accessToken, setAccessToken] = useState("YOUR_INITIAL_ACCESS_TOKEN");
+    const [refreshToken, setRefreshToken] = useState("YOUR_REFRESH_TOKEN");
 
+    const clientId = "18b9ce009b314b9eb359758d436b7b2b";
+    const clientSecret = "fce85db5774a4140b97d2d939cbafa86";
+
+    // Function to refresh the access token
+    const refreshAccessToken = async () => {
+        const tokenUrl = "https://accounts.spotify.com/api/token";
+        const data = qs.stringify({
+            grant_type: "refresh_token",
+            refresh_token: refreshToken,
+        });
+
+        const headers = {
+            Authorization:
+                "Basic " +
+                Buffer.from(`${clientId}:${clientSecret}`).toString("base64"),
+            "Content-Type": "application/x-www-form-urlencoded",
+        };
+
+        try {
+            const response = await axios.post(tokenUrl, data, { headers });
+            setAccessToken(response.data.access_token); // Update the state with the new access token
+            return response.data.access_token;
+        } catch (error) {
+            console.error("Error refreshing access token:", error);
+            throw error;
+        }
+    };
+
+    // Function to handle search
     const handleSearch = async () => {
         try {
-            const token =
-                "BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo";
+            let token = accessToken;
+
+            // Check if token is expired and refresh if necessary
+            if (isTokenExpired(token)) {
+                token = await refreshAccessToken();
+            }
+
             const response = await axios.get(
                 "https://api.spotify.com/v1/search",
                 {
@@ -25,9 +63,46 @@ const Home = () => {
             );
 
             setResults(response.data.tracks.items);
+            setError("");
         } catch (error) {
             console.error("Error fetching data from Spotify API", error);
+            if (error.response) {
+                setError(
+                    `Spotify API Error: ${error.response.data.error.message}`
+                );
+            } else if (error.request) {
+                setError("No response received from Spotify API");
+            } else {
+                setError("Error setting up request to Spotify API");
+            }
         }
+    };
+
+    // Function to check if token is expired
+    const isTokenExpired = (token) => {
+        // Implement a function to check if the token is expired
+        // For simplicity, assume tokens are valid for 1 hour
+        const decodedToken = parseJwt(token);
+        const now = Date.now() / 1000;
+        return decodedToken.exp < now;
+    };
+
+    // Function to parse JWT token
+    const parseJwt = (token) => {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map((c) => {
+                    return (
+                        "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+                    );
+                })
+                .join("")
+        );
+
+        return JSON.parse(jsonPayload);
     };
 
     return (
@@ -43,6 +118,7 @@ const Home = () => {
                 />
                 <button onClick={handleSearch}>Search</button>
             </div>
+            {error && <p className="error">{error}</p>}
             {results.length > 0 && (
                 <div className="results">
                     <h3>Search Results:</h3>
