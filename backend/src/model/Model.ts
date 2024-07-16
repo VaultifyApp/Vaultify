@@ -20,8 +20,7 @@ class Model {
      */
     async addUser(queryCode: string): Promise<User> {
         const user: User = await this.spotify.createUser(queryCode);
-        this.db.addUser(user);
-        return user;
+        return this.db.addUser(user);
     }
 
     /**
@@ -39,6 +38,8 @@ class Model {
         // send updated info to client
         // store updated info to the database
     }
+
+    async generatePlaylist() {}
 }
 
 export default Model;

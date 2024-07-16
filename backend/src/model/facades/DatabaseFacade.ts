@@ -85,8 +85,9 @@ class DatabaseFacade {
      * @effects adds the given user to the database
      * @throws error if user doesn't have required database fields
      */
-    async addUser(user: User): Promise<void> {
-        await new this.UserModel(user).save();
+    async addUser(user: User): Promise<User> {
+        const added = await new this.UserModel(user).save();
+        return added.toObject();
     }
 
     /**
