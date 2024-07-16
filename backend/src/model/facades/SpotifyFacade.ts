@@ -52,6 +52,7 @@ class SpotifyFacade {
         user = await this.updateProfile(user);
         user.playlists = [];
         user.bio = "";
+        return user;
     }
 
     /**

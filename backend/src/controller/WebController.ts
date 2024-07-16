@@ -34,38 +34,24 @@ class WebController {
     }
 
     /**
-     * handles login request by email.
-     *  if user doesnt exist, redirects to Spotify OAuth.
-     *   else, respons with user information
+     * @effects returns user profile information
      */
     private async handleLogin(): Promise<void> {
         this.app.get("/login", async (req: Request, res: Response) => {
-            // if new user, send to Spotify OAuth
+            // if new user / no id given, send to Spotify OAuth
             if (!req.query._id || typeof req.query._id !== "string") {
-                // generate random string for API code
-                let state: string = "";
-                const possible =
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                for (let i = 0; i < 16; i++) {
-                    state += possible.charAt(
-                        Math.floor(Math.random() * possible.length)
-                    );
-                }
                 // sets query params for Spotify login
-                const scope: string = "user-read-private user-read-email";
                 const queryParams: string = querystring.stringify({
                     client_id: process.env.CLIENT_ID,
                     response_type: "code",
                     redirect_uri: process.env.REDIRECT_URI,
-                    state: state,
-                    scope: scope,
+                    scope: "user-read-private user-read-email",
                 });
                 // redirects to OAuth
-                res.cookie("spotify_auth_state", state);
                 res.redirect(
                     `https://accounts.spotify.com/authorize?${queryParams}`
                 );
-                // handles spotify callback
+                // handles spotify callback after redirect
                 this.app.get(
                     "/spotify-callback",
                     async (req: Request, res: Response) => {
