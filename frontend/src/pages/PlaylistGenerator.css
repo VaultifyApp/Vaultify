@@ -46,6 +46,25 @@ body {
     font-size: 1.25rem;
 }
 
+.form-group {
+    margin: 1rem 0;
+}
+
+.length-options button {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #00d76a;
+    border-radius: 9999px;
+    color: white;
+    background-color: #333;
+    cursor: pointer;
+}
+
+.length-options .selected {
+    background-color: #00d76a;
+}
+
 .playlist-button {
     margin-top: 2rem;
     padding: 0.75rem 1.5rem;
@@ -99,4 +118,40 @@ body {
 .playlist img {
     margin-right: 10px;
     border-radius: 8px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+}
+
+.modal-content input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.modal-content button {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
 }
