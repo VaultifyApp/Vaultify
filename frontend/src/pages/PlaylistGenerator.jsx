@@ -7,6 +7,7 @@ const PlaylistGeneration = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [date, setDate] = useState("");
+    const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
     const [length, setLength] = useState(25);
     const [coverTheme, setCoverTheme] = useState("");
     const [newSongsOnly, setNewSongsOnly] = useState(true);
@@ -24,12 +25,16 @@ const PlaylistGeneration = () => {
 
     const handleCustomLengthSubmit = () => {
         const lengthValue = parseInt(customLength, 10);
-        if (!isNaN(lengthValue) && lengthValue > 0 && lengthValue <= 250) {
+        if (lengthType === "songs" && (!isNaN(lengthValue) && lengthValue > 0 && lengthValue <= 250)) {
             setLength(lengthValue);
             setIsModalOpen(false);
             setCustomLength("");
+        } else if (lengthType === "time" && (!isNaN(lengthValue) && lengthValue > 0)) {
+            setLength(lengthValue * 60); // Convert hours to minutes
+            setIsModalOpen(false);
+            setCustomLength("");
         } else {
-            alert("Suck my dick.");
+            alert("Please enter a valid number.");
         }
     };
 
@@ -45,7 +50,7 @@ const PlaylistGeneration = () => {
                         Authorization: `Bearer ${token}`,
                     },
                     params: {
-                        limit: length,
+                        limit: lengthType === "songs" ? length : Math.ceil(length / 3), // Approximate 3 minutes per song
                     },
                 }
             );
@@ -69,17 +74,42 @@ const PlaylistGeneration = () => {
                     <label>Date:</label>
                     <input type="month" value={date} onChange={(e) => setDate(e.target.value)} />
                 </div>
-                
+
                 <div className="form-group">
-                    <label>Length:</label>
-                    <div className="length-options">
-                        <button onClick={() => setLength(25)} className={length === 25 ? "selected" : ""}>25 songs</button>
-                        <button onClick={() => setLength(50)} className={length === 50 ? "selected" : ""}>50 songs</button>
-                        <button onClick={() => setIsModalOpen(true)} className={length > 50 ? "selected" : ""}>
-                            {length > 50 ? `${length} songs` : "Custom"}
+                    <label>Length Type:</label>
+                    <div className="length-type-options">
+                        <button onClick={() => setLengthType("songs")} className={lengthType === "songs" ? "selected" : ""}>
+                            Songs
+                        </button>
+                        <button onClick={() => setLengthType("time")} className={lengthType === "time" ? "selected" : ""}>
+                            Time
                         </button>
                     </div>
                 </div>
+                
+                {lengthType === "songs" ? (
+                    <div className="form-group">
+                        <label>Length:</label>
+                        <div className="length-options">
+                            <button onClick={() => setLength(25)} className={length === 25 ? "selected" : ""}>25 songs</button>
+                            <button onClick={() => setLength(50)} className={length === 50 ? "selected" : ""}>50 songs</button>
+                            <button onClick={() => setIsModalOpen(true)} className={length > 50 ? "selected" : ""}>
+                                {length > 50 ? `${length} songs` : "Custom"}
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="form-group">
+                        <label>Length:</label>
+                        <div className="length-options">
+                            <button onClick={() => setLength(60)} className={length === 60 ? "selected" : ""}>1 hour</button>
+                            <button onClick={() => setLength(180)} className={length === 180 ? "selected" : ""}>3 hours</button>
+                            <button onClick={() => setIsModalOpen(true)} className={length > 180 ? "selected" : ""}>
+                                {length > 180 ? `${length / 60} hours` : "Custom"}
+                            </button>
+                        </div>
+                    </div>
+                )}
                 
                 <div className="form-group">
                     <label>Cover Theme:</label>
@@ -150,9 +180,9 @@ const PlaylistGeneration = () => {
                                 type="number"
                                 value={customLength}
                                 onChange={(e) => setCustomLength(e.target.value)}
-                                placeholder="Enter number of songs (1-250)"
+                                placeholder={`Enter number of ${lengthType === "songs" ? "songs (1-250)" : "hours"}`}
                                 min="1"
-                                max="250"
+                                max={lengthType === "songs" ? "250" : ""}
                             />
                             <button onClick={handleCustomLengthSubmit}>Submit</button>
                             <button onClick={() => setIsModalOpen(false)}>Cancel</button>

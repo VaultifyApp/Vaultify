@@ -50,6 +50,7 @@ body {
     margin: 1rem 0;
 }
 
+.length-type-options button,
 .length-options button {
     margin: 0 0.5rem;
     padding: 0.5rem 1rem;
@@ -61,6 +62,7 @@ body {
     cursor: pointer;
 }
 
+.length-type-options .selected,
 .length-options .selected {
     background-color: #00d76a;
 }
