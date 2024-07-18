@@ -64,6 +64,11 @@ const PlaylistGeneration = () => {
         }
     };
 
+    const handleGenerate = () => {
+        onGenerate();
+        navigate('/playlist-success');
+    };
+
     return (
         <div id="playlist-container">
             <div className="playlist-content">
