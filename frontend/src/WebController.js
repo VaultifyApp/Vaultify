@@ -1,6 +1,4 @@
-
 class WebController {
-
     /**
      * @returns user profile from the server
      */
