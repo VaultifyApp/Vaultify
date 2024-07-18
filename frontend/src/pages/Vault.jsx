@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Vault.css';
+import Swiper from 'swiper/bundle';
+import 'swiper/swiper-bundle.css';
+import dillon from "../assets/dillon.png";
 
 const Vault = () => {
   const navigate = useNavigate();
@@ -10,28 +13,27 @@ const Vault = () => {
   const [isZoomedIn, setIsZoomedIn] = useState(false);
 
   const playlists = [
-    { 
-      timestamp: '3rd May 2020 7:00 PM', 
-      title: 'Morning Chill', 
-      description: 'Relaxing morning tunes', 
-      link: 'https://open.spotify.com/playlist/3zteNmnoKFGtzwRTpNhC8u', 
-      image: 'https://i.scdn.co/image/ab67616d0000b2731e0dfe6f10f5e3e5761f0d11' 
+    {
+      timestamp: '3rd May 2020 7:00 PM',
+      title: 'Morning Chill',
+      description: 'Relaxing morning tunes',
+      link: 'https://open.spotify.com/playlist/3zteNmnoKFGtzwRTpNhC8u',
+      image: dillon
     },
-    { 
-      timestamp: '19th May 2020 3:00 PM', 
-      title: 'Workout Mix', 
-      description: 'Energetic workout music', 
-      link: 'https://open.spotify.com/playlist/2', 
-      image: 'https://i.scdn.co/image/ab67616d0000b2732c5e6f10f5e3e5761f0d22' 
+    {
+      timestamp: '19th May 2020 3:00 PM',
+      title: 'Workout Mix',
+      description: 'Energetic workout music',
+      link: 'https://open.spotify.com/playlist/2',
+      image: 'https://i.scdn.co/image/ab67616d0000b2732c5e6f10f5e3e5761f0d22'
     },
-    { 
-      timestamp: '17th June 2020 7:00 PM', 
-      title: 'Evening Jazz', 
-      description: 'Smooth jazz for the evening', 
-      link: 'https://open.spotify.com/playlist/3', 
-      image: 'https://i.scdn.co/image/ab67616d0000b2733c7e6f10f5e3e5761f0d33' 
+    {
+      timestamp: '17th June 2020 7:00 PM',
+      title: 'Evening Jazz',
+      description: 'Smooth jazz for the evening',
+      link: 'https://open.spotify.com/playlist/3',
+      image: 'https://i.scdn.co/image/ab67616d0000b2733c7e6f10f5e3e5761f0d33'
     },
-    // Add more playlists as needed
   ];
 
   const handleOpenVault = () => {
@@ -43,10 +45,37 @@ const Vault = () => {
         setIsZoomedIn(true);
         setTimeout(() => {
           setIsContentVisible(true);
-        }, 3000); // Timing for zoom-in effect
-      }, 500); // Timing for door opening
-    }, 700); // Timing to match handle animation duration
+        }, 3000);
+      }, 500);
+    }, 700);
   };
+
+  useEffect(() => {
+    if (isContentVisible) {
+      const timelineSwiper = new Swiper('.timeline .swiper-container', {
+        direction: 'vertical', // Ensure vertical direction
+        loop: false,
+        speed: 1600,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: function (index, className) {
+            const year = document.querySelectorAll('.swiper-slide')[index].getAttribute('data-year');
+            return `<span class="${className}">${year}</span>`;
+          },
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          768: {
+            direction: 'horizontal', // Change to horizontal on larger screens
+          }
+        }
+      });
+    }
+  }, [isContentVisible]);
 
   return (
     <div className={`vault-container ${isZoomedIn ? 'zoom-in' : ''} ${isContentVisible ? 'zoom-out' : ''}`}>
@@ -80,40 +109,30 @@ const Vault = () => {
       ) : (
         <div className="timeline-container">
           <div className="container">
-            <div className="box">
-              <div className="container-3">
-                <span className="icon"><i className="fa fa-search"></i></span>
-                <input type="search" id="search" placeholder="Search..." />
-              </div>
-            </div>
-
-            <div className="leftbox">
-              <nav>
-                <a id="dashboard"><i className="fas fa-tachometer-alt"></i></a>
-                <a id="profile"> <i className="fas fa-user"></i> </a>
-                <a id="settings"> <i className="fas fa-cog"></i> </a>
-                <a id="messages"> <i className="fas fa-comments"></i> </a>
-                <a id="notification"> <i className="fas fa-bell"></i> </a>
-              </nav>
-            </div>
-            <div className="rightbox">
-              <div className="rb-container">
-                <ul className="rb">
-                  {playlists.map((playlist, index) => (
-                    <li className="rb-item" key={index}>
-                      <div className="timestamp">
-                        {playlist.timestamp}
+            <h1 className="title">My Vault</h1>
+            <div className="timeline">
+              <div className="swiper-container">
+                <div className="swiper-wrapper">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div
+                      className="swiper-slide"
+                      style={{ backgroundImage: `url(https://unsplash.it/1920/500?image=1${i})` }}
+                      data-year={`201${i}`}
+                      key={i}
+                    >
+                      <div className="swiper-slide-content">
+                        <span className="timeline-year">201{i}</span>
+                        <h4 className="timeline-title">Your Playlist</h4>
+                        <p className="timeline-text">
+                          text text.
+                        </p>
                       </div>
-                      <div className="item-title">
-                        <a href={playlist.link} target="_blank" rel="noopener noreferrer">
-                          <img src={playlist.image} alt={playlist.title} className="playlist-cover" />
-                          {playlist.title}
-                        </a>
-                        <p>{playlist.description}</p>
-                      </div>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
+                <div className="swiper-button-prev"></div>
+                <div className="swiper-button-next"></div>
+                <div className="swiper-pagination"></div>
               </div>
             </div>
           </div>
