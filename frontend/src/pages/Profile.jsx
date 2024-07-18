@@ -81,8 +81,9 @@ const Profile = () => {
     };
 
     const handleSaveBio = () => {
-        setBio(newBio);
-        localStorage.setItem("bio", newBio);
+        const updatedBio = newBio.trim() || "Hello world! I’m new to Vaultify.";
+        setBio(updatedBio);
+        localStorage.setItem("bio", updatedBio);
         setEditing(false);
     };
 
