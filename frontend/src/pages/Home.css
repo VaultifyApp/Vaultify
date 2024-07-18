@@ -53,6 +53,7 @@ h3 {
     font-size: 24px;
     margin-bottom: 20px;
     text-align: left;
+    margin-top: 20px;
     font-weight: bold;
 }
 
@@ -78,7 +79,7 @@ p {
 .results {
     width: 100%;
     max-width: 800px;
-    margin-top: -20px;
+    margin-top: 30px;
     margin-bottom: 40px;
 }
 
