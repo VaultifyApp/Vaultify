@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
@@ -14,6 +15,7 @@ const PlaylistGeneration = () => {
     const [emailNotifications, setEmailNotifications] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState("");
+    const navigate = useNavigate();
 
     const maxSongs = 250;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
@@ -51,6 +53,7 @@ const PlaylistGeneration = () => {
             );
 
             setPlaylist(response.data.items);
+            navigate("/playlist-success");
         } catch (error) {
             setError("Error generating playlist");
             console.error("Error fetching playlist data from Spotify API", error);
