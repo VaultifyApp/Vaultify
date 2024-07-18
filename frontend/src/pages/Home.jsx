@@ -8,7 +8,7 @@ const Home = () => {
     const fetchTrendingTracks = async () => {
         try {
             const token =
-                "BQAQ9jqPc-V7WCSWJo_zYbXq38POgj0VjTo0pxiKs8UmLekgO-FmHQfJN2EwqY-jKRRYGaOAidtRWu1_Iss-umRUuTNPCE3mE2kaXTRFUwsfuV0_5wc"; // Replace with a valid token
+                "BQDGlpUt3MR0SUj6pg-F7WlfVEVPFLtZlOKuBC6ubu6rglow5-TjVI2UtIK_0htvaXamN40mg1bLlOlP8B0IlXJMZs5HPxjxwGXRGiYKqtWwE2kwNpY"; // Replace with a valid token
             const response = await axios.get(
                 "https://api.spotify.com/v1/browse/new-releases",
                 {
