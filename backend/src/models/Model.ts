@@ -12,6 +12,10 @@ class Model {
         this.database = new DatabaseFacade();
         this.spotify = new SpotifyFacade();
     }
+
+    async generatePlaylist(): Promise<any> {
+        return "";
+    }
 }
 
 export default Model;
