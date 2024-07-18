@@ -1,10 +1,13 @@
 
 class WebController {
+
     /**
      * @returns user profile from the server
      */
-    async getUser() {
+    async login() {
         // TODO : Implement
+        // if previous user, send _id
+        // else don't
     }
 
     /**
