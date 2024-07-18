@@ -2,7 +2,7 @@ import DatabaseFacade from "../facades/DatabaseFacade.js";
 import SpotifyFacade from "../facades/SpotifyFacade.js";
 
 /**
- * The Model class is responsible for
+ ** The Model class is responsible for
  */
 class Model {
     private database: DatabaseFacade;
