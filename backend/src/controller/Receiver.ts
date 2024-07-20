@@ -5,9 +5,9 @@ import Model from "../model/Model.js";
 import User from "../model/User.js";
 
 /**
- * The WebController class is responsible for responding to requests from the client.
+ * The Receiver class is responsible for responding to requests from the client.
  */
-class WebController {
+class Receiver {
     private app: Express;
     private model: Model;
 
@@ -79,4 +79,4 @@ class WebController {
     }
 }
 
-export default WebController;
+export default Receiver;
