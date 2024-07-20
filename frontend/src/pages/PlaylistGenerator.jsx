@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Transmitter from "./Transmitter.js"
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
@@ -51,23 +51,7 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            const token =
-                "BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo";
-            const response = await axios.get(
-                "https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                    params: {
-                        limit:
-                            lengthType === "songs"
-                                ? length
-                                : Math.ceil(length / 3), // Approximate 3 minutes per song
-                    },
-                }
-            );
-
+            Transmitter
             setPlaylist(response.data.items);
         } catch (error) {
             setError("Error generating playlist");

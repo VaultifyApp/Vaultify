@@ -3,15 +3,14 @@ import axios from "axios"
 import User from "./User.js"
 
 class Transmitter {
-    private URI: string = process.env.SERVER_URI;
     /**
      * @returns user profile from the server
      */
-    async login(): Promise<User> {
-        const _id: string | null = localStorage.getItem("_id");
-        if (_id === null) {
-            const response = await axios.get(this.URI+"/login");
-            let user: User = response.data;
+    static async login() {
+        const _id = localStorage.getItem("_id");
+        if (_id == null) {
+            const response = await axios.get(Transmitter.URI+"/login");
+            let user = response.data;
             if (!user._id) {
                 throw new Error("User must have an ID");
             }
@@ -20,8 +19,8 @@ class Transmitter {
         }
         else {
             const params = {_id: _id};
-            const response = await axios.get(this.URI+"/login", {params});
-            let user: User = response.data;
+            const response = await axios.get("http://localhost3001"+"/login", {params});
+            let user = response.data;
             if (!user._id) {
                 throw new Error("User must have an ID");
             }
@@ -32,20 +31,20 @@ class Transmitter {
     /**
      * @returns updated user profile with the generated playlist
      */
-    async generatePlaylist(user: User): Promise<User> {
+    static async generatePlaylist(user) {
         const params = {_id: user._id};
-        const response = await axios.get(this.URI+"/generate-playlist", {params});
-        let updatedUser: User = response.data;
+        const response = await axios.get("http://localhost3001"+"/generate-playlist", {params});
+        let updatedUser = response.data;
         return updatedUser;
     }
 
     /**
      * @returns updated user profile with the new bio
      */
-    async updateBio(user: User): Promise<User> {
+    static async updateBio(user) {
         const params = {_id: user._id, bio: user.bio};
-        const response = await axios.get(this.URI+"/update-bio", {params});
-        let updatedUser: User = response.data;
+        const response = await axios.get("http://localhost3001"+"/update-bio", {params});
+        let updatedUser = response.data;
         return updatedUser;
     }
 }
