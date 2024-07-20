@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
-import "swiper/swiper-bundle.css";
 import dillon from "../assets/dillon.png";
 
 const Vault = () => {

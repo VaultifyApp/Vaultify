@@ -1,5 +1,4 @@
-import Model from "../models/Model.js";
-import generatePlaylist from "../models/Model.js";
+import Model from "../model/Model.js";
 import cron from "node-cron";
 
 /**

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Transmitter from "./Transmitter.js"
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
@@ -51,8 +50,7 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            let user = await Transmitter.generatePlaylist({_id: localStorage.getItem("_id")})
-            setPlaylist(user.playlists[user.playlists.length-1])
+            throw new Error("Bleh")
         } catch (error) {
             setError("Error generating playlist");
             console.error(
