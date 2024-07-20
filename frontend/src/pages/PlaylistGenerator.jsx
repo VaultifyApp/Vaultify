@@ -3,7 +3,7 @@ import Transmitter from "./Transmitter.js"
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
-    const [playlist, setPlaylist] = useState([]);
+    const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [date, setDate] = useState("");
@@ -51,8 +51,8 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            Transmitter
-            setPlaylist(response.data.items);
+            let user = await Transmitter.generatePlaylist({_id: localStorage.getItem("_id")})
+            setPlaylist(user.playlists[user.playlists.length-1])
         } catch (error) {
             setError("Error generating playlist");
             console.error(
