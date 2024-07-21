@@ -39,7 +39,7 @@ class Receiver {
     private async handleLogin(): Promise<void> {
         this.app.get("/login", async (req: Request, res: Response) => {
             // if new user / no id given, send to Spotify OAuth
-            if (!req.query._id || typeof req.query._id !== "string") {
+            if (!req.query._id || typeof req.query._id !== "string" || req.query._id == "undefined") {
                 // sets query params for Spotify login
                 const queryParams: string = querystring.stringify({
                     client_id: process.env.CLIENT_ID,
@@ -63,17 +63,19 @@ class Receiver {
                                 "Invalid query code: can't retrieve token"
                             );
                         } else {
-                            const user: User = await this.model.addUser(
+                            let user: User = await this.model.addUser(
                                 req.query.code
                             );
-                            res.json(this.removeTokens(user));
+                            user = this.removeTokens(user);
+                            res.redirect(`http://localhost:3000/login?user=${JSON.stringify(user)}`)
                         }
                     }
                 );
             } else {
                 // else retrieve user from database
                 let user: User = await this.model.getUser(req.query._id);
-                res.json(this.removeTokens(user));
+                user = this.removeTokens(user);
+                res.redirect(`http://localhost:3000/login?user=${JSON.stringify(user)}`)
             }
         });
     }
