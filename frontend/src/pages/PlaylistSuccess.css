@@ -1,4 +1,4 @@
-/* PlaylistSuccess.css */
+/* src/pages/PlaylistSuccess.css */
 .success-container {
     display: flex;
     justify-content: center;
@@ -23,9 +23,16 @@
 }
 
 .success-link {
-    color: #00d76a;
+    background-color: #00d76a;
+    color: white;
     font-size: 1.5rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     text-decoration: none;
-    margin-top: 20px;
-    display: inline-block;
+}
+
+.success-link:hover {
+    background-color: #16a34a;
 }
