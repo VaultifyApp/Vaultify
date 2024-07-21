@@ -2,7 +2,7 @@
  * The User interface is used to store user data
  */
 interface User {
-    _id?: string,
+    _id?: string;
     refreshToken?: string;
     accessToken?: string;
     username?: string;

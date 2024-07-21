@@ -12,22 +12,20 @@ const Login = () => {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const profile = localStorage.getItem("profile")
+            const profile = localStorage.getItem("profile");
             if (profile == null) {
-                window.location.href = 'http://localhost:3001/login';                    
-            }
-            else {
+                window.location.href = "http://localhost:3001/login";
+            } else {
                 window.location.href = `http://localhost:3001/login?_id=${profile._id}`;
             }
         };
         const urlParams = new URLSearchParams(location.search);
-        const profile = urlParams.get('user');
-        urlParams.delete('user');
+        const profile = urlParams.get("user");
+        urlParams.delete("user");
         if (profile == null) {
             fetchProfile();
-        }
-        else {
-            let decoded = JSON.parse(profile)
+        } else {
+            let decoded = JSON.parse(profile);
             localStorage.setItem("profile", profile);
             setProfileState(decoded);
             setProfile(decoded);

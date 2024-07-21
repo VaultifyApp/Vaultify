@@ -39,7 +39,11 @@ class Receiver {
     private async handleLogin(): Promise<void> {
         this.app.get("/login", async (req: Request, res: Response) => {
             // if new user / no id given, send to Spotify OAuth
-            if (!req.query._id || typeof req.query._id !== "string" || req.query._id == "undefined") {
+            if (
+                !req.query._id ||
+                typeof req.query._id !== "string" ||
+                req.query._id == "undefined"
+            ) {
                 // sets query params for Spotify login
                 const queryParams: string = querystring.stringify({
                     client_id: process.env.CLIENT_ID,
@@ -67,7 +71,9 @@ class Receiver {
                                 req.query.code
                             );
                             user = this.removeTokens(user);
-                            res.redirect(`http://localhost:3000/login?user=${JSON.stringify(user)}`)
+                            res.redirect(
+                                `http://localhost:3000/login?user=${JSON.stringify(user)}`
+                            );
                         }
                     }
                 );
@@ -75,7 +81,9 @@ class Receiver {
                 // else retrieve user from database
                 let user: User = await this.model.getUser(req.query._id);
                 user = this.removeTokens(user);
-                res.redirect(`http://localhost:3000/login?user=${JSON.stringify(user)}`)
+                res.redirect(
+                    `http://localhost:3000/login?user=${JSON.stringify(user)}`
+                );
             }
         });
     }

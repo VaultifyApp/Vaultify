@@ -50,7 +50,7 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            throw new Error("Bleh")
+            throw new Error("Bleh");
         } catch (error) {
             setError("Error generating playlist");
             console.error(
