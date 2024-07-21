@@ -1,5 +1,5 @@
 import { Buffer } from "buffer";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
 
 import User from "../User.js";
@@ -13,8 +13,14 @@ class SpotifyFacade {
     private CLIENT_ID: string = process.env.CLIENT_ID || "";
     private CLIENT_SECRET: string = process.env.CLIENT_SECRET || "";
     private REDIRECT_URI: string = process.env.REDIRECT_URI || "";
+    private AxiosInstance = axios.create();
+    
+    /**
+     * @effects configures axios to handle expired access tokens
+     */
+    constructor() {
 
-    constructor() {}
+    }
 
     /**
      * @param queryCode the code sent in the Spotify API request
@@ -61,14 +67,33 @@ class SpotifyFacade {
      * @returns user with updated profile data
      */
     async updateProfile(user: User): Promise<User> {
-        const response: AxiosResponse = await axios.get(
-            "https://api.spotify.com/v1/me",
-            {
-                headers: {
-                    Authorization: `Bearer ${user.accessToken}`,
-                },
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(
+                "https://api.spotify.com/v1/me",
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                    },
+                }
+            );
+        } catch (error) {
+            if (!isAxiosError(error) || error.response && error.response.status === 401) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                response = await axios.get(
+                    "https://api.spotify.com/v1/me",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                        },
+                    }
+                );
+            } else {
+                throw error;
             }
-        );
+        }
         if (
             !(
                 response.data.display_name &&
@@ -111,28 +136,44 @@ class SpotifyFacade {
         return user;
     }
 
-    private async getTopSongs(user: User, numSongs: Number): Promise<string[]> {
+    private async getTopSongs(user: User, numSongs: number): Promise<string[]> {
         let songs: string[] = [];
-        const response: AxiosResponse = await axios.get(
-            "https://api.spotify.com/v1/me",
-            {
-                headers: {
-                    Authorization: `Bearer ${user.accessToken}`,
-                },
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(
+                "https://api.spotify.com/v1/me/top/tracks",
+                {
+                    data: querystring.stringify({
+                        limit: numSongs,
+                        time_range: "short_term",
+                    }),
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                    },
+                }
+            );
+        } catch (error) {
+            if (!isAxiosError(error) || error.response && error.response.status === 401) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                response = await axios.get(
+                    "https://api.spotify.com/v1/me/top/tracks",
+                    {
+                        data: querystring.stringify({
+                            limit: numSongs,
+                            time_range: "short_term",
+                        }),
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                        },
+                    }
+                );
+            } else {
+                throw error;
             }
-        );
-        // TODO : maybe we need more of these params? PROFILE PICTURE
-        if (
-            !(
-                response.data.display_name &&
-                response.data.email &&
-                response.data.href &&
-                response.data.uri &&
-                response.data.images
-            )
-        ) {
-            throw new Error("Failed to retrieve profile information");
         }
+        if (!response.data.items) {}
         return songs;
     }
 
