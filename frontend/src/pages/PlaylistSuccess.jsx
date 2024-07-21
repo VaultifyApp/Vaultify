@@ -11,8 +11,9 @@ const PlaylistSuccess = () => {
 
         // Check if the profile and playlists exist
         if (profile && profile.playlists && profile.playlists.length > 0) {
-            // Get the first playlist link from the array
-            const playlistLink = profile.playlists[0]; // Assuming you want the first link
+            // Get the link of the most recent playlist
+            const playlistLink =
+                profile.playlists[profile.playlists.length - 1];
 
             // Navigate to the playlist link
             navigate(playlistLink);
