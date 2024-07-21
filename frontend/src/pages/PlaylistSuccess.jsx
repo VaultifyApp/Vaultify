@@ -1,14 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './PlaylistSuccess.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./PlaylistSuccess.css";
 
 const PlaylistSuccess = () => {
     const navigate = useNavigate();
 
     const handleOpenPlaylist = () => {
         // Retrieve the profile data from localStorage
-        const profile = JSON.parse(localStorage.getItem('profile'));
-        
+        const profile = JSON.parse(localStorage.getItem("profile"));
+
         // Check if the profile and playlists exist
         if (profile && profile.playlists && profile.playlists.length > 0) {
             // Get the first playlist link from the array
