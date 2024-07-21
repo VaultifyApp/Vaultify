@@ -69,7 +69,6 @@ class SpotifyFacade {
                 },
             }
         );
-        // TODO : maybe we need more of these params? PROFILE PICTURE
         if (
             !(
                 response.data.display_name &&
@@ -93,14 +92,54 @@ class SpotifyFacade {
      * @param user the user to be given a new access token
      * @returns updated user object with an active token
      */
-    private async refreshToken(user: User) {
+    private async refreshToken(user: User): Promise<User> {
+        const response: AxiosResponse = await axios.get(
+            "https://accounts.spotify.com/api/token",
+            {
+                data: querystring.stringify({
+                    grant_type: "refresh_token",
+                    refresh_token: user.refreshToken,
+                }),
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded",
+                    Authorization: `Basic ${Buffer.from(`${this.CLIENT_ID}:${this.CLIENT_SECRET}`).toString("base64")}`,
+                },
+            }
+        );
+        user.accessToken = response.data.access_token;
+        user.refreshToken = response.data.refresh_token;
         return user;
     }
 
-    getTopSongs(): void {}
+    private async getTopSongs(user: User, numSongs: Number): Promise<string[]> {
+        let songs: string[] = [];
+        const response: AxiosResponse = await axios.get(
+            "https://api.spotify.com/v1/me",
+            {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`,
+                },
+            }
+        );
+        // TODO : maybe we need more of these params? PROFILE PICTURE
+        if (
+            !(
+                response.data.display_name &&
+                response.data.email &&
+                response.data.href &&
+                response.data.uri &&
+                response.data.images
+            )
+        ) {
+            throw new Error("Failed to retrieve profile information");
+        }
+        return songs;
+    }
 
-    generatePlaylist(songs: string): void {}
+    async generatePlaylist(user: User): Promise<User> {
 
+        return user;
+    }
     getPlaylist(link: string): void {}
 }
 
