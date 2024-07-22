@@ -1,8 +1,9 @@
 import { Buffer } from "buffer";
-import axios, { AxiosResponse } from "axios";
+import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
 
 import User from "../User.js";
+import { URLSearchParams } from "url";
 
 /**
  * The SpotifyFacade class is responsible for all interactions with the Spotify Web API, such as
@@ -13,7 +14,11 @@ class SpotifyFacade {
     private CLIENT_ID: string = process.env.CLIENT_ID || "";
     private CLIENT_SECRET: string = process.env.CLIENT_SECRET || "";
     private REDIRECT_URI: string = process.env.REDIRECT_URI || "";
+    private AxiosInstance = axios.create();
 
+    /**
+     * @effects configures axios to handle expired access tokens
+     */
     constructor() {}
 
     /**
@@ -32,7 +37,7 @@ class SpotifyFacade {
                 redirect_uri: this.REDIRECT_URI,
             }),
             headers: {
-                "content-type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: `Basic ${Buffer.from(`${this.CLIENT_ID}:${this.CLIENT_SECRET}`).toString("base64")}`,
             },
         });
@@ -61,15 +66,30 @@ class SpotifyFacade {
      * @returns user with updated profile data
      */
     async updateProfile(user: User): Promise<User> {
-        const response: AxiosResponse = await axios.get(
-            "https://api.spotify.com/v1/me",
-            {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get("https://api.spotify.com/v1/me", {
                 headers: {
                     Authorization: `Bearer ${user.accessToken}`,
                 },
+            });
+        } catch (error) {
+            if (
+                !isAxiosError(error) ||
+                (error.response && error.response.status === 401)
+            ) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                response = await axios.get("https://api.spotify.com/v1/me", {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                    },
+                });
+            } else {
+                throw error;
             }
-        );
-        // TODO : maybe we need more of these params? PROFILE PICTURE
+        }
         if (
             !(
                 response.data.display_name &&
@@ -86,6 +106,7 @@ class SpotifyFacade {
         user.href = response.data.href;
         user.uri = response.data.uri;
         user.images = response.data.images;
+        user.spotifyID = response.data.id;
         return user;
     }
 
@@ -93,15 +114,176 @@ class SpotifyFacade {
      * @param user the user to be given a new access token
      * @returns updated user object with an active token
      */
-    private async refreshToken(user: User) {
+    private async refreshToken(user: User): Promise<User> {
+        if (typeof user.refreshToken != "string")
+            throw new Error("Must have refresh token to refresh access");
+        const response: AxiosResponse = await axios.post(
+            "https://accounts.spotify.com/api/token",
+            new URLSearchParams({
+                grant_type: "refresh_token",
+                refresh_token: user.refreshToken,
+            }),
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    Authorization: `Basic ${Buffer.from(`${this.CLIENT_ID}:${this.CLIENT_SECRET}`).toString("base64")}`,
+                },
+            }
+        );
+        user.accessToken = response.data.access_token;
+        user.refreshToken = response.data.refresh_token;
         return user;
     }
 
-    getTopSongs(): void {}
+    /**
+     * @param user the user to retrieve songs for
+     * @param numSongs num top songs to retrieve
+     * @returns an array of uri's of the user's top songs for the month
+     */
+    private async getTopSongs(user: User, numSongs: number): Promise<string[]> {
+        let response: AxiosResponse;
+        try {
+            response = await axios.get(
+                "https://api.spotify.com/v1/me/top/tracks",
+                {
+                    params: {
+                        limit: numSongs,
+                        time_range: "short_term",
+                    },
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                    },
+                }
+            );
+        } catch (error) {
+            if (
+                isAxiosError(error) &&
+                error.response &&
+                error.response.status == 401
+            ) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                response = await axios.get(
+                    "https://api.spotify.com/v1/me/top/tracks",
+                    {
+                        params: {
+                            limit: numSongs,
+                            time_range: "short_term",
+                        },
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                        },
+                    }
+                );
+            } else {
+                throw error;
+            }
+        }
+        const items = response.data.items;
+        let songs: string[] = items.map((item: { uri: string }) => item.uri);
+        return songs;
+    }
 
-    generatePlaylist(songs: string): void {}
-
-    getPlaylist(link: string): void {}
+    /**
+     *
+     * @param user the user to generate a playlist for
+     * @returns an updated user object with a new playlist
+     */
+    // TODO: make playlist name not hardcoded
+    async generatePlaylist(user: User): Promise<User> {
+        if (!user.username) throw new Error("User must have username");
+        let songs: string[] = await this.getTopSongs(user, 50);
+        let createResponse: AxiosResponse;
+        // create playlist for user
+        try {
+            createResponse = await axios.post(
+                `https://api.spotify.com/v1/users/${user.spotifyID}/playlists`,
+                {
+                    name: "July 2024",
+                    description: `${user.username}'s top tracks for July!`,
+                    public: false,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+        } catch (error) {
+            if (
+                !isAxiosError(error) ||
+                (error.response && error.response.status === 401)
+            ) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                createResponse = await axios.post(
+                    `https://api.spotify.com/v1/users/${user.spotifyID}/playlists`,
+                    {
+                        name: "July 2024",
+                        description: `${user.username}'s top tracks for July!`,
+                        public: false,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+            } else {
+                throw error;
+            }
+        }
+        // only add songs if user has top songs
+        if (songs.length > 0) {
+            let addResponse: AxiosResponse;
+            try {
+                addResponse = await axios.post(
+                    `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
+                    {
+                        uris: songs,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+            } catch (error) {
+                if (
+                    !isAxiosError(error) ||
+                    (error.response && error.response.status === 401)
+                ) {
+                    // Token expired, refresh token
+                    user = await this.refreshToken(user);
+                    // Retry the request with the new token
+                    addResponse = await axios.post(
+                        `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
+                        {
+                            uris: songs,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${user.accessToken}`,
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    );
+                } else {
+                    throw error;
+                }
+            }
+        }
+        if (!user.playlists) {
+            user.playlists = [];
+        }
+        user.playlists.push(createResponse.data.external_urls.spotify);
+        return user;
+    }
 }
 
 export default SpotifyFacade;

@@ -39,7 +39,17 @@ class Model {
         // store updated info to the database
     }
 
-    async generatePlaylist() {}
+    /**
+     * @param _id the ID of the user to generate a playlist for
+     * @returns an updated user with a newly generated playlist
+     * @effects saves the updated user to the database
+     */
+    async generatePlaylist(_id: string): Promise<User> {
+        let user: User = await this.db.getUser(_id);
+        user = await this.spotify.generatePlaylist(user);
+        this.db.updateUser(user);
+        return user;
+    }
 }
 
 export default Model;
