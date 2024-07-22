@@ -28,7 +28,7 @@ class Receiver {
      * @returns user with tokens removed for client use
      */
     private removeTokens(user: User) {
-        const { href, uri, accessToken, refreshToken, ...userWithoutTokens } =
+        const { spotifyID, href, uri, accessToken, refreshToken, ...userWithoutTokens } =
             user;
         return userWithoutTokens;
     }
@@ -49,7 +49,7 @@ class Receiver {
                     client_id: process.env.CLIENT_ID,
                     response_type: "code",
                     redirect_uri: process.env.REDIRECT_URI,
-                    scope: "user-read-private user-read-email",
+                    scope: "user-read-private user-read-email playlist-modify-public playlist-modify-public user-top-read",
                 });
                 // redirects to OAuth
                 res.redirect(

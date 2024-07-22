@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import User from "../User.js";
+import { stringify } from "querystring";
 
 /**
  * The database facade is responsible for retrieving information from and updating the database.
@@ -76,6 +77,10 @@ class DatabaseFacade {
                     required: false,
                     default: "",
                 },
+                spotifyID: {
+                    type: String,
+                    required: true,
+                },
             })
         );
     }
@@ -86,13 +91,13 @@ class DatabaseFacade {
      * @throws error if user doesn't have required database fields
      */
     async addUser(user: User): Promise<User> {
-        if (!(user.refreshToken && user.accessToken && user.email)) {
+        if (!(user.refreshToken && user.accessToken && user.email && user.spotifyID)) {
             throw new Error(
                 "User must have required fields to be added to the database."
             );
         }
         const existingUser = await this.UserModel.findOne({
-            email: user.email,
+            _id: user._id,
         });
         if (!existingUser) {
             const added = await new this.UserModel(user).save();

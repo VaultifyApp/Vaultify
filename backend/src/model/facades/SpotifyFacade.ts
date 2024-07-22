@@ -1,5 +1,5 @@
 import { Buffer } from "buffer";
-import axios, { AxiosResponse, isAxiosError } from "axios";
+import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
 
 import User from "../User.js";
@@ -110,6 +110,7 @@ class SpotifyFacade {
         user.href = response.data.href;
         user.uri = response.data.uri;
         user.images = response.data.images;
+        user.spotifyID = response.data.id;
         return user;
     }
 
@@ -136,8 +137,12 @@ class SpotifyFacade {
         return user;
     }
 
+    /**
+     * @param user the user to retrieve songs for
+     * @param numSongs num top songs to retrieve
+     * @returns an array of uri's of the user's top songs for the month
+     */
     private async getTopSongs(user: User, numSongs: number): Promise<string[]> {
-        let songs: string[] = [];
         let response: AxiosResponse;
         try {
             response = await axios.get(
@@ -173,15 +178,94 @@ class SpotifyFacade {
                 throw error;
             }
         }
-        if (!response.data.items) {}
+        const items = response.data.items;
+        let songs: string[] = items.map((item: { uri: string; }) => item.uri);
         return songs;
     }
 
+    /**
+     * 
+     * @param user the user to generate a playlist for
+     * @returns an updated user object with a new playlist
+     */
+    // TODO: make playlist name not hardcoded
     async generatePlaylist(user: User): Promise<User> {
-
+        let songs: string[] = await this.getTopSongs(user, 50);
+        let createResponse: AxiosResponse;
+        try {
+            createResponse = await axios.get(
+                `https://api.spotify.com/v1/users/${user.spotifyID}/playlists`,
+                {
+                    data: querystring.stringify({
+                        name: "July 2024",
+                        description: `${user.username}'s top tracks for July!`
+                    }),
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                }
+            );
+        } catch (error) {
+            if (!isAxiosError(error) || error.response && error.response.status === 401) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                createResponse = await axios.get(
+                    `https://api.spotify.com/v1/users/${user.spotifyID}/playlists`,
+                    {
+                        data: querystring.stringify({
+                            name: "July 2024",
+                            description: `${user.username}'s top tracks for July!`
+                        }),
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                    }
+                );
+            } else {
+                throw error;
+            }
+        }
+        let addResponse: AxiosResponse;
+        try {
+            addResponse = await axios.get(
+                `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
+                {
+                    data: querystring.stringify({
+                        uris: songs,
+                    }),
+                    headers: {
+                        Authorization: `Bearer ${user.accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+        } catch (error) {
+            if (!isAxiosError(error) || error.response && error.response.status === 401) {
+                // Token expired, refresh token
+                user = await this.refreshToken(user);
+                // Retry the request with the new token
+                addResponse = await axios.get(
+                    `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
+                    {
+                        data: querystring.stringify({
+                            uris: songs,
+                        }),
+                        headers: {
+                            Authorization: `Bearer ${user.accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+            } else {
+                throw error;
+            }
+        }
+        user.playlists?.push(addResponse.data.external_urls.spotify);
         return user;
     }
-    getPlaylist(link: string): void {}
 }
 
 export default SpotifyFacade;
