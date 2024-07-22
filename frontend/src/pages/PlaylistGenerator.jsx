@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
     const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [date, setDate] = useState("");
     const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
     const [length, setLength] = useState(25);
     const [coverTheme, setCoverTheme] = useState("");
@@ -15,12 +15,10 @@ const PlaylistGeneration = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState("");
 
-    useEffect(() => {
-        const now = new Date();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        const year = now.getFullYear();
-        setDate(`${year}-${month}`);
-    }, []);
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    const maxSongs = 250;
+    const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
 
     const handleCustomLengthSubmit = () => {
         const lengthValue = parseInt(customLength, 10);
@@ -28,7 +26,7 @@ const PlaylistGeneration = () => {
             lengthType === "songs" &&
             !isNaN(lengthValue) &&
             lengthValue > 0 &&
-            lengthValue <= 250
+            lengthValue <= maxSongs
         ) {
             setLength(lengthValue);
             setIsModalOpen(false);
@@ -36,13 +34,16 @@ const PlaylistGeneration = () => {
         } else if (
             lengthType === "time" &&
             !isNaN(lengthValue) &&
-            lengthValue > 0
+            lengthValue > 0 &&
+            lengthValue <= maxTimeInHours
         ) {
             setLength(lengthValue * 60); // Convert hours to minutes
             setIsModalOpen(false);
             setCustomLength("");
         } else {
-            alert("Please enter a valid number.");
+            alert(
+                `Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`
+            );
         }
     };
 
@@ -50,15 +51,24 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
+            const token =
+                "BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo";
             const response = await axios.get(
-                'http://localhost:3001/generate-playlist',
+                "https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
                 {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                     params: {
-                        _id: JSON.parse(localStorage.getItem('profile'))._id,
-                    }
+                        limit:
+                            lengthType === "songs"
+                                ? length
+                                : Math.ceil(length / 3), // Approximate 3 minutes per song
+                    },
                 }
             );
-            localStorage.setItem("profile",JSON.stringify(response.data));
+
+            setPlaylist(response.data.items);
         } catch (error) {
             setError("Error generating playlist");
             console.error(
@@ -82,15 +92,6 @@ const PlaylistGeneration = () => {
                 <h2 className="playlist-subtitle">
                     Discover Your Next Favorite Songs
                 </h2>
-
-                <div className="form-group">
-                    <label>Date:</label>
-                    <input
-                        type="month"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                </div>
 
                 <div className="form-group">
                     <label>Length Type:</label>
@@ -128,9 +129,15 @@ const PlaylistGeneration = () => {
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className={length > 50 ? "selected" : ""}
+                                className={
+                                    typeof length === "number" && length > 50
+                                        ? "selected"
+                                        : ""
+                                }
                             >
-                                {length > 50 ? `${length} songs` : "Custom"}
+                                {typeof length === "number" && length > 50
+                                    ? `Custom`
+                                    : "Custom"}
                             </button>
                         </div>
                     </div>
@@ -152,10 +159,14 @@ const PlaylistGeneration = () => {
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className={length > 180 ? "selected" : ""}
+                                className={
+                                    typeof length === "number" && length > 180
+                                        ? "selected"
+                                        : ""
+                                }
                             >
-                                {length > 180
-                                    ? `${length / 60} hours`
+                                {typeof length === "number" && length > 180
+                                    ? `Custom`
                                     : "Custom"}
                             </button>
                         </div>
@@ -259,7 +270,7 @@ const PlaylistGeneration = () => {
                                 onChange={(e) =>
                                     setCustomLength(e.target.value)
                                 }
-                                placeholder={`Enter number of ${lengthType === "songs" ? "songs (1-250)" : "hours"}`}
+                                placeholder={`Enter number of ${lengthType === "songs" ? "songs (1-250)" : `hours (1-${maxTimeInHours})`}`}
                                 min="1"
                                 max={lengthType === "songs" ? "250" : ""}
                             />
