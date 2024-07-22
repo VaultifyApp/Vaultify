@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
-import dillon from "../assets/dillon.png";
 
 const Vault = () => {
     const navigate = useNavigate();
@@ -11,29 +10,11 @@ const Vault = () => {
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [isZoomedIn, setIsZoomedIn] = useState(false);
 
-    const playlists = [
-        {
-            timestamp: "3rd May 2020 7:00 PM",
-            title: "Morning Chill",
-            description: "Relaxing morning tunes",
-            link: "https://open.spotify.com/playlist/3zteNmnoKFGtzwRTpNhC8u",
-            image: dillon,
-        },
-        {
-            timestamp: "19th May 2020 3:00 PM",
-            title: "Workout Mix",
-            description: "Energetic workout music",
-            link: "https://open.spotify.com/playlist/2",
-            image: "https://i.scdn.co/image/ab67616d0000b2732c5e6f10f5e3e5761f0d22",
-        },
-        {
-            timestamp: "17th June 2020 7:00 PM",
-            title: "Evening Jazz",
-            description: "Smooth jazz for the evening",
-            link: "https://open.spotify.com/playlist/3",
-            image: "https://i.scdn.co/image/ab67616d0000b2733c7e6f10f5e3e5761f0d33",
-        },
-    ];
+    const playlists = JSON.parse(localStorage.getItem("profile")).playlists;
+
+    useEffect(() => {
+        console.log("Playlists:", playlists);
+    }, [playlists]);
 
     const handleOpenVault = () => {
         setIsWheelTurning(true);
@@ -54,7 +35,9 @@ const Vault = () => {
             const timelineSwiper = new Swiper(".timeline .swiper-container", {
                 direction: "vertical", // Ensure vertical direction
                 loop: false,
-                speed: 1600,
+                speed: 700,
+                allowTouchMove: false, // Disable touch interactions
+                mousewheel: true, // Disable mousewheel interactions
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
@@ -69,12 +52,21 @@ const Vault = () => {
                     nextEl: ".swiper-button-next",
                     prevEl: ".swiper-button-prev",
                 },
-                breakpoints: {
-                    768: {
-                        direction: "horizontal", // Change to horizontal on larger screens
-                    },
-                },
             });
+
+            const preventDefault = (e) => {
+                e.preventDefault();
+            };
+
+            // Add event listeners to disable scroll events
+            document
+                .querySelector(".timeline .swiper-container")
+                .addEventListener("wheel", preventDefault, { passive: false });
+            document
+                .querySelector(".timeline .swiper-container")
+                .addEventListener("touchmove", preventDefault, {
+                    passive: false,
+                });
         }
     }, [isContentVisible]);
 
@@ -118,25 +110,27 @@ const Vault = () => {
                         <div className="timeline">
                             <div className="swiper-container">
                                 <div className="swiper-wrapper">
-                                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                                    {playlists.map((playlist, index) => (
                                         <div
                                             className="swiper-slide"
                                             style={{
-                                                backgroundImage: `url(https://unsplash.it/1920/500?image=1${i})`,
+                                                backgroundImage: `url(https://unsplash.it/1920/500?image=${index + 1})`,
                                             }}
-                                            data-year={`201${i}`}
-                                            key={i}
+                                            data-year={`Playlist ${playlists.length - index}:`}
+                                            key={index}
                                         >
                                             <div className="swiper-slide-content">
                                                 <span className="timeline-year">
-                                                    201{i}
+                                                    Playlist #
+                                                    {playlists.length - index}:
                                                 </span>
-                                                <h4 className="timeline-title">
-                                                    Your Playlist
-                                                </h4>
-                                                <p className="timeline-text">
-                                                    text text.
-                                                </p>
+                                                <button
+                                                    onClick={() =>
+                                                        window.open(playlist)
+                                                    }
+                                                >
+                                                    Open in Spotify
+                                                </button>
                                             </div>
                                         </div>
                                     ))}
