@@ -15,7 +15,6 @@
     "dependencies": {
         "concurrently": "^8.2.2",
         "eslint-config-prettier": "^9.1.0",
-<<<<<<< Updated upstream
         "prettier": "^3.3.2"
     }
 }
