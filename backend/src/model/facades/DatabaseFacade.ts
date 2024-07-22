@@ -91,7 +91,14 @@ class DatabaseFacade {
      * @throws error if user doesn't have required database fields
      */
     async addUser(user: User): Promise<User> {
-        if (!(user.refreshToken && user.accessToken && user.email && user.spotifyID)) {
+        if (
+            !(
+                user.refreshToken &&
+                user.accessToken &&
+                user.email &&
+                user.spotifyID
+            )
+        ) {
             throw new Error(
                 "User must have required fields to be added to the database."
             );
@@ -131,8 +138,8 @@ class DatabaseFacade {
         }
         // Update the user
         const updatedUser = await this.UserModel.findByIdAndUpdate(
-            user._id, 
-            user, 
+            user._id,
+            user,
             { new: true, runValidators: true } // Return the updated document and run schema validations
         ).lean();
 
