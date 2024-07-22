@@ -59,8 +59,14 @@ const Vault = () => {
             };
 
             // Add event listeners to disable scroll events
-            document.querySelector(".timeline .swiper-container").addEventListener('wheel', preventDefault, { passive: false });
-            document.querySelector(".timeline .swiper-container").addEventListener('touchmove', preventDefault, { passive: false });
+            document
+                .querySelector(".timeline .swiper-container")
+                .addEventListener("wheel", preventDefault, { passive: false });
+            document
+                .querySelector(".timeline .swiper-container")
+                .addEventListener("touchmove", preventDefault, {
+                    passive: false,
+                });
         }
     }, [isContentVisible]);
 
@@ -115,10 +121,13 @@ const Vault = () => {
                                         >
                                             <div className="swiper-slide-content">
                                                 <span className="timeline-year">
-                                                    Playlist #{playlists.length - index}:
+                                                    Playlist #
+                                                    {playlists.length - index}:
                                                 </span>
                                                 <button
-                                                    onClick={() => window.open(playlist)}
+                                                    onClick={() =>
+                                                        window.open(playlist)
+                                                    }
                                                 >
                                                     Open in Spotify
                                                 </button>
