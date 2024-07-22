@@ -33,6 +33,13 @@ class Receiver {
                 let user: User = await this.model.generatePlaylist(
                     req.query._id
                 );
+                if (
+                    req.query.notifs &&
+                    typeof req.query.notifs !== "boolean" &&
+                    req.query.notifs == "true"
+                ) {
+                    this.model.sendWelcomeEmail(user);
+                }
                 user = this.removeTokens(user);
                 res.json(user);
             }

@@ -1,6 +1,7 @@
 import User from "./User.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
+import nodemailer from "nodemailer";
 
 /**
  * The Model class is responsible for
@@ -8,6 +9,15 @@ import SpotifyFacade from "./facades/SpotifyFacade.js";
 class Model {
     private db: DatabaseFacade;
     private spotify: SpotifyFacade;
+    private readonly emailer = nodemailer.createTransport({
+        host: 'live.smtp.mailtrap.io',
+        port: 587,
+        secure: false, // use SSL
+        auth: {
+            user: '1a2b3c4d5e6f7g',
+            pass: '1a2b3c4d5e6f7g',
+        }
+    });
 
     constructor() {
         this.db = new DatabaseFacade();
@@ -49,6 +59,27 @@ class Model {
         user = await this.spotify.generatePlaylist(user);
         this.db.updateUser(user);
         return user;
+    }
+
+    /**
+     * @param user the user to email
+     * @effects sends a welcome email to the provided user's email.
+     */
+    async sendWelcomeEmail(user: User): Promise<void> {
+        if (!user.email) throw new Error("User must have email");
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: user.email,
+            subject: "Welcome to Vaultify!",
+            text: "Congratulations on creating your first playlist with Vaultify!\n\tWe'll be keeping touch every month with a brand new playlist for you to enjoy!\n\nSincerely,\nThe Vaultify Team :)",
+        };
+        // Send mail with defined transport object
+        this.emailer.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error(`Error: ${error}`);
+                return;
+            }
+        });
     }
 }
 

@@ -57,6 +57,7 @@ const PlaylistGeneration = () => {
                 {
                     params: {
                         _id: JSON.parse(localStorage.getItem("profile"))._id,
+                        notifs: emailNotifications,
                     },
                 }
             );
