@@ -10,6 +10,7 @@ import Welcome from "./pages/Welcome";
 import Login from "./misc/Login";
 import Layout from "./misc/Layout";
 import PlaylistGenerator from "./pages/PlaylistGenerator";
+import PlaylistSuccess from "./pages/PlaylistSuccess";
 import Vault from "./pages/Vault";
 import AboutUs from "./pages/AboutUs";
 import Home from "./pages/Home";
@@ -42,6 +43,14 @@ const AppRoutes = () => {
                     element={
                         <ProtectedRoute>
                             <PlaylistGenerator />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="playlist-success"
+                    element={
+                        <ProtectedRoute>
+                            <PlaylistSuccess />
                         </ProtectedRoute>
                     }
                 />
