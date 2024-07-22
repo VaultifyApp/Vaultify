@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
-import dillon from "../assets/dillon.png";
-/*import { client_id, client_secret } from "../misc/getAccessToken";*/
 
 const Vault = () => {
     const navigate = useNavigate();
@@ -37,9 +35,9 @@ const Vault = () => {
             const timelineSwiper = new Swiper(".timeline .swiper-container", {
                 direction: "vertical", // Ensure vertical direction
                 loop: false,
-                speed: 1600,
+                speed: 700,
                 allowTouchMove: false, // Disable touch interactions
-                mousewheel: false, // Disable mousewheel interactions
+                mousewheel: true, // Disable mousewheel interactions
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
@@ -112,19 +110,18 @@ const Vault = () => {
                                             style={{
                                                 backgroundImage: `url(https://unsplash.it/1920/500?image=${index + 1})`,
                                             }}
-                                            data-year={`202${index}`}
+                                            data-year={`Playlist ${playlists.length - index}:`}
                                             key={index}
                                         >
                                             <div className="swiper-slide-content">
                                                 <span className="timeline-year">
-                                                    202{index}
+                                                    Playlist #{playlists.length - index}:
                                                 </span>
-                                                <h4 className="timeline-title">
-                                                    Playlist
-                                                </h4>
-                                                <p className="timeline-text">
-                                                    <a href={playlist} target="_blank" rel="noopener noreferrer">{playlist}</a>
-                                                </p>
+                                                <button
+                                                    onClick={() => window.navigate(playlist)}
+                                                >
+                                                    Open in Spotify
+                                                </button>
                                             </div>
                                         </div>
                                     ))}
