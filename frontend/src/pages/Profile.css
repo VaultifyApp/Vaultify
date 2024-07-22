@@ -120,10 +120,15 @@
 }
 
 .favorite-playlists,
+.achievements {
+    margin-top: 20px;
+    width: 51%;
+}
+
 .favorite-notes,
 .achievements {
     margin-top: 20px;
-    width: 48%;
+    width: 41%;
 }
 
 .playlists,
@@ -162,6 +167,15 @@
 .achievement p {
     margin-top: 5px;
     font-size: 14px;
+}
+
+.playlist-link {
+    color: white;
+    text-decoration: underline;
+}
+
+.playlist-link:hover {
+    color: #888888;
 }
 
 .achievements {

@@ -1,75 +1,90 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const axios = require("axios");
 const qs = require("qs");
 const { Buffer } = require("buffer");
 
+// Load environment variables from a .env file
+require("dotenv").config();
+
+const profileRoutes = require("./routes/profile");
+
 const app = express();
-const port = process.env.PORT || 3000;
 
-const client_id = "18b9ce009b314b9eb359758d436b7b2b";
-const client_secret = "fce85db5774a4140b97d2d939cbafa86";
-const redirect_uri = "http://localhost:3000/callback"; // Ensure this matches your redirect URI
+// Middleware
+app.use(bodyParser.json());
+app.use(cors());
 
-// Step 1: Redirect user to Spotify's authorization page
+// Connect to MongoDB
+mongoose
+    .connect(DATABASE_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+
+// Spotify authentication routes
 app.get("/login", (req, res) => {
     const scope = "user-read-private user-read-email";
-    const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirect_uri)}`;
+    const authUrl =
+        "https://accounts.spotify.com/authorize?" +
+        qs.stringify({
+            response_type: "code",
+            client_id: CLIENT_ID,
+            scope: scope,
+            redirect_uri: REDIRECT_URI,
+        });
+
     res.redirect(authUrl);
 });
 
-// Step 2: Handle callback and exchange code for tokens
-app.get("/callback", async (req, res) => {
+app.get("/spotify-callback", async (req, res) => {
     const code = req.query.code || null;
-    const tokenUrl = "https://accounts.spotify.com/api/token";
-    const data = qs.stringify({
-        grant_type: "authorization_code",
-        code: code,
-        redirect_uri: redirect_uri,
-    });
-    const headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString("base64")}`,
+    const authOptions = {
+        url: "https://accounts.spotify.com/api/token",
+        form: {
+            code: code,
+            redirect_uri: REDIRECT_URI,
+            grant_type: "authorization_code",
+        },
+        headers: {
+            Authorization:
+                "Basic " +
+                Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString("base64"),
+        },
+        json: true,
     };
 
     try {
-        const response = await axios.post(tokenUrl, data, { headers });
-        const { access_token, refresh_token } = response.data;
-        console.log("Access Token:", access_token);
-        console.log("Refresh Token:", refresh_token);
+        const response = await axios.post(
+            authOptions.url,
+            qs.stringify(authOptions.form),
+            {
+                headers: authOptions.headers,
+            }
+        );
 
-        // Store tokens securely and redirect user to your app's main page
+        const accessToken = response.data.access_token;
+        const refreshToken = response.data.refresh_token;
+
+        // Store tokens in the user's profile in the database here
+
         res.redirect(
-            `http://localhost:3000?access_token=${access_token}&refresh_token=${refresh_token}`
+            `${CLIENT_URI}/?access_token=${accessToken}&refresh_token=${refreshToken}`
         );
     } catch (error) {
-        console.error("Error getting tokens", error);
-        res.send("Error getting tokens");
+        console.error("Error during Spotify callback:", error);
+        res.redirect(CLIENT_URI);
     }
 });
 
-// Endpoint to refresh access token
-app.get("/refresh_token", async (req, res) => {
-    const refreshToken = req.query.refresh_token;
-    const tokenUrl = "https://accounts.spotify.com/api/token";
-    const data = qs.stringify({
-        grant_type: "refresh_token",
-        refresh_token: refreshToken,
-    });
-    const headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString("base64")}`,
-    };
+// Import and use routes
+app.use("/api/profile", profileRoutes);
 
-    try {
-        const response = await axios.post(tokenUrl, data, { headers });
-        const { access_token } = response.data;
-        res.json({ access_token });
-    } catch (error) {
-        console.error("Error refreshing access token", error);
-        res.send("Error refreshing access token");
-    }
-});
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+// Start the server
+app.listen(SERVER_PORT, () => {
+    console.log(`Server running on port ${SERVER_PORT}`);
 });
