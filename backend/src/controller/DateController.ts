@@ -1,5 +1,4 @@
-import Model from "../models/Model.js";
-import generatePlaylist from "../models/Model.js";
+import Model from "../model/Model.js";
 import cron from "node-cron";
 
 /**
@@ -14,6 +13,7 @@ class DateController {
     }
 
     private monthlyGenerate() {
+        /*
         // Schedule the function to run at 23:59 on the last day of each month
         cron.schedule(
             "59 23 28-31 * *",
@@ -41,6 +41,7 @@ class DateController {
                 timezone: "America/New_York",
             }
         );
+        */
     }
 }
 

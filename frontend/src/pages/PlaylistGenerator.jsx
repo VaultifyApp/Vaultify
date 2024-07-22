@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
-    const [playlist, setPlaylist] = useState([]);
+    const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
@@ -49,7 +49,36 @@ const PlaylistGeneration = () => {
     };
 
     const generatePlaylist = async () => {
-        navigate("/playlist-success"); // Navigate to PlaylistSuccess page
+        setLoading(true);
+        setError("");
+        try {
+            const response = await axios.get(
+                "http://localhost:3001/generate-playlist",
+                {
+                    params: {
+                        _id: JSON.parse(localStorage.getItem("profile"))._id,
+                    },
+                }
+            );
+            setPlaylist(
+                response.data.playlists[response.data.playlists.length - 1]
+            );
+            localStorage.setItem("profile", JSON.stringify(response.data));
+            navigate("/playlist-success");
+        } catch (error) {
+            setError("Error generating playlist");
+            console.error(
+                "Error fetching playlist data from Spotify API",
+                error
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGenerate = () => {
+        onGenerate();
+        navigate("/playlist-success");
     };
 
     return (

@@ -16,7 +16,7 @@ const PlaylistSuccess = () => {
                 profile.playlists[profile.playlists.length - 1];
 
             // Navigate to the playlist link
-            navigate(playlistLink);
+            window.open(playlistLink);
         } else {
             alert("No playlist link found in the profile.");
         }
