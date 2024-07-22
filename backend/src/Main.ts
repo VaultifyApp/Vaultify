@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../../.env" });
 
 import Model from "./model/Model.js";
-import WebController from "./controller/WebController.js";
-import DateController from "./controller/DateController.js";
+import Receiver from "./controller/Receiver.js";
+import Automator from "./controller/Automator.js";
 
 /**
  * The Main class is responible for starting the server and constructing objects
@@ -35,8 +35,8 @@ class Main {
         app.use(express.json());
 
         let model: Model = new Model();
-        let web: WebController = new WebController(app, model);
-        let date: DateController = new DateController(app, model);
+        let web: Receiver = new Receiver(app, model);
+        let date: Automator = new Automator(app, model);
 
         app.listen(port, () => {
             console.log(`Server is running on port: ${port}`);

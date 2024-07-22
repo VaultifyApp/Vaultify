@@ -18,7 +18,6 @@ interface User {
             width: number;
         },
     ];
-    spotifyID?: string;
 }
 
 export default User;

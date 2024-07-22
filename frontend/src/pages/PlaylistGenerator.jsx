@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PlaylistGenerator.css";
 
 const PlaylistGeneration = () => {
-    const [playlist, setPlaylist] = useState([]);
+    const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
@@ -15,21 +16,35 @@ const PlaylistGeneration = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState("");
 
+    const navigate = useNavigate(); // Initialize useNavigate
+
     const maxSongs = 250;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
 
     const handleCustomLengthSubmit = () => {
         const lengthValue = parseInt(customLength, 10);
-        if (lengthType === "songs" && (!isNaN(lengthValue) && lengthValue > 0 && lengthValue <= maxSongs)) {
+        if (
+            lengthType === "songs" &&
+            !isNaN(lengthValue) &&
+            lengthValue > 0 &&
+            lengthValue <= maxSongs
+        ) {
             setLength(lengthValue);
             setIsModalOpen(false);
             setCustomLength("");
-        } else if (lengthType === "time" && (!isNaN(lengthValue) && lengthValue > 0 && lengthValue <= maxTimeInHours)) {
+        } else if (
+            lengthType === "time" &&
+            !isNaN(lengthValue) &&
+            lengthValue > 0 &&
+            lengthValue <= maxTimeInHours
+        ) {
             setLength(lengthValue * 60); // Convert hours to minutes
             setIsModalOpen(false);
             setCustomLength("");
         } else {
-            alert(`Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`);
+            alert(
+                `Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`
+            );
         }
     };
 
@@ -37,33 +52,42 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            const token = "BQBcSaFkjvxu8-cAJ7x3b2kbDK8OOuwJ71X1QotvRD3-9xUE1fLFc_mvoLBPsxi4Zp2jmiFgbO3LBi1tDr0dU2I9dpoBol4ZYUIz79nY1eNQhpPU_eo";
             const response = await axios.get(
-                "https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
+                "http://localhost:3001/generate-playlist",
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
                     params: {
-                        limit: lengthType === "songs" ? length : Math.ceil(length / 3), // Approximate 3 minutes per song
+                        _id: JSON.parse(localStorage.getItem("profile"))._id,
                     },
                 }
             );
-
-            setPlaylist(response.data.items);
+            setPlaylist(
+                response.data.playlists[response.data.playlists.length - 1]
+            );
+            localStorage.setItem("profile", JSON.stringify(response.data));
+            navigate("/playlist-success");
         } catch (error) {
             setError("Error generating playlist");
-            console.error("Error fetching playlist data from Spotify API", error);
+            console.error(
+                "Error fetching playlist data from Spotify API",
+                error
+            );
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleGenerate = () => {
+        onGenerate();
+        navigate("/playlist-success");
     };
 
     return (
         <div id="playlist-container">
             <div className="playlist-content">
                 <h1 className="playlist-title">Vaultify Playlist Generator</h1>
-                <h2 className="playlist-subtitle">Discover Your Next Favorite Songs</h2>
+                <h2 className="playlist-subtitle">
+                    Discover Your Next Favorite Songs
+                </h2>
 
                 <div className="form-group">
                     <label>Length Type:</label>
@@ -101,9 +125,15 @@ const PlaylistGeneration = () => {
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className={typeof length === "number" && length > 50 ? "selected" : ""}
+                                className={
+                                    typeof length === "number" && length > 50
+                                        ? "selected"
+                                        : ""
+                                }
                             >
-                                {typeof length === "number" && length > 50 ? `${length} songs` : "Custom"}
+                                {typeof length === "number" && length > 50
+                                    ? `Custom`
+                                    : "Custom"}
                             </button>
                         </div>
                     </div>
@@ -125,9 +155,15 @@ const PlaylistGeneration = () => {
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className={typeof length === "number" && length > 180 ? "selected" : ""}
+                                className={
+                                    typeof length === "number" && length > 180
+                                        ? "selected"
+                                        : ""
+                                }
                             >
-                                {typeof length === "number" && length > 180 ? `${length / 60} hours` : "Custom"}
+                                {typeof length === "number" && length > 180
+                                    ? `Custom`
+                                    : "Custom"}
                             </button>
                         </div>
                     </div>
@@ -170,13 +206,19 @@ const PlaylistGeneration = () => {
                         <input
                             type="checkbox"
                             checked={emailNotifications}
-                            onChange={(e) => setEmailNotifications(e.target.checked)}
+                            onChange={(e) =>
+                                setEmailNotifications(e.target.checked)
+                            }
                         />
                         Turn on email notifications
                     </label>
                 </div>
 
-                <button className="playlist-button" onClick={generatePlaylist} disabled={loading}>
+                <button
+                    className="playlist-button"
+                    onClick={generatePlaylist}
+                    disabled={loading}
+                >
                     {loading ? "Generating..." : "Generate"}
                 </button>
 
@@ -184,7 +226,9 @@ const PlaylistGeneration = () => {
 
                 {playlist.length > 0 && (
                     <div className="playlist">
-                        <h3 className="playlist-section-title">Your Custom Playlist:</h3>
+                        <h3 className="playlist-section-title">
+                            Your Custom Playlist:
+                        </h3>
                         <ul>
                             {playlist.map((track) => (
                                 <li key={track.track.id}>
@@ -194,7 +238,9 @@ const PlaylistGeneration = () => {
                                         width="50"
                                     />
                                     {track.track.name} by{" "}
-                                    {track.track.artists.map((artist) => artist.name).join(", ")}
+                                    {track.track.artists
+                                        .map((artist) => artist.name)
+                                        .join(", ")}
                                 </li>
                             ))}
                         </ul>
@@ -202,8 +248,9 @@ const PlaylistGeneration = () => {
                 )}
 
                 <p className="playlist-text">
-                    Vaultify generates personalized playlists for you based on your listening habits. 
-                    Click the button above to generate a new playlist and enjoy a fresh musical journey!
+                    Vaultify generates personalized playlists for you based on
+                    your listening habits. Click the button above to generate a
+                    new playlist and enjoy a fresh musical journey!
                 </p>
 
                 {isModalOpen && (
@@ -213,13 +260,19 @@ const PlaylistGeneration = () => {
                             <input
                                 type="number"
                                 value={customLength}
-                                onChange={(e) => setCustomLength(e.target.value)}
+                                onChange={(e) =>
+                                    setCustomLength(e.target.value)
+                                }
                                 placeholder={`Enter number of ${lengthType === "songs" ? "songs (1-250)" : `hours (1-${maxTimeInHours})`}`}
                                 min="1"
                                 max={lengthType === "songs" ? "250" : ""}
                             />
-                            <button onClick={handleCustomLengthSubmit}>Submit</button>
-                            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+                            <button onClick={handleCustomLengthSubmit}>
+                                Submit
+                            </button>
+                            <button onClick={() => setIsModalOpen(false)}>
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 )}
