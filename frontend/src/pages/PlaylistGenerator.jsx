@@ -170,7 +170,7 @@ const PlaylistGeneration = () => {
                 )}
 
                 <div className="form-group">
-                    <label>Cover Theme:</label>
+                    <label>Cover Theme:&nbsp;</label>
                     <select
                         value={coverTheme}
                         onChange={(e) => setCoverTheme(e.target.value)}
@@ -189,7 +189,7 @@ const PlaylistGeneration = () => {
                             checked={newSongsOnly}
                             onChange={(e) => setNewSongsOnly(e.target.checked)}
                         />
-                        New songs only
+                        New to me only
                     </label>
                 </div>
 
