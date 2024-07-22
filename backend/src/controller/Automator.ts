@@ -1,4 +1,5 @@
 import { Express } from "express";
+import schedule from "node-schedule";
 
 import Model from "../model/Model.js";
 
@@ -12,6 +13,14 @@ class Automator {
     constructor(app: Express, model: Model) {
         this.app = app;
         this.model = model;
+        this.monthlyGenerate();
+    }
+
+    private monthlyGenerate() {
+        schedule.scheduleJob("00 12 01 * *", async () => {
+            console.log("Generating Playlists...");
+            await this.model.monthlyGenerate();
+        });
     }
 }
 
