@@ -30,16 +30,12 @@ class Receiver {
                 ) {
                     throw new Error("Must have ID to generate playlist");
                 }
-                let user: User = await this.model.generatePlaylist(
-                    req.query._id
-                );
-                if (
-                    req.query.notifs &&
-                    typeof req.query.notifs !== "boolean" &&
-                    req.query.notifs == "true"
-                ) {
-                    this.model.sendWelcomeEmail(user);
+                if (typeof req.query.notifs != 'string') {
+                    throw new Error("Query must have notifs param")
                 }
+                let user: User = await this.model.configGeneration(
+                    req.query._id, req.query.notifs
+                );
                 user = this.removeTokens(user);
                 res.json(user);
             }
@@ -53,6 +49,7 @@ class Receiver {
      */
     private removeTokens(user: User) {
         const {
+            notifs,
             spotifyID,
             href,
             uri,

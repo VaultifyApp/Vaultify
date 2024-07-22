@@ -81,6 +81,10 @@ class DatabaseFacade {
                     type: String,
                     required: true,
                 },
+                notifs: {
+                    type: Boolean,
+                    default: false,
+                },
             })
         );
     }
@@ -130,7 +134,7 @@ class DatabaseFacade {
     }
 
     /**
-     *
+     * @effects updates the user in the database
      */
     async updateUser(user: User): Promise<User> {
         if (!user._id) {
@@ -148,6 +152,14 @@ class DatabaseFacade {
         }
 
         return updatedUser;
+    }
+
+    /**
+     * @returns all users opted in for notifs
+     */
+    async getOptedInUsers(): Promise<[User]> {
+        let users: [User] = await this.UserModel.find({ notifs: true }).lean();
+        return users;
     }
 }
 

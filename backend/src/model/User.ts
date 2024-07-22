@@ -19,6 +19,7 @@ interface User {
         },
     ];
     spotifyID?: string;
+    notifs?: boolean;
 }
 
 export default User;
