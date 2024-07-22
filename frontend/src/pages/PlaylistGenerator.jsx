@@ -81,25 +81,34 @@ const PlaylistGeneration = () => {
         navigate("/playlist-success");
     };
 
+    const handleLengthTypeChange = (type) => {
+        setLengthType(type);
+        if (type === "time") {
+            setLength(60); // Automatically set to 1 hour
+        } else {
+            setLength(25); // Default to 25 songs
+        }
+    };
+
     return (
         <div id="playlist-container">
             <div className="playlist-content">
-                <h1 className="playlist-title">Vaultify Playlist Generator</h1>
+                <h1 className="playlist-title">Playlist Generator</h1>
                 <h2 className="playlist-subtitle">
-                    Discover Your Next Favorite Songs
+                    Discover your next favorite songs.
                 </h2>
 
                 <div className="form-group">
                     <label>Length Type:</label>
                     <div className="length-type-options">
                         <button
-                            onClick={() => setLengthType("songs")}
+                            onClick={() => handleLengthTypeChange("songs")}
                             className={lengthType === "songs" ? "selected" : ""}
                         >
                             Songs
                         </button>
                         <button
-                            onClick={() => setLengthType("time")}
+                            onClick={() => handleLengthTypeChange("time")}
                             className={lengthType === "time" ? "selected" : ""}
                         >
                             Time
@@ -176,9 +185,9 @@ const PlaylistGeneration = () => {
                         onChange={(e) => setCoverTheme(e.target.value)}
                     >
                         <option value="">Select one</option>
-                        <option value="theme1">Theme 1</option>
-                        <option value="theme2">Theme 2</option>
-                        <option value="theme3">Theme 3</option>
+                        <option value="theme1">Oil painting</option>
+                        <option value="theme2">Futuristic</option>
+                        <option value="theme3">Sky</option>
                     </select>
                 </div>
 

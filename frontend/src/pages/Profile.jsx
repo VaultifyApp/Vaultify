@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Profile.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
+import green3 from "../assets/green3.jpg";
+import defaultImage from "../assets/default.jpg";
 
 const Profile = () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
     const storedBio =
-        localStorage.getItem("bio") || "Hello world! I’m new to Vaultify.";
+        localStorage.getItem("bio") ||
+        profile.bio ||
+        "Hello world! I’m new to Vaultify.";
     const [bio, setBio] = useState(storedBio);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(storedBio);
 
-    const favoritePlaylists = [
-        {
-            title: "June 2024",
-            image: green1,
-        },
-        {
-            title: "May 2024",
-            image: green2,
-        },
-    ];
+    const truncate = (str, n) =>
+        str.length > n ? str.substr(0, n - 1) + "..." : str;
+
+    const favoritePlaylists = profile.playlists
+        .slice(-3)
+        .map((playlist, index) => ({
+            title: truncate(playlist, 15),
+            image: index === 0 ? green1 : index === 1 ? green2 : green3,
+            url: playlist,
+        }));
 
     const favoriteNotes = [
         "stooppp this song brings back so many memories!! it’s like i’m being transported back to late-night drives with friends ugh i love it",
@@ -80,12 +85,37 @@ const Profile = () => {
         setEditing(true);
     };
 
-    const handleSaveBio = () => {
-        const updatedBio = newBio.trim() || "Hello world! I’m new to Vaultify.";
+    const handleSaveBio = async () => {
+        const updatedBio = newBio.trim() || "Hello world!";
         setBio(updatedBio);
         localStorage.setItem("bio", updatedBio);
         setEditing(false);
+
+        try {
+            const response = await axios.put(
+                "http://localhost:3001/api/profile/update-bio",
+                {
+                    userId: profile._id,
+                    bio: updatedBio,
+                }
+            );
+
+            if (response.status === 200) {
+                localStorage.setItem(
+                    "profile",
+                    JSON.stringify({ ...profile, bio: updatedBio })
+                );
+            } else {
+                console.error("Failed to update bio:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error updating bio:", error);
+        }
     };
+
+    useEffect(() => {
+        console.log("Profile data:", profile);
+    }, [profile]);
 
     return (
         <div className="profile-container">
@@ -97,7 +127,10 @@ const Profile = () => {
                             <div className="profile-info">
                                 <div className="profile-pic">
                                     <img
-                                        src={profile.images[0]?.url}
+                                        src={
+                                            profile.images[0]?.url ||
+                                            defaultImage
+                                        }
                                         alt="Profile"
                                         width="150"
                                     />
@@ -105,10 +138,10 @@ const Profile = () => {
                                 <div className="profile-details">
                                     <div className="name-username">
                                         <h2 className="profile-name">
-                                            {profile.display_name}
+                                            {profile.username || "Unknown User"}
                                         </h2>
                                         <p className="profile-username">
-                                            @{profile.id}
+                                            @{profile.username || "unknown"}
                                         </p>
                                     </div>
                                     <p className="profile-counters">
@@ -162,7 +195,14 @@ const Profile = () => {
                                         alt={playlist.title}
                                         width="100"
                                     />
-                                    <p>{playlist.title}</p>
+                                    <a
+                                        className="playlist-link"
+                                        href={playlist.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {playlist.title}
+                                    </a>
                                 </div>
                             ))}
                         </div>
