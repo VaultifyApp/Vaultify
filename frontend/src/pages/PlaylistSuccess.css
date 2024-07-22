@@ -4,30 +4,17 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-<<<<<<< Updated upstream
-    background-color: #2e2e2e;
-=======
-    background-color: #1a1a1a; /* Match the background color */
->>>>>>> Stashed changes
 }
 
 .success-content {
     text-align: center;
     color: white;
-<<<<<<< Updated upstream
-    background: linear-gradient(to bottom, #434343, #000000);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-=======
-    background: #1a1a1a; /* Match the background color */
     padding: 40px;
     border-radius: 10px;
     box-shadow: none; /* Remove box shadow */
     max-width: 600px;
     width: 100%;
     box-sizing: border-box; /* Ensure padding does not affect width */
->>>>>>> Stashed changes
 }
 
 .success-icon {
