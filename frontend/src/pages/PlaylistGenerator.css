@@ -54,23 +54,28 @@ body {
     margin-bottom: 20px;
 }
 
-.length-type-options, .length-options {
+.length-type-options,
+.length-options {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
 }
 
-.length-type-options button, .length-options button {
+.length-type-options button,
+.length-options button {
     padding: 0.5rem 1rem;
     border: 2px solid #00d76a; /* Green border for unhighlighted bubbles */
     border-radius: 9999px; /* Make buttons round */
     background-color: #1a1a1a; /* Background */
     color: #00d76a; /* Green text */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.5s; /* Smooth transition for hover effect */
+    transition:
+        background-color 0.3s,
+        transform 0.5s; /* Smooth transition for hover effect */
 }
 
-.length-type-options button.selected, .length-options button.selected {
+.length-type-options button.selected,
+.length-options button.selected {
     background-color: #00d76a; /* Lighter green for selected state */
     color: white; /* White text for selected state */
 }

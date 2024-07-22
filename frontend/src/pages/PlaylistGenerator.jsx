@@ -171,7 +171,10 @@ const PlaylistGeneration = () => {
 
                 <div className="form-group">
                     <label>Cover Theme:&nbsp;</label>
-                    <select value={coverTheme} onChange={(e) => setCoverTheme(e.target.value)}>
+                    <select
+                        value={coverTheme}
+                        onChange={(e) => setCoverTheme(e.target.value)}
+                    >
                         <option value="">Select one</option>
                         <option value="theme1">Theme 1</option>
                         <option value="theme2">Theme 2</option>
