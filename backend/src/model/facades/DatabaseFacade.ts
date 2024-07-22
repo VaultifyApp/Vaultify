@@ -125,8 +125,22 @@ class DatabaseFacade {
     /**
      *
      */
-    async updateUser(user: User): Promise<User | null> {
-        throw new Error("Method not implemented");
+    async updateUser(user: User): Promise<User> {
+        if (!user._id) {
+            throw new Error("User must have an _id to be updated.");
+        }
+        // Update the user
+        const updatedUser = await this.UserModel.findByIdAndUpdate(
+            user._id, 
+            user, 
+            { new: true, runValidators: true } // Return the updated document and run schema validations
+        ).lean();
+
+        if (!updatedUser) {
+            throw new Error("User not found");
+        }
+
+        return updatedUser;
     }
 }
 
