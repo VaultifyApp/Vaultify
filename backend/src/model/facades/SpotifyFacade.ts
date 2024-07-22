@@ -233,25 +233,9 @@ class SpotifyFacade {
                 throw error;
             }
         }
-        let addResponse: AxiosResponse;
-        try {
-            addResponse = await axios.post(
-                `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
-                {
-                    uris: songs,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-        } catch (error) {
-            if (!isAxiosError(error) || error.response && error.response.status === 401) {
-                // Token expired, refresh token
-                user = await this.refreshToken(user);
-                // Retry the request with the new token
+        if (songs) {
+            let addResponse: AxiosResponse;
+            try {
                 addResponse = await axios.post(
                     `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
                     {
@@ -264,8 +248,26 @@ class SpotifyFacade {
                         },
                     }
                 );
-            } else {
-                throw error;
+            } catch (error) {
+                if (!isAxiosError(error) || error.response && error.response.status === 401) {
+                    // Token expired, refresh token
+                    user = await this.refreshToken(user);
+                    // Retry the request with the new token
+                    addResponse = await axios.post(
+                        `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
+                        {
+                            uris: songs,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${user.accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
+                } else {
+                    throw error;
+                }
             }
         }
         if (!user.playlists) {
