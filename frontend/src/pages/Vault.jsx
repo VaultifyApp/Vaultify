@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
-<<<<<<< HEAD
 import "swiper/swiper-bundle.css";
 import dillon from "../assets/dillon.png";
 /*import { client_id, client_secret } from "../misc/getAccessToken";*/
-=======
->>>>>>> ae3a87f8fd7aa72eb5faf4485505ea2065bb7d3c
 
 const Vault = () => {
     const navigate = useNavigate();
@@ -134,14 +131,6 @@ const Vault = () => {
                                                     Playlist #
                                                     {playlists.length - index}:
                                                 </span>
-<<<<<<< HEAD
-                                                <h4 className="timeline-title">
-                                                    Playlist
-                                                </h4>
-                                                <p className="timeline-text">
-                                                    <button onClick={() => openPlaylist(playlist)}>Open Playlist</button>
-                                                </p>
-=======
                                                 <button
                                                     onClick={() =>
                                                         window.open(playlist)
@@ -149,7 +138,6 @@ const Vault = () => {
                                                 >
                                                     Open in Spotify
                                                 </button>
->>>>>>> ae3a87f8fd7aa72eb5faf4485505ea2065bb7d3c
                                             </div>
                                         </div>
                                     ))}
