@@ -24,7 +24,6 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #1a1a1a; /* Ensure background color is consistent */
     border: none; /* Remove any borders */
 }
 
@@ -97,8 +96,10 @@ button:hover {
 
 select {
     padding: 10px;
-    background-color: #000000; /* Changed to match the background */
-    color: #00d76a; /* Changed to green text */
+    background-color: #1a1a1a;
+    color: #00d76a;
+    border: 2px solid #00d76a;
+    border-radius: 9999px;
 }
 
 .error {
