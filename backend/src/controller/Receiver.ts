@@ -30,11 +30,12 @@ class Receiver {
                 ) {
                     throw new Error("Must have ID to generate playlist");
                 }
-                if (typeof req.query.notifs != 'string') {
-                    throw new Error("Query must have notifs param")
+                if (typeof req.query.notifs != "string") {
+                    throw new Error("Query must have notifs param");
                 }
                 let user: User = await this.model.configGeneration(
-                    req.query._id, req.query.notifs
+                    req.query._id,
+                    req.query.notifs
                 );
                 user = this.removeTokens(user);
                 res.json(user);
