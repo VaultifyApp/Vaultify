@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import User from "../User.js";
+import { stringify } from "querystring";
 
 /**
  * The database facade is responsible for retrieving information from and updating the database.
@@ -76,6 +77,10 @@ class DatabaseFacade {
                     required: false,
                     default: "",
                 },
+                spotifyID: {
+                    type: String,
+                    required: true,
+                },
             })
         );
     }
@@ -86,7 +91,14 @@ class DatabaseFacade {
      * @throws error if user doesn't have required database fields
      */
     async addUser(user: User): Promise<User> {
-        if (!(user.refreshToken && user.accessToken && user.email)) {
+        if (
+            !(
+                user.refreshToken &&
+                user.accessToken &&
+                user.email &&
+                user.spotifyID
+            )
+        ) {
             throw new Error(
                 "User must have required fields to be added to the database."
             );
@@ -120,8 +132,22 @@ class DatabaseFacade {
     /**
      *
      */
-    async updateUser(user: User): Promise<User | null> {
-        throw new Error("Method not implemented");
+    async updateUser(user: User): Promise<User> {
+        if (!user._id) {
+            throw new Error("User must have an _id to be updated.");
+        }
+        // Update the user
+        const updatedUser = await this.UserModel.findByIdAndUpdate(
+            user._id,
+            user,
+            { new: true, runValidators: true } // Return the updated document and run schema validations
+        ).lean();
+
+        if (!updatedUser) {
+            throw new Error("User not found");
+        }
+
+        return updatedUser;
     }
 }
 

@@ -1,0 +1,201 @@
+/* src/pages/PlaylistGenerator.css */
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a; /* Set the entire background to a darker color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: #1a1a1a; /* Ensure background color is consistent */
+}
+
+#playlist-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: none; /* Remove any borders */
+}
+
+.playlist-content {
+    text-align: center;
+    color: white;
+    background-color: #1a1a1a; /* Match the background color */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: none; /* Remove box shadow */
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding does not affect width */
+    border: none; /* Remove any borders */
+}
+
+.playlist-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.playlist-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.length-type-options,
+.length-options {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.length-type-options button,
+.length-options button {
+    padding: 0.5rem 1rem;
+    border: 2px solid #00d76a; /* Green border for unhighlighted bubbles */
+    border-radius: 9999px; /* Make buttons round */
+    background-color: #1a1a1a; /* Background */
+    color: #00d76a; /* Green text */
+    cursor: pointer;
+    transition:
+        background-color 0.3s,
+        transform 0.5s; /* Smooth transition for hover effect */
+}
+
+.length-type-options button.selected,
+.length-options button.selected {
+    background-color: #00d76a; /* Lighter green for selected state */
+    color: white; /* White text for selected state */
+}
+
+button,
+input[type="checkbox"],
+select {
+    background-color: #00d76a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button.selected {
+    background-color: #00d76a;
+}
+
+button:hover {
+    background-color: #16a34a;
+}
+
+select {
+    padding: 10px;
+    background-color: #1a1a1a;
+    color: #00d76a;
+    border: 2px solid #00d76a;
+    border-radius: 9999px;
+}
+
+.error {
+    color: red;
+    margin-top: 20px;
+}
+
+.playlist {
+    margin-top: 20px;
+}
+
+.playlist-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.playlist-text {
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+button {
+    background-color: #00d76a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #16a34a;
+}
+
+.success-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+    border: none; /* Remove any borders */
+}
+
+.success-content {
+    text-align: center;
+    color: white;
+    background: #1a1a1a; /* Ensure background color is consistent */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: none; /* Remove box shadow */
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: #00d76a;
+    margin: 20px 0;
+}
+
+.success-link {
+    background-color: #00d76a;
+    color: white;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.success-link:hover {
+    background-color: #16a34a;
+}

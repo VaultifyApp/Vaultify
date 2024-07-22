@@ -17,13 +17,5 @@
         "eslint-config-prettier": "^9.1.0",
 <<<<<<< Updated upstream
         "prettier": "^3.3.2"
-=======
-        "prettier": "^3.3.2",
-        "swiper": "^11.1.5"
-    },
-    "devDependencies": {
-        "@types/node-cron": "^3.0.11",
-        "typescript": "^5.5.3"
->>>>>>> Stashed changes
     }
 }
