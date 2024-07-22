@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: transparent;
 }
 
 .success-content {
@@ -15,6 +16,7 @@
     max-width: 600px;
     width: 100%;
     box-sizing: border-box; /* Ensure padding does not affect width */
+    background-color: transparent; /* Ensure background is transparent */
 }
 
 .success-icon {

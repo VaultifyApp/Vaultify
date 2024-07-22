@@ -15,6 +15,11 @@
     "dependencies": {
         "concurrently": "^8.2.2",
         "eslint-config-prettier": "^9.1.0",
-        "prettier": "^3.3.2"
+        "node-cron": "^3.0.3",
+        "prettier": "^3.3.2",
+        "swiper": "^11.1.5"
+    },
+    "devDependencies": {
+        "@types/node-cron": "^3.0.11"
     }
 }
