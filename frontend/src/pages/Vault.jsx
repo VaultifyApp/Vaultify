@@ -118,7 +118,7 @@ const Vault = () => {
                                                     Playlist #{playlists.length - index}:
                                                 </span>
                                                 <button
-                                                    onClick={() => window.navigate(playlist)}
+                                                    onClick={() => window.open(playlist)}
                                                 >
                                                     Open in Spotify
                                                 </button>
