@@ -97,7 +97,7 @@ class DatabaseFacade {
             );
         }
         const existingUser = await this.UserModel.findOne({
-            _id: user._id,
+            email: user.email,
         });
         if (!existingUser) {
             const added = await new this.UserModel(user).save();

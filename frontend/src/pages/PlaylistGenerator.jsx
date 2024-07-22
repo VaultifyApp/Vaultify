@@ -50,7 +50,15 @@ const PlaylistGeneration = () => {
         setLoading(true);
         setError("");
         try {
-            throw new Error("Bleh");
+            const response = await axios.get(
+                'http://localhost:3001/generate-playlist',
+                {
+                    params: {
+                        _id: JSON.parse(localStorage.getItem('profile'))._id,
+                    }
+                }
+            );
+            localStorage.setItem("profile",JSON.stringify(response.data));
         } catch (error) {
             setError("Error generating playlist");
             console.error(

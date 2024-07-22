@@ -20,6 +20,18 @@ class Receiver {
     // handles HTTP requests
     private async readClient(): Promise<void> {
         this.handleLogin();
+        this.app.get("/generate-playlist", async (req: Request, res: Response) => {
+            if (
+                !req.query._id ||
+                typeof req.query._id !== "string" ||
+                req.query._id == "undefined"
+            ) {
+                throw new Error("Must have ID to generate playlist");
+            }
+            let user: User = await this.model.generatePlaylist(req.query._id);
+            user = this.removeTokens(user);
+            res.json(user);
+        });
     }
 
     /**
@@ -49,7 +61,7 @@ class Receiver {
                     client_id: process.env.CLIENT_ID,
                     response_type: "code",
                     redirect_uri: process.env.REDIRECT_URI,
-                    scope: "user-read-private user-read-email playlist-modify-public playlist-modify-public user-top-read",
+                    scope: "user-read-private user-read-email playlist-modify-public playlist-modify-private user-top-read",
                 });
                 // redirects to OAuth
                 res.redirect(
