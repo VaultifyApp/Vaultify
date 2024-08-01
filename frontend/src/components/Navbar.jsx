@@ -4,6 +4,9 @@ import "./Navbar.css";
 import logo from "../assets/logo.png";
 import settingsIcon from "../assets/settings.png";
 
+/**
+ * navigation bar that links to each page
+ */
 const Navbar = () => {
     return (
         <div className="navbar">

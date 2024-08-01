@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./Welcome.css";
 
+/**
+ * describes site and prompts users to log in
+ */
 const Welcome = () => {
     const navigate = useNavigate();
 

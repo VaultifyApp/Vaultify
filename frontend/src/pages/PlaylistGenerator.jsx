@@ -3,7 +3,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PlaylistGenerator.css";
 
-const PlaylistGeneration = () => {
+/**
+ * the playlist generator page provides users with the parameters to customize their monthly playlist
+ */
+const PlaylistGenerator = () => {
     const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -12,7 +15,6 @@ const PlaylistGeneration = () => {
     const [coverTheme, setCoverTheme] = useState("");
     const [newSongsOnly, setNewSongsOnly] = useState(true);
     const [monthly, setMonthly] = useState(true);
-    const [emailNotifications, setEmailNotifications] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState("");
 
@@ -21,6 +23,7 @@ const PlaylistGeneration = () => {
     const maxSongs = 250;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
 
+    // verifies validity of custom length inputs
     const handleCustomLengthSubmit = () => {
         const lengthValue = parseInt(customLength, 10);
         if (
@@ -48,6 +51,7 @@ const PlaylistGeneration = () => {
         }
     };
 
+    // calls the server to generate a playlist for the user
     const generatePlaylist = async () => {
         setLoading(true);
         setError("");
@@ -57,7 +61,7 @@ const PlaylistGeneration = () => {
                 {
                     params: {
                         _id: JSON.parse(localStorage.getItem("profile"))._id,
-                        notifs: emailNotifications,
+                        monthly: monthly,
                     },
                 }
             );
@@ -77,11 +81,7 @@ const PlaylistGeneration = () => {
         }
     };
 
-    const handleGenerate = () => {
-        onGenerate();
-        navigate("/playlist-success");
-    };
-
+    // handles switching between time and num songs
     const handleLengthTypeChange = (type) => {
         setLengthType(type);
         if (type === "time") {
@@ -210,20 +210,7 @@ const PlaylistGeneration = () => {
                             checked={monthly}
                             onChange={(e) => setMonthly(e.target.checked)}
                         />
-                        Generate playlist monthly
-                    </label>
-                </div>
-
-                <div className="form-group">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={emailNotifications}
-                            onChange={(e) =>
-                                setEmailNotifications(e.target.checked)
-                            }
-                        />
-                        Turn on email notifications
+                        Monthly generation and notifications
                     </label>
                 </div>
 
@@ -237,33 +224,10 @@ const PlaylistGeneration = () => {
 
                 {error && <p className="error">{error}</p>}
 
-                {playlist.length > 0 && (
-                    <div className="playlist">
-                        <h3 className="playlist-section-title">
-                            Your Custom Playlist:
-                        </h3>
-                        <ul>
-                            {playlist.map((track) => (
-                                <li key={track.track.id}>
-                                    <img
-                                        src={track.track.album.images[0].url}
-                                        alt={track.track.name}
-                                        width="50"
-                                    />
-                                    {track.track.name} by{" "}
-                                    {track.track.artists
-                                        .map((artist) => artist.name)
-                                        .join(", ")}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
                 <p className="playlist-text">
                     Vaultify generates personalized playlists for you based on
                     your listening habits. Click the button above to generate a
-                    new playlist and enjoy a fresh musical journey!
+                    new playlist with your top songs!
                 </p>
 
                 {isModalOpen && (
@@ -294,4 +258,4 @@ const PlaylistGeneration = () => {
     );
 };
 
-export default PlaylistGeneration;
+export default PlaylistGenerator;

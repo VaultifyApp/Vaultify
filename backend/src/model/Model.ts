@@ -13,6 +13,9 @@ class Model {
         apiKey: process.env.MAILER_KEY || "",
     });
 
+    /**
+     * @effects constructs facades
+     */
     constructor() {
         this.db = new DatabaseFacade();
         this.spotify = new SpotifyFacade();
@@ -35,14 +38,6 @@ class Model {
         return await this.db.getUser(_id);
     }
 
-    async updateUser() {
-        // dont forget await blocks !!!
-        //let user: User = this.database.getUser();
-        //user = SpotifyFacade.updateProfile(user);
-        // send updated info to client
-        // store updated info to the database
-    }
-
     /**
      * @param _id the ID of the user to generate a playlist for
      * @returns an updated user with a newly generated playlist
@@ -55,7 +50,11 @@ class Model {
             user.notifs = true;
             this.sendWelcomeEmail(user);
             this.db.updateUser(user);
+        } else {
+            user.notifs = false;
+            this.db.updateUser(user);
         }
+
         return user;
     }
 

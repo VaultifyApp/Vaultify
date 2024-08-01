@@ -1,9 +1,12 @@
 // src/components/Layout.jsx
 import React from "react";
-import Navbar from "../components/Navbar";
-import ProfileIcon from "../components/ProfileIcon";
+import Navbar from "./Navbar";
+import ProfileIcon from "./ProfileIcon";
 import { Outlet } from "react-router-dom";
 
+/**
+ * layout used by pages
+ */
 const Layout = () => {
     return (
         <div>

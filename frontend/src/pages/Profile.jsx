@@ -6,6 +6,9 @@ import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
 import defaultImage from "../assets/default.jpg";
 
+/**
+ * displays profile information to the user
+ */
 const Profile = () => {
     const profile = JSON.parse(localStorage.getItem("profile"));
     const storedBio =

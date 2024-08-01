@@ -5,10 +5,10 @@ import {
     Route,
     Navigate,
 } from "react-router-dom";
-import { AuthProvider, AuthContext } from "./misc/AuthContext";
+import { AuthProvider, AuthContext } from "./utils/AuthContext";
 import Welcome from "./pages/Welcome";
-import Login from "./misc/Login";
-import Layout from "./misc/Layout";
+import Login from "./pages/Login";
+import Layout from "./components/Layout";
 import PlaylistGenerator from "./pages/PlaylistGenerator";
 import PlaylistSuccess from "./pages/PlaylistSuccess";
 import Vault from "./pages/Vault";
@@ -16,9 +16,12 @@ import AboutUs from "./pages/AboutUs";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import ProtectedRoute from "./misc/ProtectedRoute";
+import ProtectedRoute from "./utils/ProtectedRoute";
 import "./App.css";
 
+/**
+ * initializes routes for the application
+ */
 const AppRoutes = () => {
     const { isLoggedIn } = useContext(AuthContext);
 

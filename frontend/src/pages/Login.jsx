@@ -1,8 +1,11 @@
 // src/components/Login.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../utils/AuthContext";
 
+/**
+ * logs the user in to spotify either through OAuth or the server
+ */
 const Login = () => {
     const [profile, setProfileState] = useState(null);
     const location = useLocation();

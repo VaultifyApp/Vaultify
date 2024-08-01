@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
 
+/**
+ * displays the user's playlists
+ */
 const Vault = () => {
     const navigate = useNavigate();
     const [isWheelTurning, setIsWheelTurning] = useState(false);

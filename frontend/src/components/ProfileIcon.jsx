@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../misc/AuthContext";
+import { AuthContext } from "../utils/AuthContext";
 import "./ProfileIcon.css";
 import defaultImage from "../assets/default.jpg";
 
+/**
+ * loads and displays the user's profile picture
+ */
 const ProfileIcon = () => {
     const { profile } = useContext(AuthContext);
     const navigate = useNavigate();
