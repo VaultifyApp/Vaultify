@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PlaylistSuccess.css";
 
+/**
+ * Indicated success to the user and allows them to navigate to their generated playlist
+ */
 const PlaylistSuccess = () => {
-    const navigate = useNavigate();
-
+    // navigates user to the most recently generated playlist
     const handleOpenPlaylist = () => {
-        // Retrieve the profile data from localStorage
         const profile = JSON.parse(localStorage.getItem("profile"));
 
-        // Check if the profile and playlists exist
         if (profile && profile.playlists && profile.playlists.length > 0) {
             // Get the link of the most recent playlist
             const playlistLink =
@@ -18,7 +18,7 @@ const PlaylistSuccess = () => {
             // Navigate to the playlist link
             window.open(playlistLink);
         } else {
-            alert("No playlist link found in the profile.");
+            alert("No playlists found in profile.");
         }
     };
 
