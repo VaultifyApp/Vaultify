@@ -8,6 +8,7 @@ import {
 import { AuthProvider, AuthContext } from "./utils/AuthContext";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
+import LoginCallback from "./pages/LoginCallback";
 import Layout from "./components/Layout";
 import PlaylistGenerator from "./pages/PlaylistGenerator";
 import PlaylistSuccess from "./pages/PlaylistSuccess";
@@ -32,6 +33,7 @@ const AppRoutes = () => {
                 element={isLoggedIn ? <Navigate to="/home" /> : <Welcome />}
             />
             <Route path="/login" element={<Login />} />
+            <Route path="/login-callback" element={<LoginCallback />} />
             <Route path="/" element={<Layout />}>
                 <Route
                     path="home"

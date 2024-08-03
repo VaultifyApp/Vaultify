@@ -95,18 +95,6 @@ class DatabaseFacade {
      * @throws error if user doesn't have required database fields
      */
     async addUser(user: User): Promise<User> {
-        if (
-            !(
-                user.refreshToken &&
-                user.accessToken &&
-                user.email &&
-                user.spotifyID
-            )
-        ) {
-            throw new Error(
-                "User must have required fields to be added to the database."
-            );
-        }
         const existingUser = await this.UserModel.findOne({
             email: user.email,
         });
@@ -120,15 +108,15 @@ class DatabaseFacade {
 
     /**
      * @param email the email to be searched for
-     * @returns the user associated with email
+     * @returns the user associated with _id
      * @throws Error if user not found
      */
     async getUser(_id: string): Promise<User> {
         let user: User | null = await this.UserModel.findOne({
             _id: _id,
         }).lean();
-        if (user === null) {
-            throw new Error("User not found");
+        if (!user) {
+            throw new Error("User not found in DB");
         }
         return user;
     }

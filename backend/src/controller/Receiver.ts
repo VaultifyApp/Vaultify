@@ -14,8 +14,8 @@ class Receiver {
     constructor(app: Express, model: Model) {
         this.app = app;
         this.model = model;
-        this.handleLogin();
         this.handleGeneration();
+        this.handleGetUser();
     }
 
     /**
@@ -57,65 +57,46 @@ class Receiver {
                     req.query._id,
                     req.query.monthly
                 );
-                user = this.removeTokens(user);
-                res.json(user);
+                res.json(this.removeTokens(user));
             }
         );
     }
 
     /**
-     * @effects returns user profile information
+     * @returns user with the given _id
      */
-    private async handleLogin(): Promise<void> {
-        this.app.get("/login", async (req: Request, res: Response) => {
-            // if new user / no id given, send to Spotify OAuth
-            if (
-                !req.query._id ||
-                typeof req.query._id !== "string" ||
-                req.query._id == "undefined"
-            ) {
-                // sets query params for Spotify login
-                const queryParams: string = querystring.stringify({
-                    client_id: process.env.CLIENT_ID,
-                    response_type: "code",
-                    redirect_uri: process.env.REDIRECT_URI,
-                    scope: "user-read-private user-read-email playlist-modify-public playlist-modify-private user-top-read",
-                });
-                // redirects to OAuth
-                res.redirect(
-                    `https://accounts.spotify.com/authorize?${queryParams}`
-                );
-                // handles spotify callback after redirect
-                this.app.get(
-                    "/spotify-callback",
-                    async (req: Request, res: Response) => {
-                        if (
-                            !req.query.code ||
-                            typeof req.query.code !== "string"
-                        ) {
-                            throw new Error(
-                                "Invalid query code: can't retrieve token"
-                            );
-                        } else {
-                            let user: User = await this.model.addUser(
-                                req.query.code
-                            );
-                            user = this.removeTokens(user);
-                            res.redirect(
-                                `http://localhost:3000/login?user=${JSON.stringify(user)}`
-                            );
-                        }
-                    }
-                );
-            } else {
-                // else retrieve user from database
-                let user: User = await this.model.getUser(req.query._id);
-                user = this.removeTokens(user);
-                res.redirect(
-                    `http://localhost:3000/login?user=${JSON.stringify(user)}`
-                );
+    private async handleGetUser(): Promise<void> {
+        this.app.get(
+            "/get-user-from-_id",
+            async (req: Request, res: Response) => {
+                if (
+                    !req.query._id ||
+                    typeof req.query._id !== "string" ||
+                    req.query._id == "undefined"
+                ) {
+                    throw new Error("Must have ID to get a user");
+                }
+                let user: User = await this.model.getUserByID(req.query._id);
+                res.json(this.removeTokens(user));
             }
-        });
+        );
+        this.app.get(
+            "/get-user-from-code",
+            async (req: Request, res: Response) => {
+                if (
+                    !req.query.code ||
+                    typeof req.query.code !== "string" ||
+                    req.query.code == "undefined"
+                ) {
+                    throw new Error("Must have ID to get a user");
+                }
+
+                const code = req.query.code;
+                console.log(code);
+                let user: User = await this.model.getUserByCode(req.query.code);
+                res.json(this.removeTokens(user));
+            }
+        );
     }
 }
 

@@ -26,16 +26,29 @@ class Model {
      * @returns a new user object with user data associated to queryCode
      */
     async addUser(queryCode: string): Promise<User> {
-        const user: User = await this.spotify.createUser(queryCode);
+        const user: User = await this.spotify.getProfile(queryCode);
         return this.db.addUser(user);
     }
 
     /**
-     * @param email the email to be searched for in the database
+     * @param _id the ID to be searched for in the database
      * @returns the user interface associated with that email.
      */
-    async getUser(_id: string): Promise<User> {
-        return await this.db.getUser(_id);
+    async getUserByID(_id: string): Promise<User> {
+        let user: User = await this.db.getUser(_id);
+        user = await this.spotify.updateProfile(user);
+        this.db.updateUser(user);
+        return user;
+    }
+
+    /**
+     * @param code the spotify code to get user info
+     * @returns the user associated with that code
+     */
+    async getUserByCode(code: string): Promise<User> {
+        let user: User = await this.spotify.getProfile(code);
+        return await this.db.addUser(user);
+        // TODO : UPDATE USER IF THEY ALREADY EXISTS
     }
 
     /**
