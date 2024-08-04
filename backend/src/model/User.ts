@@ -1,3 +1,5 @@
+import Playlist from "./Playlist.js";
+
 /**
  * The User interface is used to store user data
  */
@@ -10,16 +12,14 @@ interface User {
     bio: string;
     href: string;
     uri: string;
-    playlists: string[];
-    images: [
-        {
-            url: string;
-            height: number;
-            width: number;
-        },
-    ];
+    playlists: Playlist[];
+    image?: {
+        url: string;
+        height: number;
+        width: number;
+    },
     spotifyID: string;
-    notifs?: boolean;
+    notifs: boolean;
 }
 
 export default User;

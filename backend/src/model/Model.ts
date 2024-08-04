@@ -4,7 +4,7 @@ import SpotifyFacade from "./facades/SpotifyFacade.js";
 import { MailerSend, EmailParams, Recipient, Sender } from "mailersend";
 
 /**
- * The Model class is responsible for
+ * The Model class is responsible for modifying and fetching backend data
  */
 class Model {
     private db: DatabaseFacade;

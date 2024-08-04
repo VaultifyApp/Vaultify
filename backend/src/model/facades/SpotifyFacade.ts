@@ -111,11 +111,12 @@ class SpotifyFacade {
             email: profileResponse.data.email,
             href: profileResponse.data.href,
             uri: profileResponse.data.uri,
-            images: profileResponse.data.images,
             spotifyID: profileResponse.data.id,
             playlists: [],
             bio: "",
+            notifs: false,
         };
+        if (profileResponse.data.images[0]) user.image = profileResponse.data.images[0];
         return user;
     }
 
@@ -134,7 +135,7 @@ class SpotifyFacade {
         user.email = response.data.email;
         user.href = response.data.href;
         user.uri = response.data.uri;
-        user.images = response.data.images;
+        if (response.data.images[0]) user.image = response.data.images[0];
         user.spotifyID = response.data.id;
         return user;
     }

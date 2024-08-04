@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-
 import User from "../User.js";
+import Playlist from "../Playlist.js";
+import Track from "../Track.js"
 import { stringify } from "querystring";
 
 /**
@@ -28,10 +29,86 @@ class DatabaseFacade {
         mongoose.connection.on("error", (err) => {
             throw err;
         });
-        // creates database model for users.
-        this.UserModel = mongoose.model<User>(
-            "User",
-            new mongoose.Schema<User>({
+        // format for storing tracks in the db
+        const TrackSchema = new mongoose.Schema<Track>({
+                title: {
+                    type: String,
+                    required: true,
+                },
+                artist: {
+                    type: String,
+                    required: true,
+                },
+                spotifyID: {
+                    type: String,
+                    required: true,
+                },
+                url: {
+                    type: String,
+                    required: true,
+                },
+                popularity: {
+                    type: Number,
+                    required: true,
+                },
+                image: {
+                    url: {
+                      type: String,
+                      required: true
+                    },
+                    height: {
+                      type: Number,
+                      required: true
+                    },
+                    width: {
+                      type: Number,
+                      required: true
+                    }
+                },
+        });
+        // format for storing playlists in the db
+        const PlaylistSchema = new mongoose.Schema<Playlist>({
+                title: {
+                    type: String,
+                    required: true,
+                },
+                description: {
+                    type: String,
+                    required: true,
+                },
+                spotifyID: {
+                    type: String,
+                    required: true,
+                },
+                url: {
+                    type: String,
+                    required: true,
+                },
+                mood: {
+                    type: Number,
+                    required: true,
+                },
+                image: {
+                    url: {
+                      type: String,
+                      required: true
+                    },
+                    height: {
+                      type: Number,
+                      required: true
+                    },
+                    width: {
+                      type: Number,
+                      required: true
+                    }
+                },
+                tracks: {
+                    type: [ TrackSchema ],
+                    required: true
+                }
+        });
+        // format for storing users in the db
+        const UserSchema = new mongoose.Schema<User>({
                 username: {
                     type: String,
                     required: true,
@@ -57,19 +134,23 @@ class DatabaseFacade {
                     type: String,
                     required: true,
                 },
-                images: {
-                    type: [
-                        {
-                            url: { type: String, required: true },
-                            height: { type: Number, required: true },
-                            width: { type: Number, required: true },
-                        },
-                    ],
-                    required: true,
+                image: {
+                    url: {
+                      type: String,
+                      required: true
+                    },
+                    height: {
+                      type: Number,
+                      required: true
+                    },
+                    width: {
+                      type: Number,
+                      required: true
+                    }
                 },
                 playlists: {
-                    type: [String],
-                    required: false,
+                    type: [PlaylistSchema],
+                    required: true,
                     default: [],
                 },
                 bio: {
@@ -85,8 +166,9 @@ class DatabaseFacade {
                     type: Boolean,
                     default: false,
                 },
-            })
-        );
+        });
+        // stores user model to interact with db
+        this.UserModel = mongoose.model<User>("User", UserSchema);
     }
 
     /**
