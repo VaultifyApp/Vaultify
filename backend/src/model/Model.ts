@@ -2,6 +2,7 @@ import User from "./User.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
 import EmailFacade from "./facades/EmailFacade.js";
+import CoverFacade from "./facades/CoverFacade.js";
 
 /**
  * The Model class is responsible for modifying and fetching backend data
@@ -10,6 +11,7 @@ class Model {
     private db: DatabaseFacade;
     private spotify: SpotifyFacade;
     private email: EmailFacade;
+    private cover: CoverFacade;
 
     /**
      * @effects constructs facades
@@ -18,6 +20,7 @@ class Model {
         this.db = new DatabaseFacade();
         this.spotify = new SpotifyFacade();
         this.email = new EmailFacade();
+        this.cover = new CoverFacade();
     }
 
     /**
