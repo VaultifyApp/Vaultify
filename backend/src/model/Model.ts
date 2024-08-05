@@ -97,7 +97,7 @@ class Model {
      * @param user the user to be updated in the db
      * @effects updates user in db
      */
-    async updateUser(user: User, manual: boolean): Promise<void> {
+    async updateUser(user: User): Promise<void> {
         this.db.updateUser(user);
     }
 }
