@@ -5,6 +5,11 @@ import Playlist from "../Playlist.js";
  * playlist covers using OpenAI
  */
 class CoverGenerator {
+    /**
+     * @param playlist the playlist to generate a cover for
+     * @param theme cover theme - can be ""
+     * @returns
+     */
     async generateCover(playlist: Playlist, theme: string): Promise<Playlist> {
         /**
          * :::: TODO ::::
