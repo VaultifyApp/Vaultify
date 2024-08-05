@@ -4,7 +4,7 @@ import "./Main.css";
 import App from "./App";
 
 /**
- * loads site wide css and rends the react app
+ * loads site wide css and renders the react app
  */
 const container = document.getElementById("root");
 const root = createRoot(container);
