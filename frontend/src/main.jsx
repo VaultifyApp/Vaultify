@@ -3,6 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 
+/**
+ * loads site wide css and rends the react app
+ */
 const container = document.getElementById("root");
 const root = createRoot(container);
 
