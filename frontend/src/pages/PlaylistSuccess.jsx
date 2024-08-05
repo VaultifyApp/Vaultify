@@ -13,7 +13,7 @@ const PlaylistSuccess = () => {
         if (profile && profile.playlists && profile.playlists.length > 0) {
             // Get the link of the most recent playlist
             const playlistLink =
-                profile.playlists[profile.playlists.length - 1];
+                profile.playlists[profile.playlists.length - 1].url;
 
             // Navigate to the playlist link
             window.open(playlistLink);

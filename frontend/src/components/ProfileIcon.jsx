@@ -12,9 +12,7 @@ const ProfileIcon = () => {
     const navigate = useNavigate();
 
     const profileImage =
-        profile && profile.images && profile.images.length > 0
-            ? profile.images[0].url
-            : defaultImage;
+        profile && profile.image ? profile.image.url : defaultImage;
 
     return (
         <div className="profile-icon" onClick={() => navigate("/profile")}>
