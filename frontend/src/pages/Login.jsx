@@ -13,14 +13,9 @@ const Login = () => {
     const { setIsLoggedIn, setProfile } = useContext(AuthContext);
     useEffect(() => {
         const login = async () => {
-            let profile;
-            try {
-                profile = JSON.parse(localStorage.getItem("profile"));
-            } catch {
-                profile = null;
-            }
+            const _id = localStorage.getItem("_id");
             // if no profile, redirect to spotify Oauth
-            if (!profile || !profile._id) {
+            if (!_id) {
                 // spotify OAuth will redirect to the login-callback route. see LoginCallback.jsx
                 const params = new URLSearchParams({
                     client_id: "79e0bbb20e714c1cb35b10742723ee7a",
@@ -32,17 +27,17 @@ const Login = () => {
             }
             // else, call backend to update profile
             else {
-                const response = await axios.get(
-                    `http://localhost:3001/get-user-from-_id?_id=${profile._id}`
-                );
-                profile = response.data;
-                localStorage.setItem("profile", JSON.stringify(profile));
-                setIsLoggedIn(true);
-                setProfile(profile);
-
-                // TODO : AUTH CONTEXT STUFF
-
-                navigate("/home");
+                try {
+                    const response = await axios.get(
+                        `http://localhost:3001/get-user-from-_id?_id=${_id}`
+                    );
+                    const profile = response.data;
+                    setIsLoggedIn(true);
+                    setProfile(profile);
+                    navigate("/home");
+                } catch (err) {
+                    navigate("/");
+                }
             }
         };
         login();

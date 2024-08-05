@@ -52,7 +52,9 @@ class Receiver {
                     return res.status(400).json({ error: "Invalid _id param" });
                 }
                 if (typeof req.query.monthly != "string") {
-                    return res.status(400).json({ error: "Invalid monthly param" });
+                    return res
+                        .status(400)
+                        .json({ error: "Invalid monthly param" });
                 }
                 try {
                     let user: User = await this.model.configGeneration(
@@ -60,8 +62,7 @@ class Receiver {
                         req.query.monthly
                     );
                     res.json(this.removeTokens(user));
-                }
-                catch (err) {
+                } catch (err) {
                     return res.status(400).json({ error: err });
                 }
             }
@@ -83,8 +84,7 @@ class Receiver {
             try {
                 const user: User = JSON.parse(req.query.user);
                 this.model.updateUser(user);
-            }
-            catch (err) {
+            } catch (err) {
                 return res.status(400).json({ error: err });
             }
         });
@@ -105,10 +105,11 @@ class Receiver {
                     return res.status(400).json({ error: "Invalid _id param" });
                 }
                 try {
-                    let user: User = await this.model.getUserByID(req.query._id);
+                    let user: User = await this.model.getUserByID(
+                        req.query._id
+                    );
                     res.json(this.removeTokens(user));
-                }
-                catch (err) {
+                } catch (err) {
                     return res.status(400).json({ error: err });
                 }
             }
@@ -121,13 +122,16 @@ class Receiver {
                     typeof req.query.code !== "string" ||
                     req.query.code == "undefined"
                 ) {
-                    return res.status(400).json({ error: "Invalid code param" });
+                    return res
+                        .status(400)
+                        .json({ error: "Invalid code param" });
                 }
                 try {
-                    let user: User = await this.model.getUserByCode(req.query.code);
+                    let user: User = await this.model.getUserByCode(
+                        req.query.code
+                    );
                     res.json(this.removeTokens(user));
-                }
-                catch (err) {
+                } catch (err) {
                     return res.status(400).json({ error: err });
                 }
             }

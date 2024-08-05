@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../utils/AuthContext";
 import "./Profile.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
@@ -10,7 +11,7 @@ import defaultImage from "../assets/default.jpg";
  * displays profile information to the user
  */
 const Profile = () => {
-    const profile = JSON.parse(localStorage.getItem("profile"));
+    const { profile } = useContext(AuthContext);
     const storedBio =
         localStorage.getItem("bio") ||
         profile.bio ||

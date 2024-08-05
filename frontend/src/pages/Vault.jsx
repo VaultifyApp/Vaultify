@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../utils/AuthContext";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
 
@@ -13,7 +14,8 @@ const Vault = () => {
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [isZoomedIn, setIsZoomedIn] = useState(false);
 
-    const playlists = JSON.parse(localStorage.getItem("profile")).playlists;
+    const { profile } = useContext(AuthContext);
+    const playlists = profile.playlists;
 
     useEffect(() => {
         console.log("Playlists:", playlists);
@@ -124,12 +126,13 @@ const Vault = () => {
                                         >
                                             <div className="swiper-slide-content">
                                                 <span className="timeline-year">
-                                                    Playlist #
-                                                    {playlists.length - index}:
+                                                    {playlist.title}:
                                                 </span>
                                                 <button
                                                     onClick={() =>
-                                                        window.open(playlist)
+                                                        window.open(
+                                                            playlist.url
+                                                        )
                                                     }
                                                 >
                                                     Open in Spotify
