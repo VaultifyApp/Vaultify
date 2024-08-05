@@ -16,6 +16,7 @@ class Receiver {
         this.model = model;
         this.handleGeneration();
         this.handleGetUser();
+        this.handleUpdateUser();
     }
 
     /**
@@ -48,16 +49,21 @@ class Receiver {
                     typeof req.query._id !== "string" ||
                     req.query._id == "undefined"
                 ) {
-                    throw new Error("Must have ID to generate playlist");
+                    return res.status(400).json({ error: "Invalid _id param" });
                 }
                 if (typeof req.query.monthly != "string") {
-                    throw new Error("Query must have notifs param");
+                    return res.status(400).json({ error: "Invalid monthly param" });
                 }
-                let user: User = await this.model.configGeneration(
-                    req.query._id,
-                    req.query.monthly
-                );
-                res.json(this.removeTokens(user));
+                try {
+                    let user: User = await this.model.configGeneration(
+                        req.query._id,
+                        req.query.monthly
+                    );
+                    res.json(this.removeTokens(user));
+                }
+                catch (err) {
+                    return res.status(400).json({ error: err });
+                }
             }
         );
     }
@@ -72,15 +78,20 @@ class Receiver {
                 typeof req.query.user !== "string" ||
                 req.query.user == "undefined"
             ) {
-                throw new Error("User can't be updated");
+                return res.status(400).json({ error: "user param invalid" });
             }
-            const user: User = JSON.parse(req.query.user);
-            this.model.updateUser(user);
+            try {
+                const user: User = JSON.parse(req.query.user);
+                this.model.updateUser(user);
+            }
+            catch (err) {
+                return res.status(400).json({ error: err });
+            }
         });
     }
 
     /**
-     * @returns user with the given _id
+     * @effects returns the user associated with given param
      */
     private async handleGetUser(): Promise<void> {
         this.app.get(
@@ -91,10 +102,15 @@ class Receiver {
                     typeof req.query._id !== "string" ||
                     req.query._id == "undefined"
                 ) {
-                    throw new Error("Must have ID to get a user");
+                    return res.status(400).json({ error: "Invalid _id param" });
                 }
-                let user: User = await this.model.getUserByID(req.query._id);
-                res.json(this.removeTokens(user));
+                try {
+                    let user: User = await this.model.getUserByID(req.query._id);
+                    res.json(this.removeTokens(user));
+                }
+                catch (err) {
+                    return res.status(400).json({ error: err });
+                }
             }
         );
         this.app.get(
@@ -105,10 +121,15 @@ class Receiver {
                     typeof req.query.code !== "string" ||
                     req.query.code == "undefined"
                 ) {
-                    throw new Error("Must have ID to get a user");
+                    return res.status(400).json({ error: "Invalid code param" });
                 }
-                let user: User = await this.model.getUserByCode(req.query.code);
-                res.json(this.removeTokens(user));
+                try {
+                    let user: User = await this.model.getUserByCode(req.query.code);
+                    res.json(this.removeTokens(user));
+                }
+                catch (err) {
+                    return res.status(400).json({ error: err });
+                }
             }
         );
     }

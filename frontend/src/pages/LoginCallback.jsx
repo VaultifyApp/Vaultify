@@ -14,14 +14,19 @@ const LoginCallback = () => {
 
             console.log(code);
             const params = new URLSearchParams({ code: code });
-            const response = await axios.get(
-                `http://localhost:3001/get-user-from-code?${params.toString()}`
-            );
-            const profile = response.data;
-            localStorage.setItem("profile", JSON.stringify(profile));
-            setIsLoggedIn(true);
-            setProfile(profile);
-            navigate("/home");
+            try {
+                const response = await axios.get(
+                    `http://localhost:3001/get-user-from-code?${params.toString()}`
+                );
+                const profile = response.data;
+                localStorage.setItem("profile", JSON.stringify(profile));
+                setIsLoggedIn(true);
+                setProfile(profile);
+                navigate("/home");
+            }
+            catch (err) {
+                navigate("/");
+            }
         };
         loginFromCode();
     }, [setIsLoggedIn, setProfile, navigate]);
