@@ -90,9 +90,6 @@ class Receiver {
                 ) {
                     throw new Error("Must have ID to get a user");
                 }
-
-                const code = req.query.code;
-                console.log(code);
                 let user: User = await this.model.getUserByCode(req.query.code);
                 res.json(this.removeTokens(user));
             }

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import User from "../User.js";
 import Playlist from "../Playlist.js";
-import Track from "../Track.js"
-import { stringify } from "querystring";
+import Track from "../Track.js";
+import Image from "../Image.js";
 
 /**
  * The database facade is responsible for retrieving information from and updating the database.
@@ -29,143 +29,128 @@ class DatabaseFacade {
         mongoose.connection.on("error", (err) => {
             throw err;
         });
+        // format for storing images in the db
+        const ImageSchema = new mongoose.Schema<Image>({
+            url: {
+                type: String,
+                required: true, // Makes this field optional
+            },
+            height: {
+                type: Number,
+                required: true, // Makes this field optional
+            },
+            width: {
+                type: Number,
+                required: true, // Makes this field optional
+            },
+        });
         // format for storing tracks in the db
         const TrackSchema = new mongoose.Schema<Track>({
-                title: {
-                    type: String,
-                    required: true,
-                },
-                artist: {
-                    type: String,
-                    required: true,
-                },
-                spotifyID: {
-                    type: String,
-                    required: true,
-                },
-                url: {
-                    type: String,
-                    required: true,
-                },
-                popularity: {
-                    type: Number,
-                    required: true,
-                },
-                image: {
-                    url: {
-                      type: String,
-                      required: true
-                    },
-                    height: {
-                      type: Number,
-                      required: true
-                    },
-                    width: {
-                      type: Number,
-                      required: true
-                    }
-                },
+            title: {
+                type: String,
+                required: true,
+            },
+            artists: {
+                type: [String],
+                required: true,
+            },
+            spotifyID: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+            popularity: {
+                type: Number,
+                required: true,
+            },
+            image: {
+                type: ImageSchema,
+                required: true,
+            },
         });
         // format for storing playlists in the db
         const PlaylistSchema = new mongoose.Schema<Playlist>({
-                title: {
-                    type: String,
-                    required: true,
-                },
-                description: {
-                    type: String,
-                    required: true,
-                },
-                spotifyID: {
-                    type: String,
-                    required: true,
-                },
-                url: {
-                    type: String,
-                    required: true,
-                },
-                mood: {
-                    type: Number,
-                    required: true,
-                },
-                image: {
-                    url: {
-                      type: String,
-                      required: true
-                    },
-                    height: {
-                      type: Number,
-                      required: true
-                    },
-                    width: {
-                      type: Number,
-                      required: true
-                    }
-                },
-                tracks: {
-                    type: [ TrackSchema ],
-                    required: true
-                }
+            title: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
+            spotifyID: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+            mood: {
+                type: Number,
+                required: true,
+            },
+            image: {
+                type: ImageSchema,
+                required: false,
+            },
+            tracks: {
+                type: [TrackSchema],
+                required: true,
+            },
         });
         // format for storing users in the db
         const UserSchema = new mongoose.Schema<User>({
-                username: {
-                    type: String,
-                    required: true,
-                },
-                email: {
-                    type: String,
-                    required: true,
-                    unique: true,
-                },
-                accessToken: {
-                    type: String,
-                    required: true,
-                },
-                refreshToken: {
-                    type: String,
-                    required: true,
-                },
-                href: {
-                    type: String,
-                    required: true,
-                },
-                uri: {
-                    type: String,
-                    required: true,
-                },
-                image: {
-                    url: {
-                      type: String,
-                      required: true
-                    },
-                    height: {
-                      type: Number,
-                      required: true
-                    },
-                    width: {
-                      type: Number,
-                      required: true
-                    }
-                },
-                playlists: {
-                    type: [PlaylistSchema],
-                    required: true,
-                    default: [],
-                },
-                bio: {
-                    type: String,
-                    required: false,
-                    default: "",
-                },
-                spotifyID: {
-                    type: String,
-                    required: true,
-                },
-                notifs: {
-                    type: Boolean,
-                    default: false,
-                },
+            username: {
+                type: String,
+                required: true,
+            },
+            email: {
+                type: String,
+                required: true,
+                unique: true,
+            },
+            accessToken: {
+                type: String,
+                required: true,
+            },
+            refreshToken: {
+                type: String,
+                required: true,
+            },
+            href: {
+                type: String,
+                required: true,
+            },
+            uri: {
+                type: String,
+                required: true,
+            },
+            image: {
+                type: ImageSchema,
+                required: false,
+            },
+            playlists: {
+                type: [PlaylistSchema],
+                required: true,
+                default: [],
+            },
+            bio: {
+                type: String,
+                required: false,
+                default: "",
+            },
+            spotifyID: {
+                type: String,
+                required: true,
+            },
+            notifs: {
+                type: Boolean,
+                default: false,
+            },
         });
         // stores user model to interact with db
         this.UserModel = mongoose.model<User>("User", UserSchema);

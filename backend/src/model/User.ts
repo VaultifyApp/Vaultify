@@ -1,4 +1,5 @@
 import Playlist from "./Playlist.js";
+import Image from "./Image.js";
 
 /**
  * The User interface is used to store user data
@@ -13,11 +14,7 @@ interface User {
     href: string;
     uri: string;
     playlists: Playlist[];
-    image?: {
-        url: string;
-        height: number;
-        width: number;
-    },
+    image?: Image;
     spotifyID: string;
     notifs: boolean;
 }

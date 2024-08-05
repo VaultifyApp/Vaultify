@@ -1,17 +1,15 @@
+import Image from "./Image.js";
+
 /**
  * The Track interface stores track information
  */
 interface Track {
-    title: string,
-    artist: string,
-    spotifyID: string,
-    url: string,
-    popularity: number,
-    image: {
-        url: string,
-        height: number,
-        width: number,
-    }
+    title: string;
+    artists: string[];
+    spotifyID: string;
+    url: string;
+    popularity: number;
+    image: Image;
 }
 
 export default Track;

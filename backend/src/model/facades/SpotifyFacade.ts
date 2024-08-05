@@ -1,10 +1,10 @@
 import { Buffer } from "buffer";
 import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
-
 import User from "../User.js";
+import Playlist from "../Playlist.js";
+import Track from "../Track.js";
 import { URLSearchParams } from "url";
-import { response } from "express";
 
 /**
  * The SpotifyFacade class is responsible for all interactions with the Spotify Web API, such as
@@ -116,7 +116,8 @@ class SpotifyFacade {
             bio: "",
             notifs: false,
         };
-        if (profileResponse.data.images[0]) user.image = profileResponse.data.images[0];
+        if (profileResponse.data.images[0])
+            user.image = profileResponse.data.images[0];
         return user;
     }
 
@@ -145,8 +146,15 @@ class SpotifyFacade {
      * @param numSongs num top songs to retrieve
      * @returns an array of uri's of the user's top songs for the month
      */
-    private async getTopSongs(user: User, numSongs: number): Promise<string[]> {
-        let body = {
+    private async getTopSongs(user: User, numSongs: number): Promise<Track[]> {
+        // fetch top tracks for users
+
+        /**
+         * ::::::: TODO :::::::
+         * config for > 50 songs since you have to make multiple requests!
+         */
+
+        let getBody = {
             method: "get",
             url: "https://api.spotify.com/v1/me/top/tracks",
             params: {
@@ -154,24 +162,65 @@ class SpotifyFacade {
                 time_range: "short_term",
             },
         };
-        const response: AxiosResponse = await this.makeRequest(user, body);
-        const items = response.data.items;
-        let songs: string[] = items.map((item: { uri: string }) => item.uri);
-        return songs;
+        const getTracksResponse: AxiosResponse = await this.makeRequest(
+            user,
+            getBody
+        );
+        // get mood info for tracks
+        const trackData = getTracksResponse.data.items;
+        const ids = getTracksResponse.data.items.map(
+            (item: { id: string }) => item.id
+        );
+        /**
+         * ::::: TODO :::::
+         * config for > 100 ids
+         */
+        const analysisBody = {
+            method: "get",
+            url: "https://api.spotify.com/v1/audio-features",
+            params: {
+                ids: ids.join(","),
+            },
+        };
+        const analysisResponse: AxiosResponse = await this.makeRequest(
+            user,
+            analysisBody
+        );
+        const analysisData = analysisResponse.data.audio_features;
+        // construct Track objects
+        let tracks: Track[] = [];
+        let moodTotal = 0;
+        for (let i = 0; i < trackData.length; i++) {
+            tracks.push({
+                title: trackData[i].name,
+                artists: trackData[i].artists.map(
+                    (artist: { name: string }) => artist.name
+                ),
+                spotifyID: trackData[i].id,
+                url: trackData[i].external_urls.spotify,
+                popularity: trackData[i].popularity,
+                image: trackData[i].album.images[0],
+            });
+            moodTotal += analysisData[i].valence;
+        }
+        const averageMood: number = moodTotal / trackData.length;
+        return tracks;
     }
 
     /**
      *
      * @param user the user to generate a playlist for
+     * @param numSongs the number of songs to add to the playlist
+     * @param manualGeneration whether the playlist was manually generated
      * @returns an updated user object with a new playlist
      */
-    // TODO: make playlist name not hardcoded
-    async generatePlaylist(user: User): Promise<User> {
-        const currentDate = new Date();
-
-        // TODO : : CONFIG TITLE FOR MID MONTH VS RECAP
-
+    async generatePlaylist(
+        user: User,
+        numSongs: number,
+        manualGeneration: boolean
+    ): Promise<User> {
         // Get current month and year to name playlist
+        const currentDate = new Date();
         const monthIndex = currentDate.getMonth();
         const monthNames = [
             "January",
@@ -187,9 +236,18 @@ class SpotifyFacade {
             "November",
             "December",
         ];
-        const currMonth = monthNames[monthIndex];
         const currYear = currentDate.getFullYear();
-        let songs: string[] = await this.getTopSongs(user, 50);
+        let name: string;
+        let month: string;
+        if (manualGeneration) {
+            month = monthNames[monthIndex];
+            name = `${month} ${currYear} Mid Month Recap`;
+        } else {
+            month = monthNames[monthIndex - 1];
+            name = `${month} ${currYear}`;
+        }
+        let description: string = `${user.username}'s top tracks for ${month} ${currYear}!`;
+        // create playlist for user
         let createBody = {
             method: "post",
             url: `https://api.spotify.com/v1/users/${user.spotifyID}/playlists`,
@@ -197,22 +255,80 @@ class SpotifyFacade {
                 "Content-Type": "application/json",
             },
             data: {
-                name: `${currMonth} ${currYear}`,
-                description: `${user.username}'s top tracks for ${currMonth} ${currYear}!`,
+                name: name,
+                description: description,
                 public: true,
             },
         };
-        const createResponse: AxiosResponse = await this.makeRequest(
+        const createResponse = await this.makeRequest(user, createBody);
+        // fetch top tracks for users
+
+        /**
+         * ::::::: TODO :::::::
+         * config for > 50 songs since you have to make multiple requests!
+         */
+
+        let getBody = {
+            method: "get",
+            url: "https://api.spotify.com/v1/me/top/tracks",
+            params: {
+                limit: numSongs,
+                time_range: "short_term",
+            },
+        };
+        const getTracksResponse: AxiosResponse = await this.makeRequest(
             user,
-            createBody
+            getBody
         );
-        // only add songs if user has top songs
-        if (songs.length > 0) {
+        const trackData = getTracksResponse.data.items;
+        // init playlist info
+        let averageMood: number = 0.5;
+        let tracks: Track[] = [];
+        // only analyze / add songs if user has songs
+        if (trackData.length > 0) {
+            const ids = getTracksResponse.data.items.map(
+                (item: { id: string }) => item.id
+            );
+            /**
+             * ::::: TODO :::::
+             * config for > 100 ids
+             */
+            // analyze mood of tracks
+            const analysisBody = {
+                method: "get",
+                url: "https://api.spotify.com/v1/audio-features",
+                params: {
+                    ids: ids.join(","),
+                },
+            };
+            const analysisResponse: AxiosResponse = await this.makeRequest(
+                user,
+                analysisBody
+            );
+            const analysisData = analysisResponse.data.audio_features;
+            // construct Track objects
+            let moodTotal = 0;
+            for (let i = 0; i < trackData.length; i++) {
+                tracks.push({
+                    title: trackData[i].name,
+                    artists: trackData[i].artists.map(
+                        (artist: { name: string }) => artist.name
+                    ),
+                    spotifyID: trackData[i].id,
+                    url: trackData[i].external_urls.spotify,
+                    popularity: trackData[i].popularity,
+                    image: trackData[i].album.images[0],
+                });
+                moodTotal += analysisData[i].valence;
+            }
+            averageMood = moodTotal / trackData.length;
+            // add tracks to playlist
+            const uris = trackData.map((item: { uri: string }) => item.uri);
             let addBody = {
                 method: "post",
                 url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
                 data: {
-                    uris: songs,
+                    uris: uris,
                 },
                 headers: {
                     "Content-Type": "application/json",
@@ -232,7 +348,15 @@ class SpotifyFacade {
         if (!user.playlists) {
             user.playlists = [];
         }
-        user.playlists.push(createResponse.data.external_urls.spotify);
+        user.playlists.push({
+            title: name,
+            description: description,
+            url: createResponse.data.external_urls.spotify,
+            spotifyID: createResponse.data.id,
+            image: createResponse.data.images[0],
+            mood: averageMood,
+            tracks: tracks,
+        });
         return user;
     }
 }

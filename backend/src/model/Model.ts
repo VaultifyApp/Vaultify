@@ -58,7 +58,7 @@ class Model {
      */
     async configGeneration(_id: string, notifs: string): Promise<User> {
         let user: User = await this.db.getUser(_id);
-        user = await this.generatePlaylist(user);
+        user = await this.generatePlaylist(user, true);
         if (notifs == "true") {
             user.notifs = true;
             this.sendWelcomeEmail(user);
@@ -72,12 +72,13 @@ class Model {
     }
 
     /**
-     * @param _id the ID of the user to generate a playlist for
+     * @param user the user to generate a playlist for
+     * @param manual whether the playlist is manually or automatically generated
      * @returns an updated user with a newly generated playlist
      * @effects saves the updated user to the database
      */
-    async generatePlaylist(user: User): Promise<User> {
-        user = await this.spotify.generatePlaylist(user);
+    async generatePlaylist(user: User, manual: boolean): Promise<User> {
+        user = await this.spotify.generatePlaylist(user, 50, manual);
         this.db.updateUser(user);
         return user;
     }
@@ -88,7 +89,7 @@ class Model {
     async monthlyGenerate(): Promise<void> {
         let users: [User] = await this.db.getOptedInUsers();
         for (let i = 0; i < users.length; i++) {
-            users[i] = await this.generatePlaylist(users[i]);
+            users[i] = await this.generatePlaylist(users[i], false);
             this.sendNewPlaylistEmail(users[i]);
         }
     }
