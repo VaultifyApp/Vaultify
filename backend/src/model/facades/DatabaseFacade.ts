@@ -70,6 +70,10 @@ class DatabaseFacade {
                 type: ImageSchema,
                 required: true,
             },
+            note: {
+                type: String,
+                required: false,
+            },
         });
         // format for storing playlists in the db
         const PlaylistSchema = new mongoose.Schema<Playlist>({
