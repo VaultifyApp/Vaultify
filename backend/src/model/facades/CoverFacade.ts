@@ -7,7 +7,7 @@ import Playlist from "../Playlist.js";
 class CoverGenerator {
     /**
      * @param playlist the playlist to generate a cover for
-     * @param theme cover theme - can be ""
+     * @param theme cover theme - can be "Oil Painting", "Futuristic", or "Sky".
      * @returns
      */
     async generateCover(playlist: Playlist, theme: string): Promise<Playlist> {
