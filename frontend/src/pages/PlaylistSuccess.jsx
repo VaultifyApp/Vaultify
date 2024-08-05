@@ -4,7 +4,7 @@ import { AuthContext } from "../utils/AuthContext";
 import "./PlaylistSuccess.css";
 
 /**
- * Indicated success to the user and allows them to navigate to their generated playlist
+ * Playlist generation success page component
  */
 const PlaylistSuccess = () => {
     const { profile } = useContext(AuthContext);

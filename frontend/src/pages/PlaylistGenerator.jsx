@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./PlaylistGenerator.css";
 
 /**
- * the playlist generator page provides users with the parameters to customize their monthly playlist
+ * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
     const [playlist, setPlaylist] = useState("");

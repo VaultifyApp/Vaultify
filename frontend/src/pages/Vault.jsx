@@ -5,7 +5,7 @@ import "./Vault.css";
 import Swiper from "swiper/bundle";
 
 /**
- * displays the user's playlists
+ * Vault page component
  */
 const Vault = () => {
     const navigate = useNavigate();

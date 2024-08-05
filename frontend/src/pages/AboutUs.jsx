@@ -6,6 +6,9 @@ import profile3 from "../assets/michael.png";
 import profile4 from "../assets/dillon.png";
 import profile5 from "../assets/matt.png";
 
+/**
+ * About Us page componenet
+ */
 const AboutUs = () => {
     return (
         <div className="about-container">

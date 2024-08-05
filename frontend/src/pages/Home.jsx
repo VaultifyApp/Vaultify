@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Home.css";
 
+/**
+ * Home page component
+ */
 const Home = () => {
     const [results, setResults] = useState([]);
 

@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 import "./Welcome.css";
 
 /**
- * describes site and prompts users to log in
+ * Welcome page component
  */
 const Welcome = () => {
     const navigate = useNavigate();

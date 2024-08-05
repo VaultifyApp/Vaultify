@@ -8,7 +8,7 @@ import green3 from "../assets/green3.jpg";
 import defaultImage from "../assets/default.jpg";
 
 /**
- * displays profile information to the user
+ * Profile page component
  */
 const Profile = () => {
     const { profile } = useContext(AuthContext);
