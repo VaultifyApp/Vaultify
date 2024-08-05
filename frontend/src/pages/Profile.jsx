@@ -131,7 +131,9 @@ const Profile = () => {
                                 <div className="profile-pic">
                                     <img
                                         src={
-                                            profile && profile.image ? profile.image.url : defaultImage
+                                            profile && profile.image
+                                                ? profile.image.url
+                                                : defaultImage
                                         }
                                         alt="Profile"
                                         width="150"
