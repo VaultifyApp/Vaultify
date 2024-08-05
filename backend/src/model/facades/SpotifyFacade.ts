@@ -1,9 +1,9 @@
 import { Buffer } from "buffer";
 import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
-import User from "../User.js";
-import Playlist from "../Playlist.js";
-import Track from "../Track.js";
+import User from "../interfaces/User.js";
+import Playlist from "../interfaces/Playlist.js";
+import Track from "../interfaces/Track.js";
 import { URLSearchParams } from "url";
 
 /**
@@ -140,72 +140,6 @@ class SpotifyFacade {
         if (response.data.images[0]) user.image = response.data.images[0];
         user.spotifyID = response.data.id;
         return user;
-    }
-
-    /**
-     * @param user the user to retrieve songs for
-     * @param numSongs num top songs to retrieve
-     * @returns an array of uri's of the user's top songs for the month
-     */
-    private async getTopSongs(user: User, numSongs: number): Promise<Track[]> {
-        // fetch top tracks for users
-
-        /**
-         * ::::::: TODO :::::::
-         * config for > 50 songs since you have to make multiple requests!
-         */
-
-        let getBody = {
-            method: "get",
-            url: "https://api.spotify.com/v1/me/top/tracks",
-            params: {
-                limit: numSongs,
-                time_range: "short_term",
-            },
-        };
-        const getTracksResponse: AxiosResponse = await this.makeRequest(
-            user,
-            getBody
-        );
-        // get mood info for tracks
-        const trackData = getTracksResponse.data.items;
-        const ids = getTracksResponse.data.items.map(
-            (item: { id: string }) => item.id
-        );
-        /**
-         * ::::: TODO :::::
-         * config for > 100 ids
-         */
-        const analysisBody = {
-            method: "get",
-            url: "https://api.spotify.com/v1/audio-features",
-            params: {
-                ids: ids.join(","),
-            },
-        };
-        const analysisResponse: AxiosResponse = await this.makeRequest(
-            user,
-            analysisBody
-        );
-        const analysisData = analysisResponse.data.audio_features;
-        // construct Track objects
-        let tracks: Track[] = [];
-        let moodTotal = 0;
-        for (let i = 0; i < trackData.length; i++) {
-            tracks.push({
-                title: trackData[i].name,
-                artists: trackData[i].artists.map(
-                    (artist: { name: string }) => artist.name
-                ),
-                spotifyID: trackData[i].id,
-                url: trackData[i].external_urls.spotify,
-                popularity: trackData[i].popularity,
-                image: trackData[i].album.images[0],
-            });
-            moodTotal += analysisData[i].valence;
-        }
-        const averageMood: number = moodTotal / trackData.length;
-        return tracks;
     }
 
     /**

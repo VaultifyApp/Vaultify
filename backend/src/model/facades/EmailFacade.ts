@@ -1,5 +1,5 @@
 import { MailerSend, EmailParams, Recipient, Sender } from "mailersend";
-import User from "../User.js";
+import User from "../interfaces/User.js";
 
 class EmailFacade {
     private readonly mailer;

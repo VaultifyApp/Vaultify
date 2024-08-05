@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import User from "../User.js";
-import Playlist from "../Playlist.js";
-import Track from "../Track.js";
-import Image from "../Image.js";
+import User from "../interfaces/User.js";
+import Playlist from "../interfaces/Playlist.js";
+import Track from "../interfaces/Track.js";
+import Image from "../interfaces/Image.js";
 
 /**
  * The database facade is responsible for retrieving information from and updating the database.

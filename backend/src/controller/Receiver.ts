@@ -2,7 +2,7 @@ import { Express, Request, Response } from "express";
 import querystring from "querystring";
 
 import Model from "../model/Model.js";
-import User from "../model/User.js";
+import User from "../model/interfaces/User.js";
 
 /**
  * The Receiver class is responsible for responding to requests from the client.

@@ -1,4 +1,4 @@
-import Playlist from "../Playlist.js";
+import Playlist from "../interfaces/Playlist.js";
 
 /**
  * The CoverGenerator class is responsible for generating

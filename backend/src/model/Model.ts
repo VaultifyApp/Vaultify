@@ -1,4 +1,4 @@
-import User from "./User.js";
+import User from "./interfaces/User.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
 import EmailFacade from "./facades/EmailFacade.js";
