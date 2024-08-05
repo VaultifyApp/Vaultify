@@ -2,6 +2,7 @@
 import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../utils/AuthContext";
+import Server from "../utils/Server";
 import querystring from "querystring";
 import axios from "axios";
 
@@ -10,11 +11,11 @@ import axios from "axios";
  */
 const Login = () => {
     const navigate = useNavigate();
-    const { setIsLoggedIn, setProfile } = useContext(AuthContext);
+    const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
     useEffect(() => {
         const login = async () => {
             const _id = localStorage.getItem("_id");
-            // if no profile, redirect to spotify Oauth
+            // if no current user, redirect to spotify Oauth
             if (!_id) {
                 // spotify OAuth will redirect to the login-callback route. see LoginCallback.jsx
                 const params = new URLSearchParams({
@@ -25,15 +26,13 @@ const Login = () => {
                 });
                 window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
             }
-            // else, call backend to update profile
+            // else, call backend to update current user
             else {
                 try {
-                    const response = await axios.get(
-                        `http://localhost:3001/get-user-from-_id?_id=${_id}`
-                    );
-                    const profile = response.data;
+                    const user = await Server.getUserByID(_id);
+                    console.log(user);
                     setIsLoggedIn(true);
-                    setProfile(profile);
+                    setCurrentUser(user);
                     navigate("/home");
                 } catch (err) {
                     navigate("/");
@@ -41,7 +40,7 @@ const Login = () => {
             }
         };
         login();
-    }, [setIsLoggedIn, setProfile, navigate]);
+    }, [setIsLoggedIn, setCurrentUser, navigate]);
 
     return (
         <div>

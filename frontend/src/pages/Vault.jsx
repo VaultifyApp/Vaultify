@@ -14,8 +14,8 @@ const Vault = () => {
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [isZoomedIn, setIsZoomedIn] = useState(false);
 
-    const { profile } = useContext(AuthContext);
-    const playlists = profile.playlists;
+    const { currentUser } = useContext(AuthContext);
+    const playlists = currentUser.playlists;
 
     useEffect(() => {
         console.log("Playlists:", playlists);

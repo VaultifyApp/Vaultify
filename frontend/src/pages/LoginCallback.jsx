@@ -8,28 +8,25 @@ import { AuthContext } from "../utils/AuthContext";
  */
 const LoginCallback = () => {
     const navigate = useNavigate();
-    const { setIsLoggedIn, setProfile } = useContext(AuthContext);
+    const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
     useEffect(() => {
         const loginFromCode = async () => {
             const code = new URLSearchParams(window.location.search).get(
                 "code"
             );
-            const params = new URLSearchParams({ code: code });
             try {
-                const response = await axios.get(
-                    `http://localhost:3001/get-user-from-code?${params.toString()}`
-                );
-                const profile = response.data;
+                const user = await Server.getUserByCode(code);
+                console.log(user);
                 localStorage.setItem("_id", profile._id);
                 setIsLoggedIn(true);
-                setProfile(profile);
+                setCurrentUser(user);
                 navigate("/home");
             } catch (err) {
                 navigate("/");
             }
         };
         loginFromCode();
-    }, [setIsLoggedIn, setProfile, navigate]);
+    }, [setIsLoggedIn, setCurrentUser, navigate]);
     return (
         <div>
             <h1>Logging in...</h1>

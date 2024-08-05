@@ -73,16 +73,12 @@ class Receiver {
      * @effects updates the given user in the db
      */
     private async handleUpdateUser(): Promise<void> {
-        this.app.get("/update-user", async (req: Request, res: Response) => {
-            if (
-                !req.query.user ||
-                typeof req.query.user !== "string" ||
-                req.query.user == "undefined"
-            ) {
+        this.app.post("/update-user", async (req: Request, res: Response) => {
+            if (!req.body) {
                 return res.status(400).json({ error: "user param invalid" });
             }
             try {
-                const user: User = JSON.parse(req.query.user);
+                const user: User = req.body;
                 this.model.updateUser(user);
             } catch (err) {
                 return res.status(400).json({ error: err });
@@ -95,7 +91,7 @@ class Receiver {
      */
     private async handleGetUser(): Promise<void> {
         this.app.get(
-            "/get-user-from-_id",
+            "/get-user-by-_id",
             async (req: Request, res: Response) => {
                 if (
                     !req.query._id ||
@@ -115,7 +111,7 @@ class Receiver {
             }
         );
         this.app.get(
-            "/get-user-from-code",
+            "/get-user-by-code",
             async (req: Request, res: Response) => {
                 if (
                     !req.query.code ||

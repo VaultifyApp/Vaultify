@@ -1,33 +1,32 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../utils/AuthContext";
 import "./Profile.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
+import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
 
 /**
  * Profile page component
  */
 const Profile = () => {
-    const { profile } = useContext(AuthContext);
-    const storedBio =
-        localStorage.getItem("bio") ||
-        profile.bio ||
-        "Hello world! I’m new to Vaultify.";
-    const [bio, setBio] = useState(storedBio);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
+    console.log(currentUser);
     const [editing, setEditing] = useState(false);
-    const [newBio, setNewBio] = useState(storedBio);
+    const [newBio, setNewBio] = useState(
+        currentUser.bio || "Hello world! I’m new to Vaultify."
+    );
 
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
     const greens = [green1, green2, green3];
-    const favoritePlaylists = profile.playlists
+    const favoritePlaylists = currentUser.playlists
         .slice(-3)
         .map((playlist, index) => ({
             title: truncate(playlist.title, 15),
-            image: playlist.image || greens[index],
+            image: playlist.image ? playlist.image.url : greens[index],
             url: playlist.url,
         }));
 
@@ -91,35 +90,15 @@ const Profile = () => {
 
     const handleSaveBio = async () => {
         const updatedBio = newBio.trim() || "Hello world!";
-        setBio(updatedBio);
-        localStorage.setItem("bio", updatedBio);
+        currentUser.bio = updatedBio;
+        setCurrentUser(currentUser);
         setEditing(false);
-
         try {
-            const response = await axios.put(
-                "http://localhost:3001/api/profile/update-bio",
-                {
-                    userId: profile._id,
-                    bio: updatedBio,
-                }
-            );
-
-            if (response.status === 200) {
-                localStorage.setItem(
-                    "profile",
-                    JSON.stringify({ ...profile, bio: updatedBio })
-                );
-            } else {
-                console.error("Failed to update bio:", response.data.message);
-            }
+            Server.updateUser(currentUser);
         } catch (error) {
-            console.error("Error updating bio:", error);
+            console.error("Error updating bio", error);
         }
     };
-
-    useEffect(() => {
-        console.log("Profile data:", profile);
-    }, [profile]);
 
     return (
         <div className="profile-container">
@@ -127,61 +106,52 @@ const Profile = () => {
                 <h1 className="profile-title">Profile</h1>
                 <div className="profile-header">
                     <div className="profile-details-left">
-                        {profile ? (
-                            <div className="profile-info">
-                                <div className="profile-pic">
-                                    <img
-                                        src={
-                                            profile && profile.image
-                                                ? profile.image.url
-                                                : defaultImage
-                                        }
-                                        alt="Profile"
-                                        width="150"
-                                    />
+                        <div className="profile-info">
+                            <div className="profile-pic">
+                                <img
+                                    src={
+                                        currentUser.image
+                                            ? currentUser.image.url
+                                            : defaultImage
+                                    }
+                                    alt="Profile"
+                                    width="150"
+                                />
+                            </div>
+                            <div className="profile-details">
+                                <div className="name-username">
+                                    <h2 className="profile-name">
+                                        {currentUser.username}
+                                    </h2>
                                 </div>
-                                <div className="profile-details">
-                                    <div className="name-username">
-                                        <h2 className="profile-name">
-                                            {profile.username || "Unknown User"}
-                                        </h2>
-                                        <p className="profile-username">
-                                            @{profile.username || "unknown"}
-                                        </p>
-                                    </div>
-                                    <p className="profile-counters">
-                                        {favoritePlaylists.length} Playlists |{" "}
-                                        {favoriteNotes.length} Notes |{" "}
-                                        {achievements.length} Achievements
-                                    </p>
-                                    <div className="bio-section">
-                                        {editing ? (
-                                            <div className="edit-bio-section">
-                                                <textarea
-                                                    className="bio-textarea"
-                                                    value={newBio}
-                                                    onChange={(e) =>
-                                                        setNewBio(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                />
-                                                <button
-                                                    className="save-bio-button"
-                                                    onClick={handleSaveBio}
-                                                >
-                                                    Save
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <p>{bio}</p>
-                                        )}
-                                    </div>
+                                <p className="profile-counters">
+                                    {favoritePlaylists.length} Playlists |{" "}
+                                    {favoriteNotes.length} Notes |{" "}
+                                    {achievements.length} Achievements
+                                </p>
+                                <div className="bio-section">
+                                    {editing ? (
+                                        <div className="edit-bio-section">
+                                            <textarea
+                                                className="bio-textarea"
+                                                value={newBio}
+                                                onChange={(e) =>
+                                                    setNewBio(e.target.value)
+                                                }
+                                            />
+                                            <button
+                                                className="save-bio-button"
+                                                onClick={handleSaveBio}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p>{currentUser.bio}</p>
+                                    )}
                                 </div>
                             </div>
-                        ) : (
-                            <p>Loading...</p>
-                        )}
+                        </div>
                     </div>
                     {!editing && (
                         <div className="edit-bio-button">

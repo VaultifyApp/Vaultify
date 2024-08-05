@@ -7,13 +7,13 @@ import "./PlaylistSuccess.css";
  * Playlist generation success page component
  */
 const PlaylistSuccess = () => {
-    const { profile } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
     // navigates user to the most recently generated playlist
     const handleOpenPlaylist = () => {
-        if (profile && profile.playlists && profile.playlists.length > 0) {
+        if (currentUser.playlists.length > 0) {
             // Get the link of the most recent playlist
             const playlistLink =
-                profile.playlists[profile.playlists.length - 1].url;
+                currentUser.playlists[currentUser.playlists.length - 1].url;
             // Navigate to the playlist link
             window.open(playlistLink);
         } else {

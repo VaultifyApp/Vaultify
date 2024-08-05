@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { AuthContext } from "../utils/AuthContext";
+import Server from "../utils/Server";
 import "./PlaylistGenerator.css";
 
 /**
  * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
-    const [playlist, setPlaylist] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
@@ -19,6 +20,8 @@ const PlaylistGenerator = () => {
     const [customLength, setCustomLength] = useState("");
 
     const navigate = useNavigate(); // Initialize useNavigate
+
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const maxSongs = 250;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
@@ -56,26 +59,11 @@ const PlaylistGenerator = () => {
         setLoading(true);
         setError("");
         try {
-            const response = await axios.get(
-                "http://localhost:3001/generate-playlist",
-                {
-                    params: {
-                        _id: JSON.parse(localStorage.getItem("profile"))._id,
-                        monthly: monthly,
-                    },
-                }
-            );
-            setPlaylist(
-                response.data.playlists[response.data.playlists.length - 1]
-            );
-            localStorage.setItem("profile", JSON.stringify(response.data));
+            setCurrentUser(await Server.generatePlaylist(currentUser, monthly));
             navigate("/playlist-success");
         } catch (error) {
             setError("Error generating playlist");
-            console.error(
-                "Error fetching playlist data from Spotify API",
-                error
-            );
+            console.error(error);
         } finally {
             setLoading(false);
         }

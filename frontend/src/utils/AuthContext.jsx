@@ -3,19 +3,19 @@ import React, { createContext, useState } from "react";
 import PropTypes from "prop-types";
 
 /**
- * AuthContext provided global variables for login status and
- * profile to all components on the site
+ * AuthContext provides global variables for login status and
+ * user to all components on the site
+ * also provides server util functions
  */
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [profile, setProfile] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
 
     return (
         <AuthContext.Provider
-            value={{ isLoggedIn, setIsLoggedIn, profile, setProfile }}
+            value={{ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser }}
         >
             {children}
         </AuthContext.Provider>
