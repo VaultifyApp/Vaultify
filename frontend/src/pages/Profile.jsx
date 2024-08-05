@@ -21,13 +21,13 @@ const Profile = () => {
 
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
-
+    const greens = [green1, green2, green3];
     const favoritePlaylists = profile.playlists
         .slice(-3)
         .map((playlist, index) => ({
-            title: truncate(playlist, 15),
-            image: index === 0 ? green1 : index === 1 ? green2 : green3,
-            url: playlist,
+            title: truncate(playlist.title, 15),
+            image: playlist.image || greens[index],
+            url: playlist.url,
         }));
 
     const favoriteNotes = [
@@ -131,8 +131,7 @@ const Profile = () => {
                                 <div className="profile-pic">
                                     <img
                                         src={
-                                            profile.images[0]?.url ||
-                                            defaultImage
+                                            profile && profile.image ? profile.image.url : defaultImage
                                         }
                                         alt="Profile"
                                         width="150"
