@@ -92,6 +92,14 @@ class Model {
             this.email.sendNewPlaylistEmail(users[i]);
         }
     }
+
+    /**
+     * @param user the user to be updated in the db
+     * @effects updates user in db
+     */
+    async updateUser(user: User, manual: boolean): Promise<void> {
+        this.db.updateUser(user);
+    }
 }
 
 export default Model;

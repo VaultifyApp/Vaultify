@@ -63,6 +63,26 @@ class Receiver {
     }
 
     /**
+     * @effects updates the given user in the db
+     */
+    private async handleUpdateUser(): Promise<void> {
+        this.app.get(
+            "/update-user",
+            async (req: Request, res: Response) => {
+                if (
+                    !req.query.user ||
+                    typeof req.query.user !== "string" ||
+                    req.query.user == "undefined"
+                ) {
+                    throw new Error("User can't be updated");
+                }
+                const user: User = JSON.parse(req.query.user);
+                this.model.updateUser(user);
+            }
+        );
+    }
+
+    /**
      * @returns user with the given _id
      */
     private async handleGetUser(): Promise<void> {
