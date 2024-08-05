@@ -115,6 +115,7 @@ class SpotifyFacade {
             playlists: [],
             bio: "",
             notifs: false,
+            numMonths: 0,
         };
         if (profileResponse.data.images[0])
             user.image = profileResponse.data.images[0];

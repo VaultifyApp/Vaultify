@@ -17,6 +17,7 @@ interface User {
     image?: Image;
     spotifyID: string;
     notifs: boolean;
+    numMonths: number;
 }
 
 export default User;

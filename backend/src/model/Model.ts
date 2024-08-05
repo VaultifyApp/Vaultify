@@ -78,6 +78,7 @@ class Model {
      */
     async generatePlaylist(user: User, manual: boolean): Promise<User> {
         user = await this.spotify.generatePlaylist(user, 50, manual);
+        if (!manual) user.numMonths = user.numMonths + 1;
         this.db.updateUser(user);
         return user;
     }
