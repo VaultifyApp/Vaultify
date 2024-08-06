@@ -303,6 +303,11 @@ class SpotifyFacade {
             },
         };
         await this.makeRequest(user, addToProfileBody);
+        let getImageBody = {
+            method: "get",
+            url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/images`
+        }
+        const imageResponse: AxiosResponse = await this.makeRequest(user, getImageBody);
         if (!user.playlists) {
             user.playlists = [];
         }
@@ -311,7 +316,7 @@ class SpotifyFacade {
             description: description,
             url: createResponse.data.external_urls.spotify,
             spotifyID: createResponse.data.id,
-            image: createResponse.data.images[0],
+            image: imageResponse.data[0],
             mood: averageMood,
             tracks: tracks,
         });
