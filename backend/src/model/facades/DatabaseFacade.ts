@@ -151,9 +151,19 @@ class DatabaseFacade {
                 type: String,
                 required: true,
             },
-            notifs: {
-                type: Boolean,
-                default: false,
+            settings: {
+                notifs: {
+                    type: Boolean,
+                    required: true,
+                },
+                numSongs: {
+                    type: Number,
+                    required: true,
+                },
+                newOnly: {
+                    type: Boolean,
+                    required: true,
+                },
             },
         });
         // stores user model to interact with db
@@ -178,7 +188,7 @@ class DatabaseFacade {
     }
 
     /**
-     * @param email the email to be searched for
+     * @param _id the _id to be searched for
      * @returns the user associated with _id
      * @throws Error if user not found
      */

@@ -114,7 +114,11 @@ class SpotifyFacade {
             spotifyID: profileResponse.data.id,
             playlists: [],
             bio: "",
-            notifs: false,
+            settings: {
+                notifs: false,
+                numSongs: 50,
+                newOnly: false,
+            },
             numMonths: 0,
         };
         if (profileResponse.data.images[0])
@@ -152,10 +156,10 @@ class SpotifyFacade {
      */
     async generatePlaylist(
         user: User,
-        numSongs: number,
-        manualGeneration: boolean,
-        newOnly: boolean,
+        manualGeneration: boolean
     ): Promise<User> {
+        const numSongs = user.settings.numSongs;
+        const newOnly = user.settings.newOnly;
         if (numSongs > 100) throw new Error("numSongs must be <= 100");
         // Get current month and year to name playlist
         const currentDate = new Date();
@@ -216,8 +220,10 @@ class SpotifyFacade {
                 method: "get",
                 url: "https://api.spotify.com/v1/me/top/tracks",
                 params: {
-                    limit: newOnly ? 50 : Math.min(50,numSongs-toBeAdded.length),
-                    offset: 50*i,
+                    limit: newOnly
+                        ? 50
+                        : Math.min(50, numSongs - toBeAdded.length),
+                    offset: 50 * i,
                     time_range: "short_term",
                 },
             };
@@ -231,8 +237,7 @@ class SpotifyFacade {
                         toBeAdded.push(item);
                     }
                 }
-            }
-            else {
+            } else {
                 toBeAdded.push(...getTracksResponse.data.items);
             }
             // if user has no more top items, break !!!
@@ -244,9 +249,7 @@ class SpotifyFacade {
         let tracks: Track[] = [];
         // only analyze / add songs if user has songs
         if (toBeAdded.length > 0) {
-            const ids = toBeAdded.map(
-                (item: { id: string }) => item.id
-            );
+            const ids = toBeAdded.map((item: { id: string }) => item.id);
             // analyze mood of tracks
             const analysisBody = {
                 method: "get",

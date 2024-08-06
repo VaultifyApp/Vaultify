@@ -16,8 +16,12 @@ interface User {
     playlists: Playlist[];
     image?: Image;
     spotifyID: string;
-    notifs: boolean;
     numMonths: number;
+    settings: {
+        notifs: boolean;
+        newOnly: boolean;
+        numSongs: number;
+    };
 }
 
 export default User;

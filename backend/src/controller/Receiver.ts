@@ -26,7 +26,7 @@ class Receiver {
      */
     private removeTokens(user: User) {
         const {
-            notifs,
+            settings,
             spotifyID,
             href,
             uri,
@@ -45,21 +45,19 @@ class Receiver {
             "/generate-playlist",
             async (req: Request, res: Response) => {
                 if (
-                    !req.query._id ||
                     typeof req.query._id !== "string" ||
-                    req.query._id == "undefined"
+                    typeof req.query.monthly != "string" ||
+                    typeof req.query.newOnly != "string" ||
+                    typeof req.query.numSongs != "string"
                 ) {
-                    return res.status(400).json({ error: "Invalid _id param" });
-                }
-                if (typeof req.query.monthly != "string") {
-                    return res
-                        .status(400)
-                        .json({ error: "Invalid monthly param" });
+                    return res.status(400).json({ error: "Invalid params" });
                 }
                 try {
                     let user: User = await this.model.configGeneration(
                         req.query._id,
-                        req.query.monthly
+                        JSON.parse(req.query.monthly),
+                        Number(req.query.numSongs),
+                        JSON.parse(req.query.newOnly)
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {

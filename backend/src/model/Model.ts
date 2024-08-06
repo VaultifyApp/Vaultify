@@ -58,18 +58,18 @@ class Model {
      * @returns an updated user with a newly generated playlist
      * @effects saves the updated user to the database and sends welcome email
      */
-    async configGeneration(_id: string, notifs: string): Promise<User> {
+    async configGeneration(
+        _id: string,
+        notifs: boolean,
+        numSongs: number,
+        newOnly: boolean
+    ): Promise<User> {
         let user: User = await this.db.getUser(_id);
+        user.settings.notifs = notifs;
+        user.settings.numSongs = numSongs;
+        user.settings.newOnly = newOnly;
         user = await this.generatePlaylist(user, true);
-        if (notifs == "true") {
-            user.notifs = true;
-            this.email.sendWelcomeEmail(user);
-            this.db.updateUser(user);
-        } else {
-            user.notifs = false;
-            this.db.updateUser(user);
-        }
-
+        this.db.updateUser(user);
         return user;
     }
 
@@ -80,11 +80,7 @@ class Model {
      * @effects saves the updated user to the database
      */
     async generatePlaylist(user: User, manual: boolean): Promise<User> {
-        /**
-         * :: TODO ::
-         * config new only
-         */
-        user = await this.spotify.generatePlaylist(user, 50, manual, false);
+        user = await this.spotify.generatePlaylist(user, manual);
         if (!manual) user.numMonths = user.numMonths + 1;
         this.db.updateUser(user);
         return user;
