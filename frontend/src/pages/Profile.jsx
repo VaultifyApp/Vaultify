@@ -17,11 +17,11 @@ const Profile = () => {
     const [newBio, setNewBio] = useState(
         currentUser.bio || "Hello world! I’m new to Vaultify."
     );
-
+    // configs recent playlists
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
     const greens = [green1, green2, green3];
-    const favoritePlaylists = currentUser.playlists
+    const recentPlaylists = currentUser.playlists
         .slice(-5)
         .map((playlist, index) => ({
             title: truncate(playlist.title, 15),
@@ -29,58 +29,37 @@ const Profile = () => {
             url: playlist.url,
         }));
 
-    const achievements = [
-        { name: "Leaping in!", description: "Make your first playlist." },
-        {
-            name: "Mixer Maxer",
-            description: "Make a playlist with more than one genre.",
-        },
-        {
-            name: "Meow-meow-meow",
-            description: "Have 'What Was I Made For?' included in a playlist.",
-        },
-        {
-            name: "Groovy Guru",
-            description: "Create a playlist with 10 or more songs.",
-        },
-        {
-            name: "Genre Jumper",
-            description:
-                "Create a playlist with songs from at least 3 different genres.",
-        },
-        {
-            name: "Ultimate Collector",
-            description: "Save 50 or more playlists.",
-        },
-        {
-            name: "Social Butterfly",
-            description: "Share a playlist with a friend.",
-        },
-        {
-            name: "Trendsetter",
-            description: "Have 5 or more followers on your playlists.",
-        },
-        {
-            name: "Mood Maker",
-            description: "Create a playlist for each day of the week.",
-        },
-        {
-            name: "DJ in the Making",
-            description: "Remix a song using the app’s tools.",
-        },
-        {
-            name: "Playlist Pro",
-            description: "Create a playlist with over 100 songs.",
-        },
-        {
-            name: "Themed Maestro",
-            description: "Create a playlist with a specific theme.",
-        },
-    ];
-
-    const handleEditBio = () => {
-        setEditing(true);
-    };
+    // determine achievements
+    const achievements = [];
+    if (currentUser.playlists.length > 0) {
+        achievements.push({
+             name: "Leaping in!", description: "Generate your first playlist."
+        })
+    }
+    if (currentUser.numMonths > 0) {
+        achievements.push({
+            name: "Novice Vaulter",
+            description: "One month of automatic playlist generation."
+        })
+    }
+    if (currentUser.numMonths > 2) {
+        achievements.push({
+                name: "Intermediate Vaulter",
+                description: "Three months of automatic playlist generation."
+        })
+    }
+    if (currentUser.numMonths > 5) {
+        achievements.push({
+            name: "Expert Vaulter",
+            description: "Six months of automatic playlist generation."
+        })
+    }
+    if (currentUser.numMonths > 11) {
+        achievements.push({
+            name: "Grand Wizard",
+            description: "One year of automatic playlist generation. :0"
+        })
+    }
 
     const handleSaveBio = async () => {
         const updatedBio = newBio.trim() || "Hello world!";
@@ -119,8 +98,11 @@ const Profile = () => {
                                     </h2>
                                 </div>
                                 <p className="profile-counters">
-                                    {currentUser.playlists.length} Playlists |{" "}
-                                    {achievements.length} Achievements
+                                    {currentUser.playlists.length}{" "}
+                                    {currentUser.playlists.length == 1 ? "Playlist" : "Playlists"}
+                                    {" | "}
+                                    {achievements.length}{" "}
+                                    {achievements.length == 1 ? "Achievement" : "Achievement"}
                                 </p>
                                 <div className="bio-section">
                                     {editing ? (
@@ -148,15 +130,15 @@ const Profile = () => {
                     </div>
                     {!editing && (
                         <div className="edit-bio-button">
-                            <button onClick={handleEditBio}>Edit Bio</button>
+                            <button onClick={setEditing}>Edit Bio</button>
                         </div>
                     )}
                 </div>
-                    <div className="favorite-playlists">
+                    <div className="playlists-container">
                         <h3>Recent Playlists</h3>
                         <div className="playlists">
-                            {favoritePlaylists.length > 0 ? (
-                                favoritePlaylists.map((playlist, index) => (
+                            {recentPlaylists.length > 0 ? (
+                                recentPlaylists.map((playlist, index) => (
                                     <div key={index} className="playlist">
                                         <a
                                             className="playlist-link"
@@ -183,9 +165,9 @@ const Profile = () => {
                             )}
                         </div>
                     </div>
-                    <div className="achievements">
+                    <div className="achievements-container">
                         <h3>Achievements</h3>
-                        <div className="achievements-list">
+                        <div className="achievements">
                             {achievements.map((achievement, index) => (
                                 <div key={index} className="achievement">
                                     <div className="achievement-title">
