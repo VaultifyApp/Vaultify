@@ -31,20 +31,20 @@ const PlaylistGenerator = () => {
         const lengthValue = Number(customLength);
         if (
             (lengthType === "songs" &&
-            !isNaN(lengthValue) &&
-            lengthValue > 0 &&
-            lengthValue <= maxSongs) ||
+                !isNaN(lengthValue) &&
+                lengthValue > 0 &&
+                lengthValue <= maxSongs) ||
             (lengthType === "time" &&
-            !isNaN(lengthValue) &&
-            lengthValue > 0 &&
-            lengthValue <= maxTimeInHours)
+                !isNaN(lengthValue) &&
+                lengthValue > 0 &&
+                lengthValue <= maxTimeInHours)
         ) {
-            if (lengthType === "time") setNumSongs(Math.round(lengthValue*20.0));
+            if (lengthType === "time")
+                setNumSongs(Math.round(lengthValue * 20.0));
             else setNumSongs(Math.round(lengthValue));
             setIsModalOpen(false);
             setCustomLength(true);
-        }
-        else {
+        } else {
             alert(
                 `Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`
             );
@@ -56,7 +56,14 @@ const PlaylistGenerator = () => {
         setLoading(true);
         setError(false);
         try {
-            setCurrentUser(await Server.generatePlaylist(currentUser, monthly, numSongs, newOnly));
+            setCurrentUser(
+                await Server.generatePlaylist(
+                    currentUser,
+                    monthly,
+                    numSongs,
+                    newOnly
+                )
+            );
             navigate("/playlist-success");
         } catch (error) {
             setError(true);
@@ -127,12 +134,20 @@ const PlaylistGenerator = () => {
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className={
-                                    !(numSongs===25||numSongs===50||numSongs===100) 
+                                    !(
+                                        numSongs === 25 ||
+                                        numSongs === 50 ||
+                                        numSongs === 100
+                                    )
                                         ? "selected"
                                         : ""
                                 }
                             >
-                                {!(numSongs===25||numSongs===50||numSongs===100) 
+                                {!(
+                                    numSongs === 25 ||
+                                    numSongs === 50 ||
+                                    numSongs === 100
+                                )
                                     ? `${numSongs} songs`
                                     : "Custom"}
                             </button>
@@ -163,13 +178,21 @@ const PlaylistGenerator = () => {
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className={
-                                    !(numSongs===20||numSongs===60||numSongs===100) 
+                                    !(
+                                        numSongs === 20 ||
+                                        numSongs === 60 ||
+                                        numSongs === 100
+                                    )
                                         ? "selected"
                                         : ""
                                 }
                             >
-                                {!(numSongs===20||numSongs===60||numSongs===100) 
-                                    ? `${(numSongs*3)/60} hours`
+                                {!(
+                                    numSongs === 20 ||
+                                    numSongs === 60 ||
+                                    numSongs === 100
+                                )
+                                    ? `${(numSongs * 3) / 60} hours`
                                     : "Custom"}
                             </button>
                         </div>
@@ -239,7 +262,11 @@ const PlaylistGenerator = () => {
                                 }
                                 placeholder={`Enter number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}`}
                                 min="1"
-                                max={lengthType === "songs" ? maxSongs : maxTimeInHours}
+                                max={
+                                    lengthType === "songs"
+                                        ? maxSongs
+                                        : maxTimeInHours
+                                }
                             />
                             <button onClick={handleCustomLengthSubmit}>
                                 Submit
