@@ -107,6 +107,7 @@ select {
 .error {
     color: red;
     margin-top: 20px;
+    text-align: center;
 }
 
 .playlist {
@@ -119,6 +120,7 @@ select {
 }
 
 .playlist-text {
+    text-align: center;
     margin-top: 20px;
     font-size: 1rem;
     line-height: 1.5;
@@ -155,44 +157,5 @@ button {
 }
 
 button:hover {
-    background-color: #16a34a;
-}
-
-.success-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #1a1a1a;
-    border: none; /* Remove any borders */
-}
-
-.success-content {
-    text-align: center;
-    color: white;
-    background: #1a1a1a; /* Ensure background color is consistent */
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: none; /* Remove box shadow */
-}
-
-.success-icon {
-    font-size: 5rem;
-    color: #00d76a;
-    margin: 20px 0;
-}
-
-.success-link {
-    background-color: #00d76a;
-    color: white;
-    font-size: 1.5rem;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.success-link:hover {
     background-color: #16a34a;
 }

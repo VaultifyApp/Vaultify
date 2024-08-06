@@ -10,44 +10,41 @@ import "./PlaylistGenerator.css";
  */
 const PlaylistGenerator = () => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [lengthType, setLengthType] = useState("songs"); // "songs" or "time"
-    const [length, setLength] = useState(25);
+    const [error, setError] = useState(false);
+    const [lengthType, setLengthType] = useState("songs");
+    const [numSongs, setNumSongs] = useState(25);
     const [coverTheme, setCoverTheme] = useState("");
-    const [newSongsOnly, setNewSongsOnly] = useState(true);
+    const [newOnly, setNewOnly] = useState(false);
     const [monthly, setMonthly] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [customLength, setCustomLength] = useState("");
+    const [customLength, setCustomLength] = useState(false);
 
     const navigate = useNavigate(); // Initialize useNavigate
 
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
-    const maxSongs = 250;
+    const maxSongs = 100;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
 
     // verifies validity of custom length inputs
     const handleCustomLengthSubmit = () => {
-        const lengthValue = parseInt(customLength, 10);
+        const lengthValue = Number(customLength);
         if (
-            lengthType === "songs" &&
+            (lengthType === "songs" &&
             !isNaN(lengthValue) &&
             lengthValue > 0 &&
-            lengthValue <= maxSongs
-        ) {
-            setLength(lengthValue);
-            setIsModalOpen(false);
-            setCustomLength("");
-        } else if (
-            lengthType === "time" &&
+            lengthValue <= maxSongs) ||
+            (lengthType === "time" &&
             !isNaN(lengthValue) &&
             lengthValue > 0 &&
-            lengthValue <= maxTimeInHours
+            lengthValue <= maxTimeInHours)
         ) {
-            setLength(lengthValue * 60); // Convert hours to minutes
+            if (lengthType === "time") setNumSongs(Math.round(lengthValue*20.0));
+            else setNumSongs(Math.round(lengthValue));
             setIsModalOpen(false);
-            setCustomLength("");
-        } else {
+            setCustomLength(true);
+        }
+        else {
             alert(
                 `Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`
             );
@@ -57,12 +54,12 @@ const PlaylistGenerator = () => {
     // calls the server to generate a playlist for the user
     const generatePlaylist = async () => {
         setLoading(true);
-        setError("");
+        setError(false);
         try {
-            setCurrentUser(await Server.generatePlaylist(currentUser, monthly));
+            setCurrentUser(await Server.generatePlaylist(currentUser, monthly, numSongs, newOnly));
             navigate("/playlist-success");
         } catch (error) {
-            setError("Error generating playlist");
+            setError(true);
             console.error(error);
         } finally {
             setLoading(false);
@@ -73,9 +70,9 @@ const PlaylistGenerator = () => {
     const handleLengthTypeChange = (type) => {
         setLengthType(type);
         if (type === "time") {
-            setLength(60); // Automatically set to 1 hour
+            setNumSongs(20); // Automatically set to 1 hour
         } else {
-            setLength(25); // Default to 25 songs
+            setNumSongs(25); // Default to 25 songs
         }
     };
 
@@ -110,27 +107,33 @@ const PlaylistGenerator = () => {
                         <label>Length:</label>
                         <div className="length-options">
                             <button
-                                onClick={() => setLength(25)}
-                                className={length === 25 ? "selected" : ""}
+                                onClick={() => setNumSongs(25)}
+                                className={numSongs === 25 ? "selected" : ""}
                             >
                                 25 songs
                             </button>
                             <button
-                                onClick={() => setLength(50)}
-                                className={length === 50 ? "selected" : ""}
+                                onClick={() => setNumSongs(50)}
+                                className={numSongs === 50 ? "selected" : ""}
                             >
                                 50 songs
                             </button>
                             <button
+                                onClick={() => setNumSongs(100)}
+                                className={numSongs === 100 ? "selected" : ""}
+                            >
+                                100 songs
+                            </button>
+                            <button
                                 onClick={() => setIsModalOpen(true)}
                                 className={
-                                    typeof length === "number" && length > 50
+                                    !(numSongs===25||numSongs===50||numSongs===100) 
                                         ? "selected"
                                         : ""
                                 }
                             >
-                                {typeof length === "number" && length > 50
-                                    ? `Custom`
+                                {!(numSongs===25||numSongs===50||numSongs===100) 
+                                    ? `${numSongs} songs`
                                     : "Custom"}
                             </button>
                         </div>
@@ -140,27 +143,33 @@ const PlaylistGenerator = () => {
                         <label>Length:</label>
                         <div className="length-options">
                             <button
-                                onClick={() => setLength(60)}
-                                className={length === 60 ? "selected" : ""}
+                                onClick={() => setNumSongs(20)}
+                                className={numSongs === 20 ? "selected" : ""}
                             >
                                 1 hour
                             </button>
                             <button
-                                onClick={() => setLength(180)}
-                                className={length === 180 ? "selected" : ""}
+                                onClick={() => setLength(60)}
+                                className={numSongs === 60 ? "selected" : ""}
                             >
                                 3 hours
                             </button>
                             <button
+                                onClick={() => setNumSongs(100)}
+                                className={numSongs === 100 ? "selected" : ""}
+                            >
+                                5 hours
+                            </button>
+                            <button
                                 onClick={() => setIsModalOpen(true)}
                                 className={
-                                    typeof length === "number" && length > 180
+                                    !(numSongs===20||numSongs===60||numSongs===100) 
                                         ? "selected"
                                         : ""
                                 }
                             >
-                                {typeof length === "number" && length > 180
-                                    ? `Custom`
+                                {!(numSongs===20||numSongs===60||numSongs===100) 
+                                    ? `${(numSongs*3)/60} hours`
                                     : "Custom"}
                             </button>
                         </div>
@@ -184,10 +193,10 @@ const PlaylistGenerator = () => {
                     <label>
                         <input
                             type="checkbox"
-                            checked={newSongsOnly}
-                            onChange={(e) => setNewSongsOnly(e.target.checked)}
+                            checked={newOnly}
+                            onChange={(e) => setNewOnly(e.target.checked)}
                         />
-                        New to me only
+                        {" New to me only"}
                     </label>
                 </div>
 
@@ -198,7 +207,7 @@ const PlaylistGenerator = () => {
                             checked={monthly}
                             onChange={(e) => setMonthly(e.target.checked)}
                         />
-                        Monthly generation and notifications
+                        {" Monthly generation and notifications"}
                     </label>
                 </div>
 
@@ -210,7 +219,7 @@ const PlaylistGenerator = () => {
                     {loading ? "Generating..." : "Generate"}
                 </button>
 
-                {error && <p className="error">{error}</p>}
+                {error && <p className="error">Error Generating Playlist</p>}
 
                 <p className="playlist-text">
                     Vaultify generates personalized playlists for you based on
@@ -228,9 +237,9 @@ const PlaylistGenerator = () => {
                                 onChange={(e) =>
                                     setCustomLength(e.target.value)
                                 }
-                                placeholder={`Enter number of ${lengthType === "songs" ? "songs (1-250)" : `hours (1-${maxTimeInHours})`}`}
+                                placeholder={`Enter number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}`}
                                 min="1"
-                                max={lengthType === "songs" ? "250" : ""}
+                                max={lengthType === "songs" ? maxSongs : maxTimeInHours}
                             />
                             <button onClick={handleCustomLengthSubmit}>
                                 Submit

@@ -16,7 +16,7 @@ class Server {
     /**
      * @effects generates a playlist for the current user
      */
-    static async generatePlaylist(user, monthly) {
+    static async generatePlaylist(user, monthly, numSongs, newOnly) {
         const body = {
             monthly: monthly,
         };
@@ -26,6 +26,8 @@ class Server {
                 params: {
                     _id: user._id,
                     monthly: monthly,
+                    numSongs: numSongs,
+                    newOnly: newOnly,
                 },
             }
         );

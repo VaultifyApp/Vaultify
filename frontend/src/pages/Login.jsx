@@ -34,7 +34,6 @@ const Login = () => {
             else {
                 try {
                     const user = await Server.getUserByID(_id);
-                    console.log(user);
                     setIsLoggedIn(true);
                     setCurrentUser(user);
                     navigate("/home");

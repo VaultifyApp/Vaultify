@@ -236,6 +236,7 @@ class SpotifyFacade {
                     if (!oldTracks[item.id]) {
                         toBeAdded.push(item);
                     }
+                    if (toBeAdded.length == numSongs) break;
                 }
             } else {
                 toBeAdded.push(...getTracksResponse.data.items);
