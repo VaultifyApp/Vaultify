@@ -25,7 +25,9 @@ const Profile = () => {
         .slice(-5)
         .map((playlist, index) => ({
             title: truncate(playlist.title, 15),
-            image: playlist.image ? playlist.image.url : greens[index % greens.length],
+            image: playlist.image
+                ? playlist.image.url
+                : greens[index % greens.length],
             url: playlist.url,
         }));
 
@@ -33,32 +35,33 @@ const Profile = () => {
     const achievements = [];
     if (currentUser.playlists.length > 0) {
         achievements.push({
-             name: "Leaping in!", description: "Generate your first playlist."
-        })
+            name: "Leaping in!",
+            description: "Generate your first playlist.",
+        });
     }
     if (currentUser.numMonths > 0) {
         achievements.push({
             name: "Novice Vaulter",
-            description: "One month of automatic playlist generation."
-        })
+            description: "One month of automatic playlist generation.",
+        });
     }
     if (currentUser.numMonths > 2) {
         achievements.push({
-                name: "Intermediate Vaulter",
-                description: "Three months of automatic playlist generation."
-        })
+            name: "Intermediate Vaulter",
+            description: "Three months of automatic playlist generation.",
+        });
     }
     if (currentUser.numMonths > 5) {
         achievements.push({
             name: "Expert Vaulter",
-            description: "Six months of automatic playlist generation."
-        })
+            description: "Six months of automatic playlist generation.",
+        });
     }
     if (currentUser.numMonths > 11) {
         achievements.push({
             name: "Grand Wizard",
-            description: "One year of automatic playlist generation. :0"
-        })
+            description: "One year of automatic playlist generation. :0",
+        });
     }
 
     const handleSaveBio = async () => {
@@ -99,10 +102,14 @@ const Profile = () => {
                                 </div>
                                 <p className="profile-counters">
                                     {currentUser.playlists.length}{" "}
-                                    {currentUser.playlists.length == 1 ? "Playlist" : "Playlists"}
+                                    {currentUser.playlists.length == 1
+                                        ? "Playlist"
+                                        : "Playlists"}
                                     {" | "}
                                     {achievements.length}{" "}
-                                    {achievements.length == 1 ? "Achievement" : "Achievement"}
+                                    {achievements.length == 1
+                                        ? "Achievement"
+                                        : "Achievement"}
                                 </p>
                                 <div className="bio-section">
                                     {editing ? (
@@ -134,53 +141,53 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
-                    <div className="playlists-container">
-                        <h3>Recent Playlists</h3>
-                        <div className="playlists">
-                            {recentPlaylists.length > 0 ? (
-                                recentPlaylists.map((playlist, index) => (
-                                    <div key={index} className="playlist">
-                                        <a
-                                            className="playlist-link"
-                                            href={playlist.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <img
-                                                src={playlist.image}
-                                                alt={playlist.title}
-                                                width="100"
-                                            />
-                                            {playlist.title}
-                                        </a>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="playlist">
-                                    <p>
-                                        No Playlists available... Get started
-                                        with our Playlist Generator!
-                                    </p>
+                <div className="playlists-container">
+                    <h3>Recent Playlists</h3>
+                    <div className="playlists">
+                        {recentPlaylists.length > 0 ? (
+                            recentPlaylists.map((playlist, index) => (
+                                <div key={index} className="playlist">
+                                    <a
+                                        className="playlist-link"
+                                        href={playlist.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            src={playlist.image}
+                                            alt={playlist.title}
+                                            width="100"
+                                        />
+                                        {playlist.title}
+                                    </a>
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="achievements-container">
-                        <h3>Achievements</h3>
-                        <div className="achievements">
-                            {achievements.map((achievement, index) => (
-                                <div key={index} className="achievement">
-                                    <div className="achievement-title">
-                                        {achievement.name}
-                                    </div>
-                                    <div className="achievement-description">
-                                        {achievement.description}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                            ))
+                        ) : (
+                            <div className="playlist">
+                                <p>
+                                    No Playlists available... Get started with
+                                    our Playlist Generator!
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
+                <div className="achievements-container">
+                    <h3>Achievements</h3>
+                    <div className="achievements">
+                        {achievements.map((achievement, index) => (
+                            <div key={index} className="achievement">
+                                <div className="achievement-title">
+                                    {achievement.name}
+                                </div>
+                                <div className="achievement-description">
+                                    {achievement.description}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
