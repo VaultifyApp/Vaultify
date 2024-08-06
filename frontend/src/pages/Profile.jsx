@@ -13,7 +13,6 @@ import defaultImage from "../assets/default.jpg";
  */
 const Profile = () => {
     const { currentUser, setCurrentUser } = useContext(AuthContext);
-    console.log(currentUser);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(
         currentUser.bio || "Hello world! I’m new to Vaultify."
@@ -23,17 +22,12 @@ const Profile = () => {
         str.length > n ? str.substr(0, n - 1) + "..." : str;
     const greens = [green1, green2, green3];
     const favoritePlaylists = currentUser.playlists
-        .slice(-3)
+        .slice(-5)
         .map((playlist, index) => ({
             title: truncate(playlist.title, 15),
-            image: playlist.image ? playlist.image.url : greens[index],
+            image: playlist.image ? playlist.image.url : greens[index % greens.length],
             url: playlist.url,
         }));
-
-    const favoriteNotes = [
-        "stooppp this song brings back so many memories!! it’s like i’m being transported back to late-night drives with friends ugh i love it",
-        "my girlssss slayyyyyyyed",
-    ];
 
     const achievements = [
         { name: "Leaping in!", description: "Make your first playlist." },
@@ -125,8 +119,7 @@ const Profile = () => {
                                     </h2>
                                 </div>
                                 <p className="profile-counters">
-                                    {favoritePlaylists.length} Playlists |{" "}
-                                    {favoriteNotes.length} Notes |{" "}
+                                    {currentUser.playlists.length} Playlists |{" "}
                                     {achievements.length} Achievements
                                 </p>
                                 <div className="bio-section">
@@ -159,56 +152,53 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
-                <div className="content-row">
                     <div className="favorite-playlists">
-                        <h3>Favorite Playlists</h3>
+                        <h3>Recent Playlists</h3>
                         <div className="playlists">
-                            {favoritePlaylists.map((playlist, index) => (
-                                <div key={index} className="playlist">
-                                    <img
-                                        src={playlist.image}
-                                        alt={playlist.title}
-                                        width="100"
-                                    />
-                                    <a
-                                        className="playlist-link"
-                                        href={playlist.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {playlist.title}
-                                    </a>
+                            {favoritePlaylists.length > 0 ? (
+                                favoritePlaylists.map((playlist, index) => (
+                                    <div key={index} className="playlist">
+                                        <a
+                                            className="playlist-link"
+                                            href={playlist.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <img
+                                                src={playlist.image}
+                                                alt={playlist.title}
+                                                width="100"
+                                            />
+                                            {playlist.title}
+                                        </a>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="playlist">
+                                    <p>
+                                        No Playlists available... Get started
+                                        with our Playlist Generator!
+                                    </p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
-                    <div className="favorite-notes">
-                        <h3>Favorite Notes</h3>
-                        <div className="notes">
-                            {favoriteNotes.map((note, index) => (
-                                <div key={index} className="note">
-                                    <p>{note}</p>
+                    <div className="achievements">
+                        <h3>Achievements</h3>
+                        <div className="achievements-list">
+                            {achievements.map((achievement, index) => (
+                                <div key={index} className="achievement">
+                                    <div className="achievement-title">
+                                        {achievement.name}
+                                    </div>
+                                    <div className="achievement-description">
+                                        {achievement.description}
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-                <div className="achievements">
-                    <h3>Achievements</h3>
-                    <div className="achievements-list">
-                        {achievements.map((achievement, index) => (
-                            <div key={index} className="achievement">
-                                <div className="achievement-title">
-                                    {achievement.name}
-                                </div>
-                                <div className="achievement-description">
-                                    {achievement.description}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

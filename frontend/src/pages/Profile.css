@@ -122,25 +122,21 @@
 .favorite-playlists,
 .achievements {
     margin-top: 20px;
-    width: 51%;
-}
-
-.favorite-notes,
-.achievements {
-    margin-top: 20px;
-    width: 41%;
+    width: 100%;
 }
 
 .playlists,
-.notes,
+.achievement,
 .achievements-list {
+    margin-top: 0px;
+    padding-top: 0px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     flex-wrap: wrap;
+    width: 100%
 }
 
 .playlist,
-.note,
 .achievement {
     margin: 10px;
     text-align: center; /* Center the text for playlist titles */
@@ -152,18 +148,7 @@
     margin: 0 auto; /* Center the image */
 }
 
-.note {
-    background-color: #3b3b3b;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    max-width: 200px;
-    margin: 5px;
-}
-
 .playlist p,
-.note p,
 .achievement p {
     margin-top: 5px;
     font-size: 14px;

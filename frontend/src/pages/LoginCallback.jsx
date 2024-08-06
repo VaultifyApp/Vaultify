@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useContext } from "react";
 import { AuthContext } from "../utils/AuthContext";
+import Server from "../utils/Server";
 
 /**
  * handles OAuth callback from Spotify. Uses code to fetch profile from server
@@ -16,12 +17,12 @@ const LoginCallback = () => {
             );
             try {
                 const user = await Server.getUserByCode(code);
-                console.log(user);
-                localStorage.setItem("_id", profile._id);
+                localStorage.setItem("_id", user._id);
                 setIsLoggedIn(true);
                 setCurrentUser(user);
                 navigate("/home");
             } catch (err) {
+                console.log(err);
                 navigate("/");
             }
         };
