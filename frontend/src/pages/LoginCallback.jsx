@@ -1,30 +1,33 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { AuthContext } from "../utils/AuthContext";
+import Server from "../utils/Server";
 
+/**
+ * handles OAuth callback from Spotify. Uses code to fetch profile from server
+ */
 const LoginCallback = () => {
     const navigate = useNavigate();
-    const { setIsLoggedIn, setProfile } = useContext(AuthContext);
+    const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
     useEffect(() => {
         const loginFromCode = async () => {
             const code = new URLSearchParams(window.location.search).get(
                 "code"
             );
-
-            console.log(code);
-            const params = new URLSearchParams({ code: code });
-            const response = await axios.get(
-                `http://localhost:3001/get-user-from-code?${params.toString()}`
-            );
-            const profile = response.data;
-            localStorage.setItem("profile", JSON.stringify(profile));
-            setIsLoggedIn(true);
-            setProfile(profile);
-            navigate("/home");
+            try {
+                const user = await Server.getUserByCode(code);
+                localStorage.setItem("_id", user._id);
+                setIsLoggedIn(true);
+                setCurrentUser(user);
+                navigate("/home");
+            } catch (err) {
+                console.log(err);
+                navigate("/");
+            }
         };
         loginFromCode();
-    }, [setIsLoggedIn, setProfile, navigate]);
+    }, [setIsLoggedIn, setCurrentUser, navigate]);
     return (
         <div>
             <h1>Logging in...</h1>

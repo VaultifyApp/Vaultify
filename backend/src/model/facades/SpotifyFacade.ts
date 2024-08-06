@@ -1,9 +1,9 @@
 import { Buffer } from "buffer";
 import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
-import User from "../User.js";
-import Playlist from "../Playlist.js";
-import Track from "../Track.js";
+import User from "../interfaces/User.js";
+import Playlist from "../interfaces/Playlist.js";
+import Track from "../interfaces/Track.js";
 import { URLSearchParams } from "url";
 
 /**
@@ -114,7 +114,12 @@ class SpotifyFacade {
             spotifyID: profileResponse.data.id,
             playlists: [],
             bio: "",
-            notifs: false,
+            settings: {
+                notifs: false,
+                numSongs: 50,
+                newOnly: false,
+            },
+            numMonths: 0,
         };
         if (profileResponse.data.images[0])
             user.image = profileResponse.data.images[0];
@@ -142,83 +147,20 @@ class SpotifyFacade {
     }
 
     /**
-     * @param user the user to retrieve songs for
-     * @param numSongs num top songs to retrieve
-     * @returns an array of uri's of the user's top songs for the month
-     */
-    private async getTopSongs(user: User, numSongs: number): Promise<Track[]> {
-        // fetch top tracks for users
-
-        /**
-         * ::::::: TODO :::::::
-         * config for > 50 songs since you have to make multiple requests!
-         */
-
-        let getBody = {
-            method: "get",
-            url: "https://api.spotify.com/v1/me/top/tracks",
-            params: {
-                limit: numSongs,
-                time_range: "short_term",
-            },
-        };
-        const getTracksResponse: AxiosResponse = await this.makeRequest(
-            user,
-            getBody
-        );
-        // get mood info for tracks
-        const trackData = getTracksResponse.data.items;
-        const ids = getTracksResponse.data.items.map(
-            (item: { id: string }) => item.id
-        );
-        /**
-         * ::::: TODO :::::
-         * config for > 100 ids
-         */
-        const analysisBody = {
-            method: "get",
-            url: "https://api.spotify.com/v1/audio-features",
-            params: {
-                ids: ids.join(","),
-            },
-        };
-        const analysisResponse: AxiosResponse = await this.makeRequest(
-            user,
-            analysisBody
-        );
-        const analysisData = analysisResponse.data.audio_features;
-        // construct Track objects
-        let tracks: Track[] = [];
-        let moodTotal = 0;
-        for (let i = 0; i < trackData.length; i++) {
-            tracks.push({
-                title: trackData[i].name,
-                artists: trackData[i].artists.map(
-                    (artist: { name: string }) => artist.name
-                ),
-                spotifyID: trackData[i].id,
-                url: trackData[i].external_urls.spotify,
-                popularity: trackData[i].popularity,
-                image: trackData[i].album.images[0],
-            });
-            moodTotal += analysisData[i].valence;
-        }
-        const averageMood: number = moodTotal / trackData.length;
-        return tracks;
-    }
-
-    /**
      *
      * @param user the user to generate a playlist for
      * @param numSongs the number of songs to add to the playlist
      * @param manualGeneration whether the playlist was manually generated
+     * @param newOnly whether only new songs to the user should be used
      * @returns an updated user object with a new playlist
      */
     async generatePlaylist(
         user: User,
-        numSongs: number,
         manualGeneration: boolean
     ): Promise<User> {
+        const numSongs = user.settings.numSongs;
+        const newOnly = user.settings.newOnly;
+        if (numSongs > 100) throw new Error("numSongs must be <= 100");
         // Get current month and year to name playlist
         const currentDate = new Date();
         const monthIndex = currentDate.getMonth();
@@ -262,37 +204,53 @@ class SpotifyFacade {
         };
         const createResponse = await this.makeRequest(user, createBody);
         // fetch top tracks for users
-
-        /**
-         * ::::::: TODO :::::::
-         * config for > 50 songs since you have to make multiple requests!
-         */
-
-        let getBody = {
-            method: "get",
-            url: "https://api.spotify.com/v1/me/top/tracks",
-            params: {
-                limit: numSongs,
-                time_range: "short_term",
-            },
-        };
-        const getTracksResponse: AxiosResponse = await this.makeRequest(
-            user,
-            getBody
-        );
-        const trackData = getTracksResponse.data.items;
+        // if newOnly, fetch all tracks for user in dictionary
+        let oldTracks: { [key: string]: boolean } = {};
+        if (newOnly) {
+            for (const playlist of user.playlists) {
+                for (const track of playlist.tracks) {
+                    oldTracks[track.spotifyID] = true;
+                }
+            }
+        }
+        let toBeAdded = [];
+        let i: number = 0;
+        while (toBeAdded.length < numSongs) {
+            let getBody = {
+                method: "get",
+                url: "https://api.spotify.com/v1/me/top/tracks",
+                params: {
+                    limit: newOnly
+                        ? 50
+                        : Math.min(50, numSongs - toBeAdded.length),
+                    offset: 50 * i,
+                    time_range: "short_term",
+                },
+            };
+            const getTracksResponse: AxiosResponse = await this.makeRequest(
+                user,
+                getBody
+            );
+            if (newOnly) {
+                for (const item of getTracksResponse.data.items) {
+                    if (!oldTracks[item.id]) {
+                        toBeAdded.push(item);
+                    }
+                    if (toBeAdded.length == numSongs) break;
+                }
+            } else {
+                toBeAdded.push(...getTracksResponse.data.items);
+            }
+            // if user has no more top items, break !!!
+            if (getTracksResponse.data.items.length == 0) break;
+            i = i + 1;
+        }
         // init playlist info
         let averageMood: number = 0.5;
         let tracks: Track[] = [];
         // only analyze / add songs if user has songs
-        if (trackData.length > 0) {
-            const ids = getTracksResponse.data.items.map(
-                (item: { id: string }) => item.id
-            );
-            /**
-             * ::::: TODO :::::
-             * config for > 100 ids
-             */
+        if (toBeAdded.length > 0) {
+            const ids = toBeAdded.map((item: { id: string }) => item.id);
             // analyze mood of tracks
             const analysisBody = {
                 method: "get",
@@ -308,22 +266,22 @@ class SpotifyFacade {
             const analysisData = analysisResponse.data.audio_features;
             // construct Track objects
             let moodTotal = 0;
-            for (let i = 0; i < trackData.length; i++) {
+            for (let i = 0; i < toBeAdded.length; i++) {
                 tracks.push({
-                    title: trackData[i].name,
-                    artists: trackData[i].artists.map(
+                    title: toBeAdded[i].name,
+                    artists: toBeAdded[i].artists.map(
                         (artist: { name: string }) => artist.name
                     ),
-                    spotifyID: trackData[i].id,
-                    url: trackData[i].external_urls.spotify,
-                    popularity: trackData[i].popularity,
-                    image: trackData[i].album.images[0],
+                    spotifyID: toBeAdded[i].id,
+                    url: toBeAdded[i].external_urls.spotify,
+                    popularity: toBeAdded[i].popularity,
+                    image: toBeAdded[i].album.images[0],
                 });
                 moodTotal += analysisData[i].valence;
             }
-            averageMood = moodTotal / trackData.length;
+            averageMood = moodTotal / toBeAdded.length;
             // add tracks to playlist
-            const uris = trackData.map((item: { uri: string }) => item.uri);
+            const uris = toBeAdded.map((item: { uri: string }) => item.uri);
             let addBody = {
                 method: "post",
                 url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/tracks`,
@@ -345,6 +303,14 @@ class SpotifyFacade {
             },
         };
         await this.makeRequest(user, addToProfileBody);
+        let getImageBody = {
+            method: "get",
+            url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/images`,
+        };
+        const imageResponse: AxiosResponse = await this.makeRequest(
+            user,
+            getImageBody
+        );
         if (!user.playlists) {
             user.playlists = [];
         }
@@ -353,7 +319,7 @@ class SpotifyFacade {
             description: description,
             url: createResponse.data.external_urls.spotify,
             spotifyID: createResponse.data.id,
-            image: createResponse.data.images[0],
+            image: imageResponse.data[0],
             mood: averageMood,
             tracks: tracks,
         });

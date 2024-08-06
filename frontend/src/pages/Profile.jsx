@@ -1,124 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../utils/AuthContext";
 import "./Profile.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
+import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
 
 /**
- * displays profile information to the user
+ * Profile page component
  */
 const Profile = () => {
-    const profile = JSON.parse(localStorage.getItem("profile"));
-    const storedBio =
-        localStorage.getItem("bio") ||
-        profile.bio ||
-        "Hello world! I’m new to Vaultify.";
-    const [bio, setBio] = useState(storedBio);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [editing, setEditing] = useState(false);
-    const [newBio, setNewBio] = useState(storedBio);
-
+    const [newBio, setNewBio] = useState(
+        currentUser.bio || "Hello world! I’m new to Vaultify."
+    );
+    // configs recent playlists
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
-
-    const favoritePlaylists = profile.playlists
-        .slice(-3)
+    const greens = [green1, green2, green3];
+    const recentPlaylists = currentUser.playlists
+        .slice(-5)
         .map((playlist, index) => ({
-            title: truncate(playlist, 15),
-            image: index === 0 ? green1 : index === 1 ? green2 : green3,
-            url: playlist,
+            title: truncate(playlist.title, 15),
+            image: playlist.image
+                ? playlist.image.url
+                : greens[index % greens.length],
+            url: playlist.url,
         }));
 
-    const favoriteNotes = [
-        "stooppp this song brings back so many memories!! it’s like i’m being transported back to late-night drives with friends ugh i love it",
-        "my girlssss slayyyyyyyed",
-    ];
-
-    const achievements = [
-        { name: "Leaping in!", description: "Make your first playlist." },
-        {
-            name: "Mixer Maxer",
-            description: "Make a playlist with more than one genre.",
-        },
-        {
-            name: "Meow-meow-meow",
-            description: "Have 'What Was I Made For?' included in a playlist.",
-        },
-        {
-            name: "Groovy Guru",
-            description: "Create a playlist with 10 or more songs.",
-        },
-        {
-            name: "Genre Jumper",
-            description:
-                "Create a playlist with songs from at least 3 different genres.",
-        },
-        {
-            name: "Ultimate Collector",
-            description: "Save 50 or more playlists.",
-        },
-        {
-            name: "Social Butterfly",
-            description: "Share a playlist with a friend.",
-        },
-        {
-            name: "Trendsetter",
-            description: "Have 5 or more followers on your playlists.",
-        },
-        {
-            name: "Mood Maker",
-            description: "Create a playlist for each day of the week.",
-        },
-        {
-            name: "DJ in the Making",
-            description: "Remix a song using the app’s tools.",
-        },
-        {
-            name: "Playlist Pro",
-            description: "Create a playlist with over 100 songs.",
-        },
-        {
-            name: "Themed Maestro",
-            description: "Create a playlist with a specific theme.",
-        },
-    ];
-
-    const handleEditBio = () => {
-        setEditing(true);
-    };
+    // determine achievements
+    const achievements = [];
+    if (currentUser.playlists.length > 0) {
+        achievements.push({
+            name: "Vaulting in!",
+            description: "Generated your first playlist.",
+        });
+    }
+    if (currentUser.numMonths > 0) {
+        achievements.push({
+            name: "Novice Vaulter",
+            description: "One month of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 2) {
+        achievements.push({
+            name: "Intermediate Vaulter",
+            description: "Three months of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 5) {
+        achievements.push({
+            name: "Expert Vaulter",
+            description: "Six months of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 11) {
+        achievements.push({
+            name: "Grand Wizard",
+            description: "One year of automatic playlist generation. :0",
+        });
+    }
 
     const handleSaveBio = async () => {
         const updatedBio = newBio.trim() || "Hello world!";
-        setBio(updatedBio);
-        localStorage.setItem("bio", updatedBio);
+        currentUser.bio = updatedBio;
+        setCurrentUser(currentUser);
         setEditing(false);
-
         try {
-            const response = await axios.put(
-                "http://localhost:3001/api/profile/update-bio",
-                {
-                    userId: profile._id,
-                    bio: updatedBio,
-                }
-            );
-
-            if (response.status === 200) {
-                localStorage.setItem(
-                    "profile",
-                    JSON.stringify({ ...profile, bio: updatedBio })
-                );
-            } else {
-                console.error("Failed to update bio:", response.data.message);
-            }
+            Server.updateUser(currentUser);
         } catch (error) {
-            console.error("Error updating bio:", error);
+            console.error("Error updating bio", error);
         }
     };
-
-    useEffect(() => {
-        console.log("Profile data:", profile);
-    }, [profile]);
 
     return (
         <div className="profile-container">
@@ -126,104 +82,99 @@ const Profile = () => {
                 <h1 className="profile-title">Profile</h1>
                 <div className="profile-header">
                     <div className="profile-details-left">
-                        {profile ? (
-                            <div className="profile-info">
-                                <div className="profile-pic">
-                                    <img
-                                        src={
-                                            profile.images[0]?.url ||
-                                            defaultImage
-                                        }
-                                        alt="Profile"
-                                        width="150"
-                                    />
+                        <div className="profile-info">
+                            <div className="profile-pic">
+                                <img
+                                    src={
+                                        currentUser.image
+                                            ? currentUser.image.url
+                                            : defaultImage
+                                    }
+                                    alt="Profile"
+                                    width="150"
+                                />
+                            </div>
+                            <div className="profile-details">
+                                <div className="name-username">
+                                    <h2 className="profile-name">
+                                        {currentUser.username}
+                                    </h2>
                                 </div>
-                                <div className="profile-details">
-                                    <div className="name-username">
-                                        <h2 className="profile-name">
-                                            {profile.username || "Unknown User"}
-                                        </h2>
-                                        <p className="profile-username">
-                                            @{profile.username || "unknown"}
-                                        </p>
-                                    </div>
-                                    <p className="profile-counters">
-                                        {favoritePlaylists.length} Playlists |{" "}
-                                        {favoriteNotes.length} Notes |{" "}
-                                        {achievements.length} Achievements
-                                    </p>
-                                    <div className="bio-section">
-                                        {editing ? (
-                                            <div className="edit-bio-section">
-                                                <textarea
-                                                    className="bio-textarea"
-                                                    value={newBio}
-                                                    onChange={(e) =>
-                                                        setNewBio(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                />
-                                                <button
-                                                    className="save-bio-button"
-                                                    onClick={handleSaveBio}
-                                                >
-                                                    Save
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <p>{bio}</p>
-                                        )}
-                                    </div>
+                                <p className="profile-counters">
+                                    {currentUser.playlists.length}{" "}
+                                    {currentUser.playlists.length == 1
+                                        ? "Playlist"
+                                        : "Playlists"}
+                                    {" | "}
+                                    {achievements.length}{" "}
+                                    {achievements.length == 1
+                                        ? "Achievement"
+                                        : "Achievements"}
+                                </p>
+                                <div className="bio-section">
+                                    {editing ? (
+                                        <div className="edit-bio-section">
+                                            <textarea
+                                                className="bio-textarea"
+                                                value={newBio}
+                                                onChange={(e) =>
+                                                    setNewBio(e.target.value)
+                                                }
+                                            />
+                                            <button
+                                                className="save-bio-button"
+                                                onClick={handleSaveBio}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p>{currentUser.bio}</p>
+                                    )}
                                 </div>
                             </div>
-                        ) : (
-                            <p>Loading...</p>
-                        )}
+                        </div>
                     </div>
                     {!editing && (
                         <div className="edit-bio-button">
-                            <button onClick={handleEditBio}>Edit Bio</button>
+                            <button onClick={setEditing}>Edit Bio</button>
                         </div>
                     )}
                 </div>
-                <div className="content-row">
-                    <div className="favorite-playlists">
-                        <h3>Favorite Playlists</h3>
-                        <div className="playlists">
-                            {favoritePlaylists.map((playlist, index) => (
+                <div className="playlists-container">
+                    <h3>Recent Playlists</h3>
+                    <div className="playlists">
+                        {recentPlaylists.length > 0 ? (
+                            recentPlaylists.map((playlist, index) => (
                                 <div key={index} className="playlist">
-                                    <img
-                                        src={playlist.image}
-                                        alt={playlist.title}
-                                        width="100"
-                                    />
                                     <a
                                         className="playlist-link"
                                         href={playlist.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
+                                        <img
+                                            src={playlist.image}
+                                            alt={playlist.title}
+                                            width="100"
+                                        />
                                         {playlist.title}
                                     </a>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="favorite-notes">
-                        <h3>Favorite Notes</h3>
-                        <div className="notes">
-                            {favoriteNotes.map((note, index) => (
-                                <div key={index} className="note">
-                                    <p>{note}</p>
-                                </div>
-                            ))}
-                        </div>
+                            ))
+                        ) : (
+                            <div className="playlist">
+                                <p>
+                                    No Playlists available... Get started with
+                                    our Playlist Generator!
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
-                <div className="achievements">
+                <div className="achievements-container">
                     <h3>Achievements</h3>
-                    <div className="achievements-list">
+                    <div className="achievements">
                         {achievements.map((achievement, index) => (
                             <div key={index} className="achievement">
                                 <div className="achievement-title">

@@ -2,6 +2,7 @@
 import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../utils/AuthContext";
+import Server from "../utils/Server";
 import querystring from "querystring";
 import axios from "axios";
 
@@ -10,43 +11,40 @@ import axios from "axios";
  */
 const Login = () => {
     const navigate = useNavigate();
-    const { setIsLoggedIn, setProfile } = useContext(AuthContext);
+    const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
     useEffect(() => {
+        const redirectOAuth = async () => {
+            // spotify OAuth will redirect to the login-callback route. see LoginCallback.jsx
+            const params = new URLSearchParams({
+                client_id: "79e0bbb20e714c1cb35b10742723ee7a",
+                response_type: "code",
+                redirect_uri: "http://localhost:3000/login-callback",
+                scope: "user-read-private user-read-email playlist-modify-public playlist-modify-private user-top-read",
+            });
+            window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
+        };
         const login = async () => {
-            let profile;
-            try {
-                profile = JSON.parse(localStorage.getItem("profile"));
-            } catch {
-                profile = null;
-            }
-            // if no profile, redirect to spotify Oauth
-            if (!profile || !profile._id) {
+            const _id = localStorage.getItem("_id");
+            // if no current user, redirect to spotify Oauth
+            if (!_id) {
                 // spotify OAuth will redirect to the login-callback route. see LoginCallback.jsx
-                const params = new URLSearchParams({
-                    client_id: "79e0bbb20e714c1cb35b10742723ee7a",
-                    response_type: "code",
-                    redirect_uri: "http://localhost:3000/login-callback",
-                    scope: "user-read-private user-read-email playlist-modify-public playlist-modify-private user-top-read",
-                });
-                window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
+                redirectOAuth();
             }
-            // else, call backend to update profile
+            // else, call backend to update current user
             else {
-                const response = await axios.get(
-                    `http://localhost:3001/get-user-from-_id?_id=${profile._id}`
-                );
-                profile = response.data;
-                localStorage.setItem("profile", JSON.stringify(profile));
-                setIsLoggedIn(true);
-                setProfile(profile);
-
-                // TODO : AUTH CONTEXT STUFF
-
-                navigate("/home");
+                try {
+                    const user = await Server.getUserByID(_id);
+                    setIsLoggedIn(true);
+                    setCurrentUser(user);
+                    navigate("/home");
+                } catch (err) {
+                    localStorage.removeItem(_id);
+                    redirectOAuth();
+                }
             }
         };
         login();
-    }, [setIsLoggedIn, setProfile, navigate]);
+    }, [setIsLoggedIn, setCurrentUser, navigate]);
 
     return (
         <div>

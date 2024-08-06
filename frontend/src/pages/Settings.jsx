@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * Settings page component
+ */
 const Settings = () => {
     return (
         <div>

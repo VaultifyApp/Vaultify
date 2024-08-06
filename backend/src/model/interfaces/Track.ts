@@ -10,6 +10,7 @@ interface Track {
     url: string;
     popularity: number;
     image: Image;
+    note?: string;
 }
 
 export default Track;

@@ -2,7 +2,7 @@ import { Express, Request, Response } from "express";
 import querystring from "querystring";
 
 import Model from "../model/Model.js";
-import User from "../model/User.js";
+import User from "../model/interfaces/User.js";
 
 /**
  * The Receiver class is responsible for responding to requests from the client.
@@ -16,6 +16,7 @@ class Receiver {
         this.model = model;
         this.handleGeneration();
         this.handleGetUser();
+        this.handleUpdateUser();
     }
 
     /**
@@ -25,7 +26,7 @@ class Receiver {
      */
     private removeTokens(user: User) {
         const {
-            notifs,
+            settings,
             spotifyID,
             href,
             uri,
@@ -44,54 +45,89 @@ class Receiver {
             "/generate-playlist",
             async (req: Request, res: Response) => {
                 if (
-                    !req.query._id ||
                     typeof req.query._id !== "string" ||
-                    req.query._id == "undefined"
+                    typeof req.query.monthly != "string" ||
+                    typeof req.query.newOnly != "string" ||
+                    typeof req.query.numSongs != "string"
                 ) {
-                    throw new Error("Must have ID to generate playlist");
+                    return res.status(400).json({ error: "Invalid params" });
                 }
-                if (typeof req.query.monthly != "string") {
-                    throw new Error("Query must have notifs param");
+                try {
+                    let user: User = await this.model.configGeneration(
+                        req.query._id,
+                        JSON.parse(req.query.monthly),
+                        Number(req.query.numSongs),
+                        JSON.parse(req.query.newOnly)
+                    );
+                    res.json(this.removeTokens(user));
+                } catch (err) {
+                    return res.status(400).json({ error: err });
                 }
-                let user: User = await this.model.configGeneration(
-                    req.query._id,
-                    req.query.monthly
-                );
-                res.json(this.removeTokens(user));
             }
         );
     }
 
     /**
-     * @returns user with the given _id
+     * @effects updates the given user in the db
+     */
+    private async handleUpdateUser(): Promise<void> {
+        this.app.post("/update-user", async (req: Request, res: Response) => {
+            if (!req.body) {
+                return res.status(400).json({ error: "user param invalid" });
+            }
+            try {
+                const user: User = req.body;
+                this.model.updateUser(user);
+            } catch (err) {
+                return res.status(400).json({ error: err });
+            }
+        });
+    }
+
+    /**
+     * @effects returns the user associated with given param
      */
     private async handleGetUser(): Promise<void> {
         this.app.get(
-            "/get-user-from-_id",
+            "/get-user-by-_id",
             async (req: Request, res: Response) => {
                 if (
                     !req.query._id ||
                     typeof req.query._id !== "string" ||
                     req.query._id == "undefined"
                 ) {
-                    throw new Error("Must have ID to get a user");
+                    return res.status(400).json({ error: "Invalid _id param" });
                 }
-                let user: User = await this.model.getUserByID(req.query._id);
-                res.json(this.removeTokens(user));
+                try {
+                    let user: User = await this.model.getUserByID(
+                        req.query._id
+                    );
+                    res.json(this.removeTokens(user));
+                } catch (err) {
+                    return res.status(400).json({ error: err });
+                }
             }
         );
         this.app.get(
-            "/get-user-from-code",
+            "/get-user-by-code",
             async (req: Request, res: Response) => {
                 if (
                     !req.query.code ||
                     typeof req.query.code !== "string" ||
                     req.query.code == "undefined"
                 ) {
-                    throw new Error("Must have ID to get a user");
+                    return res
+                        .status(400)
+                        .json({ error: "Invalid code param" });
                 }
-                let user: User = await this.model.getUserByCode(req.query.code);
-                res.json(this.removeTokens(user));
+                try {
+                    let user: User = await this.model.getUserByCode(
+                        req.query.code
+                    );
+                    res.json(this.removeTokens(user));
+                } catch (err) {
+                    return res.status(400).json({ error: err });
+                }
             }
         );
     }

@@ -28,10 +28,7 @@ const AppRoutes = () => {
 
     return (
         <Routes>
-            <Route
-                path="/"
-                element={isLoggedIn ? <Navigate to="/home" /> : <Welcome />}
-            />
+            <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login-callback" element={<LoginCallback />} />
             <Route path="/" element={<Layout />}>
@@ -98,7 +95,7 @@ const AppRoutes = () => {
                         isLoggedIn ? (
                             <Navigate to="/home" />
                         ) : (
-                            <Navigate to="/login" />
+                            <Navigate to="/" />
                         )
                     }
                 />

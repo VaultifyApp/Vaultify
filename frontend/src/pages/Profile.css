@@ -119,28 +119,7 @@
     width: 100%;
 }
 
-.favorite-playlists,
-.achievements {
-    margin-top: 20px;
-    width: 51%;
-}
-
-.favorite-notes,
-.achievements {
-    margin-top: 20px;
-    width: 41%;
-}
-
-.playlists,
-.notes,
-.achievements-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 .playlist,
-.note,
 .achievement {
     margin: 10px;
     text-align: center; /* Center the text for playlist titles */
@@ -152,18 +131,7 @@
     margin: 0 auto; /* Center the image */
 }
 
-.note {
-    background-color: #3b3b3b;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    max-width: 200px;
-    margin: 5px;
-}
-
 .playlist p,
-.note p,
 .achievement p {
     margin-top: 5px;
     font-size: 14px;
@@ -179,15 +147,10 @@
 }
 
 .achievements {
-    margin-top: 20px;
-    width: 100%;
     padding: 0 20px; /* Add padding to ensure achievements don't get cut off */
-}
-
-.achievements-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Align items to the start */
+    justify-content: left; /* Align items to the start */
     gap: 10px; /* Space between achievements */
 }
 
@@ -196,10 +159,9 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    min-width: 200px; /* Ensure boxes are wide enough */
+    width: 18%;
     text-align: center; /* Center text */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
-    flex: 1 1 calc(25% - 20px); /* Allow up to 4 items per row */
     margin: 10px 0; /* Space above and below each achievement */
 }
 

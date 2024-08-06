@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../utils/AuthContext";
 import "./PlaylistSuccess.css";
 
 /**
- * Indicated success to the user and allows them to navigate to their generated playlist
+ * Playlist generation success page component
  */
 const PlaylistSuccess = () => {
+    const { currentUser } = useContext(AuthContext);
     // navigates user to the most recently generated playlist
     const handleOpenPlaylist = () => {
-        const profile = JSON.parse(localStorage.getItem("profile"));
-
-        if (profile && profile.playlists && profile.playlists.length > 0) {
+        if (currentUser.playlists.length > 0) {
             // Get the link of the most recent playlist
             const playlistLink =
-                profile.playlists[profile.playlists.length - 1].url;
-
+                currentUser.playlists[currentUser.playlists.length - 1].url;
             // Navigate to the playlist link
             window.open(playlistLink);
         } else {
