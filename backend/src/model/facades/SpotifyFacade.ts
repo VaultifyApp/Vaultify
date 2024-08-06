@@ -305,9 +305,12 @@ class SpotifyFacade {
         await this.makeRequest(user, addToProfileBody);
         let getImageBody = {
             method: "get",
-            url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/images`
-        }
-        const imageResponse: AxiosResponse = await this.makeRequest(user, getImageBody);
+            url: `https://api.spotify.com/v1/playlists/${createResponse.data.id}/images`,
+        };
+        const imageResponse: AxiosResponse = await this.makeRequest(
+            user,
+            getImageBody
+        );
         if (!user.playlists) {
             user.playlists = [];
         }
