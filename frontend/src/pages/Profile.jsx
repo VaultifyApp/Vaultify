@@ -32,11 +32,11 @@ const Profile = () => {
         }));
 
     // determine achievements
-    const achievements = [];
+    const achievements = [{name: "Site Explorer", description: "Navigate to the Profile Page."}];
     if (currentUser.playlists.length > 0) {
         achievements.push({
-            name: "Vaulting in!",
-            description: "Generated your first playlist.",
+            name: "Vaulting in",
+            description: "Generate your first playlist.",
         });
     }
     if (currentUser.numMonths > 0) {

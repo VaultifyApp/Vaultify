@@ -10,6 +10,10 @@ import profile5 from "../assets/matt.png";
  * About Us page componenet
  */
 const AboutUs = () => {
+    const clickThomas = () => {
+        window.open("https://www.linkedin.com/in/thomasorifici/");
+    }
+
     return (
         <div className="about-container">
             <div className="about-content">
@@ -39,11 +43,13 @@ const AboutUs = () => {
                     technology.
                 </p>
                 <div className="profile-pictures">
-                    <img src={profile1} alt="Profile 1" />
-                    <img src={profile2} alt="Profile 2" />
-                    <img src={profile3} alt="Profile 3" />
-                    <img src={profile4} alt="Profile 4" />
-                    <img src={profile5} alt="Profile 5" />
+                    <img src={profile1} alt="Michelle" />
+                    <a href="https://www.linkedin.com/in/thomasorifici/" target="_blank" rel="noopener noreferrer">
+                        <img src={profile2} alt="Thomas" />
+                    </a>
+                    <img src={profile3} alt="Michael" />
+                    <img src={profile4} alt="Dillon" />
+                    <img src={profile5} alt="Matt" />
                 </div>
             </div>
         </div>
