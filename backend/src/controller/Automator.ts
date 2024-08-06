@@ -19,7 +19,12 @@ class Automator {
     private monthlyGenerate() {
         schedule.scheduleJob("00 12 01 * *", async () => {
             console.log("Generating Playlists...");
-            await this.model.monthlyGenerate();
+            try {
+                await this.model.monthlyGenerate();
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
     }
 }

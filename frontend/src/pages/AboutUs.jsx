@@ -21,7 +21,7 @@ const AboutUs = () => {
                 <h2>The Band</h2>
                 <h3>“Practice. Perform. Perfect.”</h3>
                 <p>
-                    We are The Band, a group of passionate juniors from RPI
+                    The Band is a group of passionate juniors from RPI
                     dedicated to revolutionizing how music enthusiasts interact
                     with their musical libraries. Michelle Li, dual majoring in
                     Computer Science and Information Technology & Web Science,
