@@ -32,7 +32,7 @@ const Profile = () => {
         }));
 
     // determine achievements
-    const achievements = [{name:"george",description:"dfwgr" },{name:"george",description:"dfwgr" },{name:"george",description:"dfwgr" }];
+    const achievements = [];
     if (currentUser.playlists.length > 0) {
         achievements.push({
             name: "Vaulting in!",
