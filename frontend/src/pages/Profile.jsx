@@ -32,11 +32,11 @@ const Profile = () => {
         }));
 
     // determine achievements
-    const achievements = [];
+    const achievements = [{name:"george",description:"dfwgr" },{name:"george",description:"dfwgr" },{name:"george",description:"dfwgr" }];
     if (currentUser.playlists.length > 0) {
         achievements.push({
-            name: "Leaping in!",
-            description: "Generate your first playlist.",
+            name: "Vaulting in!",
+            description: "Generated your first playlist.",
         });
     }
     if (currentUser.numMonths > 0) {
@@ -109,7 +109,7 @@ const Profile = () => {
                                     {achievements.length}{" "}
                                     {achievements.length == 1
                                         ? "Achievement"
-                                        : "Achievement"}
+                                        : "Achievements"}
                                 </p>
                                 <div className="bio-section">
                                     {editing ? (
