@@ -80,7 +80,11 @@ class Model {
      * @effects saves the updated user to the database
      */
     async generatePlaylist(user: User, manual: boolean): Promise<User> {
-        user = await this.spotify.generatePlaylist(user, 50, manual);
+        /**
+         * :: TODO ::
+         * config new only
+         */
+        user = await this.spotify.generatePlaylist(user, 50, manual, false);
         if (!manual) user.numMonths = user.numMonths + 1;
         this.db.updateUser(user);
         return user;
