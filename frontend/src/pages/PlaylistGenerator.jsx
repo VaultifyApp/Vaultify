@@ -148,7 +148,7 @@ const PlaylistGenerator = () => {
                                     numSongs === 50 ||
                                     numSongs === 100
                                 )
-                                    ? `${numSongs} ${(numSongs===1) ? "song" : "songs"}`
+                                    ? `${numSongs} ${numSongs === 1 ? "song" : "songs"}`
                                     : "Custom"}
                             </button>
                         </div>

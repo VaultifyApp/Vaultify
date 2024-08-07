@@ -48,7 +48,7 @@ body .navbar {
 }
 
 .navbar-logo img {
-    width: min(11vw,22vh);
+    width: min(11vw, 22vh);
 }
 
 .navbar ul {

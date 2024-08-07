@@ -31,7 +31,9 @@ const Home = () => {
         }));
 
     // determine achievements
-    const achievements = [{name: "Explorer", description: "Navigate to the Profile Page."}];
+    const achievements = [
+        { name: "Explorer", description: "Navigate to the Profile Page." },
+    ];
     if (currentUser.playlists.length > 0) {
         achievements.push({
             name: "Vaulting in",
@@ -127,7 +129,9 @@ const Home = () => {
                                             </button>
                                         </div>
                                     ) : (
-                                        <p className="bio-text">{currentUser.bio}</p>
+                                        <p className="bio-text">
+                                            {currentUser.bio}
+                                        </p>
                                     )}
                                 </div>
                             </div>
@@ -135,7 +139,9 @@ const Home = () => {
                     </div>
                     {!editing && (
                         <div className="edit-bio-button">
-                            <button onClick={() => setEditing(true)}>Edit Bio</button>
+                            <button onClick={() => setEditing(true)}>
+                                Edit Bio
+                            </button>
                         </div>
                     )}
                 </div>

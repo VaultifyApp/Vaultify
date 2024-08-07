@@ -21,8 +21,7 @@ class Automator {
             console.log("Generating Playlists...");
             try {
                 await this.model.monthlyGenerate();
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         });
