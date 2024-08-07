@@ -27,13 +27,16 @@ body {
 .playlist-content {
     text-align: center;
     color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: none; /* Remove box shadow */
-    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 15vw;
+    width: 81vw;
 }
 
 .playlist-title {
+    margin-top: 10vw;
     font-size: 2rem;
     margin-bottom: 10px;
 }

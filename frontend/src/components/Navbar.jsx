@@ -50,11 +50,6 @@ const Navbar = () => {
                     </NavLink>
                 </li>
             </ul>
-            <div className="navbar-settings">
-                <NavLink to="/settings">
-                    <img src={settingsIcon} alt="Settings" />
-                </NavLink>
-            </div>
         </div>
     );
 };

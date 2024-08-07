@@ -35,7 +35,7 @@ body .navbar {
 }
 
 .navbar-title {
-    font-size: 3vw;
+    font-size: min(3vw, 6vh);
     font-weight: bold;
     color: white;
     margin-top: 10vh;
@@ -48,7 +48,7 @@ body .navbar {
 }
 
 .navbar-logo img {
-    width: 11vw;
+    width: min(11vw,22vh);
 }
 
 .navbar ul {
@@ -57,11 +57,12 @@ body .navbar {
     padding: 0;
     width: 100%;
     text-align: center;
+    margin-bottom: 15vh;
 }
 
 .navbar li {
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 .navbar li a {
@@ -70,7 +71,9 @@ body .navbar {
     text-align: left;
     padding: 1vh 1vh;
     text-decoration: none;
-    font-size: 1.2vw;
+    font-size: min(1.3vw, 2.5vh);
+    padding-top: 1.9vh;
+    padding-bottom: 1.9vh;
 }
 
 .navbar li a:hover,
@@ -89,27 +92,4 @@ body .navbar {
     width: 100%;
     margin: 0 auto;
     text-align: center;
-}
-
-.logo {
-    height: 6em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-.navbar-settings {
-    width: 100%;
-    text-align: center;
-}
-
-.navbar-settings img {
-    width: 3vw;
 }

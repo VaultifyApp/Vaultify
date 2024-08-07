@@ -35,6 +35,7 @@ body {
 
 .heading {
     font-size: 1.75vw;
+    text-align: left;
 }
 
 .playlist-content {
@@ -45,7 +46,7 @@ body {
 }
 
 .profile-content {
-    margin-top: 1.75vw;
+    margin-top: 3vw;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -164,16 +165,16 @@ body {
 
 .playlists-container {
     padding-bottom: 4vh;
+    margin-bottom: 1.75vw;
     border-bottom: 0.15vw solid #ccc;
 }
 
 .playlists {
-    margin-top: -1vw;
     padding: 0 2vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    gap: 0.5vw;
+    gap: 2vw;
 }
 
 .playlist,
@@ -199,6 +200,7 @@ body {
 }
 
 .achievements {
+    margin-left: 1vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
@@ -206,6 +208,7 @@ body {
 }
 
 .achievement {
+    margin-top: 1vw;
     background-color: #333;
     color: white;
     padding: 1.5vw;
