@@ -4,6 +4,7 @@ import { AuthContext } from "../utils/AuthContext";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
 import axios from "axios";
+import greenShareIcon from "../assets/green-share.jpg";
 
 /**
  * Vault page component
@@ -56,6 +57,15 @@ const Vault = () => {
                 }, 3000);
             }, 500);
         }, 700);
+    };
+
+    // Function to handle copying the playlist URL to the clipboard
+    const handleCopyToClipboard = (url) => {
+        navigator.clipboard.writeText(url).then(() => {
+            alert("Link copied to clipboard!");
+        }).catch(err => {
+            console.error("Failed to copy: ", err);
+        });
     };
 
     useEffect(() => {
@@ -155,15 +165,20 @@ const Vault = () => {
                                                 <span className="timeline-year">
                                                     {playlist.title}:
                                                 </span>
-                                                <button
-                                                    onClick={() =>
-                                                        window.open(
-                                                            playlist.url
-                                                        )
-                                                    }
-                                                >
-                                                    Open in Spotify
-                                                </button>
+                                                <div className="button-group">
+                                                    <button
+                                                        onClick={() => window.open(playlist.url)}
+                                                        className="spotify-link-button"
+                                                    >
+                                                        Open in Spotify
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleCopyToClipboard(playlist.url)}
+                                                        className="share-link-button"
+                                                    >
+                                                        <img src={greenShareIcon} alt="Share" className="share-button" />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
