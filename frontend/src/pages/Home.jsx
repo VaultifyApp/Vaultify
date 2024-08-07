@@ -1,79 +1,197 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import "./Home.css";
+import green1 from "../assets/green1.jpg";
+import green2 from "../assets/green2.jpg";
+import green3 from "../assets/green3.jpg";
+import Server from "../utils/Server";
+import defaultImage from "../assets/default.jpg";
 
 /**
  * Home page component
  */
 const Home = () => {
-    const [results, setResults] = useState([]);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
+    const [editing, setEditing] = useState(false);
+    const [newBio, setNewBio] = useState(
+        currentUser.bio || "Hello world! I’m new to Vaultify."
+    );
+    // configs recent playlists
+    const truncate = (str, n) =>
+        str.length > n ? str.substr(0, n - 1) + "..." : str;
+    const greens = [green1, green2, green3];
+    const recentPlaylists = currentUser.playlists
+        .slice(-6)
+        .map((playlist, index) => ({
+            title: truncate(playlist.title, 15),
+            image: playlist.image
+                ? playlist.image.url
+                : greens[index % greens.length],
+            url: playlist.url,
+        }));
 
-    const fetchTrendingTracks = async () => {
+    // determine achievements
+    const achievements = [
+        { name: "Explorer", description: "Navigate to the Profile Page." },
+    ];
+    if (currentUser.playlists.length > 0) {
+        achievements.push({
+            name: "Vaulting in",
+            description: "Generate your first playlist.",
+        });
+    }
+    if (currentUser.numMonths > 0) {
+        achievements.push({
+            name: "Novice Vaulter",
+            description: "One month of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 2) {
+        achievements.push({
+            name: "Intermediate Vaulter",
+            description: "Three months of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 5) {
+        achievements.push({
+            name: "Expert Vaulter",
+            description: "Six months of automatic playlist generation.",
+        });
+    }
+    if (currentUser.numMonths > 11) {
+        achievements.push({
+            name: "Grand Wizard",
+            description: "One year of automatic playlist generation. :0",
+        });
+    }
+
+    const handleSaveBio = async () => {
+        const updatedBio = newBio.trim() || "Hello world!";
+        currentUser.bio = updatedBio;
+        setCurrentUser(currentUser);
+        setEditing(false);
         try {
-            const token =
-                "BQDGlpUt3MR0SUj6pg-F7WlfVEVPFLtZlOKuBC6ubu6rglow5-TjVI2UtIK_0htvaXamN40mg1bLlOlP8B0IlXJMZs5HPxjxwGXRGiYKqtWwE2kwNpY"; // Replace with a valid token
-            const response = await axios.get(
-                "https://api.spotify.com/v1/browse/new-releases",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                    params: {
-                        limit: 12,
-                    },
-                }
-            );
-
-            setResults(response.data.albums.items);
+            Server.updateUser(currentUser);
         } catch (error) {
-            console.error("Error fetching data from Spotify API", error);
+            console.error("Error updating bio", error);
         }
     };
 
-    useEffect(() => {
-        fetchTrendingTracks();
-    }, []);
-
     return (
-        <div className="container">
-            <h1>Vaultify</h1>
-            <h2>Vault your music memories.</h2>
-            <h3>What is Vaultify?</h3>
-            <p>
-                We here at Vaultify aim to transform your listening experiences
-                by generating highly customizable monthly playlists for you
-                containing all your favorite songs, which you can export back
-                onto your Spotify library with one click. After generating your
-                first playlist with us, you can access your very own unique
-                “Vault” page to visit all your personal notes, playlists, and
-                AI-generated playlist covers. We aspire to snapshot your
-                listening journey and portray the personal story that your music
-                history tells.
-                <br></br>
-                <br></br>
-                Get started now by accessing the “Playlist Generator” page to
-                make your first playlist.
-            </p>
-            {results.length > 0 && (
-                <div className="results">
-                    <h3>Trending Now</h3>
-                    <ul>
-                        {results.map((album) => (
-                            <li key={album.id}>
+        <div className="home-container">
+            <div className="home-content">
+                <div className="profile-content">
+                    <div className="profile-details-left">
+                        <div className="profile-info">
+                            <div className="profile-pic">
                                 <img
-                                    src={album.images[0].url}
-                                    alt={album.name}
-                                    width="50"
+                                    src={
+                                        currentUser.image
+                                            ? currentUser.image.url
+                                            : defaultImage
+                                    }
+                                    alt="Profile"
+                                    width="150"
                                 />
-                                {album.name} by{" "}
-                                {album.artists
-                                    .map((artist) => artist.name)
-                                    .join(", ")}
-                            </li>
-                        ))}
-                    </ul>
+                            </div>
+                            <div className="profile-details">
+                                <div className="name-username">
+                                    <h2 className="profile-name">
+                                        {currentUser.username}
+                                    </h2>
+                                </div>
+                                <p className="profile-counters">
+                                    {currentUser.playlists.length}{" "}
+                                    {currentUser.playlists.length == 1
+                                        ? "Playlist"
+                                        : "Playlists"}
+                                    {" | "}
+                                    {achievements.length}{" "}
+                                    {achievements.length == 1
+                                        ? "Achievement"
+                                        : "Achievements"}
+                                </p>
+                                <div className="bio-section">
+                                    {editing ? (
+                                        <div className="edit-bio-section">
+                                            <textarea
+                                                className="bio-textarea"
+                                                value={newBio}
+                                                onChange={(e) =>
+                                                    setNewBio(e.target.value)
+                                                }
+                                            />
+                                            <button
+                                                className="save-bio-button"
+                                                onClick={handleSaveBio}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p className="bio-text">
+                                            {currentUser.bio}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {!editing && (
+                        <div className="edit-bio-button">
+                            <button onClick={() => setEditing(true)}>
+                                Edit Bio
+                            </button>
+                        </div>
+                    )}
                 </div>
-            )}
+                <div className="playlists-container">
+                    <h3 className="heading">Recent Playlists</h3>
+                    <div className="playlists">
+                        {recentPlaylists.length > 0 ? (
+                            recentPlaylists.map((playlist, index) => (
+                                <div key={index} className="playlist">
+                                    <a
+                                        className="playlist-link"
+                                        href={playlist.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            src={playlist.image}
+                                            alt={playlist.title}
+                                            width="100"
+                                        />
+                                        {playlist.title}
+                                    </a>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="playlist">
+                                <p>
+                                    No Playlists available... Get started with
+                                    our Playlist Generator!
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="achievements-container">
+                    <h3 className="heading">Achievements</h3>
+                    <div className="achievements">
+                        {achievements.map((achievement, index) => (
+                            <div key={index} className="achievement">
+                                <div className="achievement-title">
+                                    {achievement.name}
+                                </div>
+                                <div className="achievement-description">
+                                    {achievement.description}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

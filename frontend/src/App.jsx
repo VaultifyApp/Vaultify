@@ -15,7 +15,6 @@ import PlaylistSuccess from "./pages/PlaylistSuccess";
 import Vault from "./pages/Vault";
 import AboutUs from "./pages/AboutUs";
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import "./App.css";
@@ -69,14 +68,6 @@ const AppRoutes = () => {
                     element={
                         <ProtectedRoute>
                             <AboutUs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="profile"
-                    element={
-                        <ProtectedRoute>
-                            <Profile />
                         </ProtectedRoute>
                     }
                 />

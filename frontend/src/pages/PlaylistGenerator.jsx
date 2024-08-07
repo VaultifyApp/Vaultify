@@ -88,7 +88,7 @@ const PlaylistGenerator = () => {
             <div className="playlist-content">
                 <h1 className="playlist-title">Playlist Generator</h1>
                 <h2 className="playlist-subtitle">
-                    Discover your next favorite songs.
+                    Vault your Listening through a Custom Playlist.
                 </h2>
 
                 <div className="form-group">
@@ -148,7 +148,7 @@ const PlaylistGenerator = () => {
                                     numSongs === 50 ||
                                     numSongs === 100
                                 )
-                                    ? `${numSongs} songs`
+                                    ? `${numSongs} ${numSongs === 1 ? "song" : "songs"}`
                                     : "Custom"}
                             </button>
                         </div>
