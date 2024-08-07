@@ -4,7 +4,6 @@ html {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Ensure no scrollbars */
     background: #494949; /* Set the page background color to match the vault */
 }
 
@@ -14,8 +13,6 @@ html {
     align-items: center;
     height: 100%;
     width: 100%;
-    background: linear-gradient(to bottom, #494949, #101010) !important;
-    perspective: 2000px;
     position: relative; /* Added to position contents correctly */
     overflow: hidden; /* Ensure no scrollbars */
 }
@@ -24,29 +21,26 @@ html {
     position: relative;
     width: 60vw; /* Increase the width to take up more of the page */
     height: 60vw; /* Increase the height to take up more of the page */
-    max-width: 800px; /* Ensure the vault does not get too large */
-    max-height: 800px; /* Ensure the vault does not get too large */
-    background: rgb(235, 235, 235);
+    max-width: 100%; /* Ensure the vault does not get too large */
+    max-height: 100%; /* Ensure the vault does not get too large */
     border-radius: 6%;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: transform 2s ease;
+    margin-left: 20%;
 }
 
 .vault-viewhole {
     position: absolute;
-    width: 50%; /* Adjust the size of the viewhole */
-    height: 50%;
-    background: linear-gradient(
-        to bottom,
-        #494949,
-        #101010
-    ); /* Matches background color */
+    width: 31%; /* Adjust the size of the viewhole */
+    height: 31%;
+    background: linear-gradient(to bottom, #494949, #101010) !important;
     border-radius: 50%;
     top: 50%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
     z-index: 1; /* Ensures the viewhole is behind the inner door */
 }
 
@@ -54,7 +48,7 @@ html {
     position: absolute; /* Changed from relative to absolute */
     width: 85%; /* Adjust the size of the inner door */
     height: 85%;
-    background: rgb(219, 219, 219);
+    background: linear-gradient(to bottom, #676767, #4c4c4c) !important;
     border-radius: 25%;
     transform-origin: left center;
     transition: transform 2s ease;
@@ -72,7 +66,7 @@ html {
 }
 
 .vault-door-lock {
-    background: rgb(185, 185, 185);
+    background: rgb(107, 107, 107);
 }
 
 .vault-door-circle {
@@ -189,24 +183,14 @@ html {
 
 /* Timeline CSS */
 .timeline-container {
-    animation: grow 2s forwards;
     width: 100vw; /* Ensure it takes full viewport width */
     height: 100vh; /* Ensure it takes full viewport height */
-    overflow: hidden; /* Prevent scrollbars */
     display: flex; /* Flexbox for alignment */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
     flex-direction: column; /* Ensure column layout */
     background-color: transparent; /* Background color for timeline */
-}
-
-@keyframes grow {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
+    margin-left: 15%;
 }
 
 .container {
@@ -226,16 +210,19 @@ html {
     color: #ffffff;
     font-style: italic;
     font-weight: 800;
+    margin-bottom: 3%;
 }
 
 .timeline {
-    width: 100%;
-    background-color: #fff;
+    width: 90%;
+    height: 70%;
     box-shadow: 0 5px 25px 5px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensure it can be layered with z-index */
+    z-index: 1; /* Lower than the .title */
 }
 
 .timeline .swiper-container {
-    height: 800px;
+    height: 70%;
     width: 100%;
     position: relative;
 }
@@ -384,24 +371,6 @@ html {
     z-index: 2;
     transition: 0.2s;
     right: 50px;
-}
-
-.timeline .swiper-button-prev {
-    left: 8%;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23d4a024'%2F%3E%3C%2Fsvg%3E");
-
-    &:hover {
-        transform: translateX(-3px);
-    }
-}
-
-.timeline .swiper-button-next {
-    right: 8%;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23d4a024'%2F%3E%3C%2Fsvg%3E");
-
-    &:hover {
-        transform: translateX(3px);
-    }
 }
 
 @media screen and (min-width: 768px) {
