@@ -12,6 +12,7 @@ import LoginCallback from "./pages/LoginCallback";
 import Layout from "./components/Layout";
 import PlaylistGenerator from "./pages/PlaylistGenerator";
 import PlaylistSuccess from "./pages/PlaylistSuccess";
+import PlaylistView from "./pages/PlaylistView"; 
 import Vault from "./pages/Vault";
 import AboutUs from "./pages/AboutUs";
 import Home from "./pages/Home";
@@ -54,6 +55,14 @@ const AppRoutes = () => {
                         <ProtectedRoute>
                             <PlaylistSuccess />
                         </ProtectedRoute>
+                    }
+                />
+                <Route 
+                    path="/playlist-view" 
+                    element={
+                    <ProtectedRoute>
+                        <PlaylistView />
+                    </ProtectedRoute>
                     }
                 />
                 <Route

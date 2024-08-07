@@ -1,0 +1,46 @@
+.playlist-container {
+    background-color: #1a1a1a; /* Dark background for the playlist */
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .no-playlist {
+    color: #ccc;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .playlist-title {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .song-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .song-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+  }
+  
+  .song-info {
+    flex-grow: 1;
+  }
+  
+  .song-note {
+    margin-left: 20px;
+    flex-grow: 2;
+    background: #333;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  

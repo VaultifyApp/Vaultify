@@ -56,14 +56,14 @@ const PlaylistGenerator = () => {
         setLoading(true);
         setError(false);
         try {
-            setCurrentUser(
-                await Server.generatePlaylist(
-                    currentUser,
-                    monthly,
-                    numSongs,
-                    newOnly
-                )
+            const playlistData = await Server.generatePlaylist(
+                currentUser,
+                monthly,
+                numSongs,
+                newOnly
             );
+            localStorage.setItem('playlistData', JSON.stringify(playlistData)); // Store playlist data in localStorage
+            setCurrentUser(playlistData);
             navigate("/playlist-success");
         } catch (error) {
             setError(true);
@@ -72,6 +72,7 @@ const PlaylistGenerator = () => {
             setLoading(false);
         }
     };
+
 
     // handles switching between time and num songs
     const handleLengthTypeChange = (type) => {

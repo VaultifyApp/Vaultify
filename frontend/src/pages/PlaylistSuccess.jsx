@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Make sure useNavigate is imported
 import { AuthContext } from "../utils/AuthContext";
 import "./PlaylistSuccess.css";
 
@@ -8,7 +8,12 @@ import "./PlaylistSuccess.css";
  */
 const PlaylistSuccess = () => {
     const { currentUser } = useContext(AuthContext);
-    // navigates user to the most recently generated playlist
+    const navigate = useNavigate(); // Initialize navigate
+
+    const handleViewPlaylist = () => {
+        navigate('/playlist-view'); // Redirect to the PlaylistView page
+    };
+
     const handleOpenPlaylist = () => {
         if (currentUser.playlists.length > 0) {
             // Get the link of the most recent playlist
@@ -28,6 +33,9 @@ const PlaylistSuccess = () => {
                 <div className="success-icon">✔</div>
                 <button onClick={handleOpenPlaylist} className="success-link">
                     Open playlist here
+                </button>
+                <button onClick={handleViewPlaylist} className="success-link">
+                    View Playlist
                 </button>
             </div>
         </div>
