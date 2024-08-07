@@ -45,15 +45,15 @@ html {
 }
 
 .vault-door-inner {
-    position: absolute; /* Changed from relative to absolute */
-    width: 85%; /* Adjust the size of the inner door */
+    position: absolute; 
+    width: 85%; 
     height: 85%;
     background: linear-gradient(to bottom, #676767, #4c4c4c) !important;
     border-radius: 25%;
     transform-origin: left center;
     transition: transform 2s ease;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
-    z-index: 2; /* Ensures the inner door is above the viewhole */
+    z-index: 2; 
 }
 
 .vault-door-lock-wrapper {
