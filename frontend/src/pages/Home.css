@@ -30,7 +30,8 @@ body {
     align-items: center;
     height: 100vh;
     margin-left: 20vw;
-    width: 81vw;
+    margin-right: 5vw;
+    width: 76vw;
 }
 
 .heading {
@@ -99,10 +100,11 @@ body {
 }
 
 .bio-text {
-    width: 2vw;
+    width: 30vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
+    text-align: left;
     font-size: 1.1vw;
 }
 
