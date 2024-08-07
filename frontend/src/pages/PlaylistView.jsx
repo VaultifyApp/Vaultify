@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import AuthContext from "../utils/AuthContext";
 
 const PlaylistView = () => {
   const [playlist, setPlaylist] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [ currentUser, setCurrentUser ] = useContext(AuthContext);
 
   useEffect(() => {
     console.log("Attempting to retrieve playlist data...");
-    const savedPlaylist = localStorage.getItem('playlistData');
+    const savedPlaylist = currentUser.playlists[currentUser.playlists.length - 1]
     if (savedPlaylist) {
-      console.log("Playlist data found:", savedPlaylist);
-      setPlaylist(JSON.parse(savedPlaylist));
+      const parsedData = savedPlaylist;
+      if (parsedData && Array.isArray(parsedData.songs)) {
+        setPlaylist(parsedData);
+        console.log("Playlist data found and valid:", parsedData);
+      } else {
+        console.error("Invalid or missing playlist data:", parsedData);
+      }
     } else {
       console.log("No playlist data found.");
     }
     setLoading(false);
-    return () => {
-      localStorage.removeItem('playlistData');
-    };
   }, []);
 
   if (loading) {
@@ -24,17 +28,17 @@ const PlaylistView = () => {
   }
 
   if (!playlist) {
-    return <div className="no-playlist">No playlist found</div>;
+    return <div>No playlist found or the playlist is missing necessary data.</div>;
   }
 
   return (
     <div className="playlist-container">
-      <h2 className="playlist-title">{playlist.title}</h2>
-      <ul className="song-list">
+      <h2>{playlist.title}</h2>
+      <ul>
         {playlist.songs.map((song, index) => (
-          <li key={index} className="song-item">
-            <span className="song-info">{song.title} by {song.artist}</span>
-            <input type="text" placeholder="Add a note..." className="song-note" />
+          <li key={index}>
+            {song.title} by {song.artist}
+            <input type="text" placeholder="Add a note..." />
           </li>
         ))}
       </ul>

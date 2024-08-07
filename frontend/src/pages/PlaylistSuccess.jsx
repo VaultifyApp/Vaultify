@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom"; // Make sure useNavigate is imported
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../utils/AuthContext";
 import "./PlaylistSuccess.css";
 
@@ -32,10 +32,10 @@ const PlaylistSuccess = () => {
                 <h1>Playlist successfully created.</h1>
                 <div className="success-icon">✔</div>
                 <button onClick={handleOpenPlaylist} className="success-link">
-                    Open playlist here
+                    Open playlist in Spotify
                 </button>
                 <button onClick={handleViewPlaylist} className="success-link">
-                    View Playlist
+                    View Playlist Here
                 </button>
             </div>
         </div>

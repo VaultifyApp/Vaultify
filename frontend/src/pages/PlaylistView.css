@@ -1,46 +1,49 @@
-.playlist-container {
-    background-color: #1a1a1a; /* Dark background for the playlist */
+/* PlaylistView.css */
+.view-container {
+    background-color: #333; /* Dark grey background for visibility */
     color: white;
     padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .no-playlist {
-    color: #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.5);
+    margin: 20px;
+}
+
+.no-playlist {
+    color: red; /* Make this text red for high visibility */
+    font-size: 24px;
     text-align: center;
-    padding: 20px;
-  }
-  
-  .playlist-title {
-    color: #fff;
-    margin-bottom: 20px;
-  }
-  
-  .song-list {
-    list-style: none;
+    margin-top: 50px;
+}
+
+.song-list {
+    list-style: none; /* Remove bullet points from list */
     padding: 0;
-  }
-  
-  .song-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    border-bottom: 1px solid gray;
-    padding-bottom: 10px;
-  }
-  
-  .song-info {
-    flex-grow: 1;
-  }
-  
-  .song-note {
-    margin-left: 20px;
-    flex-grow: 2;
-    background: #333;
-    border: none;
-    color: white;
-    padding: 8px;
+}
+
+.song-item {
+    background-color: #222; /* Darker background for each item */
+    margin: 10px 0;
+    padding: 10px;
     border-radius: 5px;
-  }
-  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-info {
+    font-weight: bold;
+}
+
+.song-note {
+    flex-grow: 1;
+    margin-left: 10px;
+    padding: 8px;
+    border: 2px solid #666; /* Lighter border for input */
+    background-color: #555; /* Light grey background for inputs */
+    color: white;
+}
+
+.playlist-title {
+    text-align: center;
+    margin-bottom: 20px;
+}

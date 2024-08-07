@@ -58,13 +58,14 @@ const AppRoutes = () => {
                     }
                 />
                 <Route 
-                    path="/playlist-view" 
+                    path="playlist-view" 
                     element={
-                    <ProtectedRoute>
-                        <PlaylistView />
-                    </ProtectedRoute>
+                        <ProtectedRoute>
+                            <PlaylistView />
+                        </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="vault"
                     element={
