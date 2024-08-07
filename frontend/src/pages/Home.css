@@ -1,121 +1,225 @@
-.container {
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+#home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.home-content {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 20vw;
+    width: 81vw;
+}
+
+.heading {
+    font-size: 1.75vw;
+}
+
+.playlist-content {
+    text-align: center;
+    color: white;
+    box-shadow: none; /* Remove box shadow */
+    width: 100%;
+}
+
+.profile-content {
+    margin-top: 1.75vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 0.15vw solid #ccc;
+    width: 100%;
+    padding-bottom: 1.75vw;
+    margin-bottom: 1.75vw;
+}
+
+.profile-details-left {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    padding: 40px;
-    height: 100vh;
-    overflow-y: auto;
-    color: #ffffff; /* Update text color to match the image */
 }
 
-h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
-    margin-top: 70px;
+.profile-info {
+    display: flex;
+    align-items: center;
 }
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 30px;
+.profile-pic img {
+    border-radius: 50%;
+    margin-right: 2vw; /* Adjust margin for better scaling */
+    width: 10vw;
 }
 
-.search-bar {
-    display: flex; /* Align items in a row */
-    justify-content: center;
-    margin: 20px;
-    margin-bottom: 70px;
-    width: 80%;
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.search-bar input {
-    flex-grow: 1; /* Allow input to grow and fill available space */
-    padding: 15px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 60px 0 0 60px; /* Rounded corners on the left side */
+.name-username {
+    display: flex;
+    align-items: baseline;
 }
 
-.search-bar button {
-    padding: 15px;
-    font-size: 18px;
+.profile-name {
+    font-size: 1.75vw;
+    font-weight: bold;
+    margin-right: 1vw;
+}
+
+.profile-counters {
+    font-size: 1.1vw;
+    margin-top: 0.4vw;
+}
+
+.bio-section {
+    margin-top: 0.75vw;
+}
+
+.bio-text {
+    width: 2vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    font-size: 1.1vw;
+}
+
+.edit-bio-section {
+    display: flex;
+    align-items: center;
+}
+
+.bio-textarea {
+    width: 100%;
+    height: 4vw;
+    margin-right: 1vw;
+    border-radius: 0.25vw;
+    border: 0.1vw solid #ccc;
+    font-size: 1.1vw;
+}
+
+.save-bio-button {
+    background-color: #00d76a;
+    color: white;
     border: none;
-    border-radius: 0 60px 60px 0; /* Rounded corners on the right side */
-    background-color: #737373; /* Spotify green color */
-    color: rgb(255, 255, 255);
+    width: 7vw;
+    height: 3vw;
+    border-radius: 0.35vw;
+    cursor: pointer;
+    font-size: 1.1vw;
+    text-align: center;
+    padding: 0.7vw;
+}
+
+.save-bio-button:hover {
+    background-color: #16a34a;
+}
+
+.edit-bio-button {
+    padding: 0.7vw;
+    align-self: flex-start;
+    width: 10vw;
+    height: 3vw;
+    border-radius: 0.35vw;
+    font-size: 1.1vw;
+}
+
+.edit-bio-button button {
+    background-color: #00d76a;
+    color: white;
+    border: none;
     cursor: pointer;
 }
 
-.search-bar button:hover {
-    background-color: #232323; /* Slightly lighter green on hover */
+.edit-bio-button button:hover {
+    background-color: #16a34a;
 }
 
-h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: left;
-    margin-top: 20px;
-    font-weight: bold;
+.playlists-container,
+.achievements-container {
+    width: 100%;
+    text-align: center;
 }
 
-p {
-    font-size: 18px;
-    line-height: 1.6;
-    text-align: left;
+.playlists-container {
+    padding-bottom: 4vh;
+    border-bottom: 0.15vw solid #ccc;
 }
 
 .playlists {
+    margin-top: -1vw;
+    padding: 0 2vw;
     display: flex;
-    justify-content: center;
-    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 0.5vw;
 }
 
-.playlists img {
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
-    margin: 0 10px;
+.playlist,
+.achievement {
+    text-align: center;
 }
 
-.results {
-    width: 100%;
-    max-width: 800px;
-    margin-top: 30px;
-    margin-bottom: 40px;
+.playlist img {
+    border-radius: 0.7vw;
+    display: block;
+    width: 10vw;
+    height: 10vw;
 }
 
-.results ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    list-style-type: none;
-    padding: 0;
+.playlist-link {
+    color: white;
+    text-decoration: underline;
+    font-size: 1.1vw;
 }
 
-.results li {
-    background-color: #3e3e3e;
-    border-radius: 10px;
-    padding: 10px;
+.playlist-link:hover {
+    color: #888888;
+}
+
+.achievements {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 1vw;
 }
 
-.results img {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
+.achievement {
+    background-color: #333;
+    color: white;
+    padding: 1.5vw;
+    border-radius: 1vw;
+    width: 18%;
+    text-align: center;
 }
 
-.results .track-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.results .track-info .track-name {
-    font-size: 16px;
+.achievement-title {
     font-weight: bold;
+    font-size: 1.1vw;
+    padding-bottom: 0.5vw;
 }
 
-.results .track-info .track-artists {
-    font-size: 14px;
+.achievement-description {
+    font-size: 0.9vw;
 }

@@ -22,7 +22,6 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    border: none; /* Remove any borders */
 }
 
 .playlist-content {
@@ -31,10 +30,7 @@ body {
     padding: 40px;
     border-radius: 10px;
     box-shadow: none; /* Remove box shadow */
-    max-width: 600px;
     width: 100%;
-    box-sizing: border-box; /* Ensure padding does not affect width */
-    border: none; /* Remove any borders */
 }
 
 .playlist-title {
