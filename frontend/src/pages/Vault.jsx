@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../utils/AuthContext";
 import "./Vault.css";
 import Swiper from "swiper/bundle";
+import axios from "axios";
 
 /**
  * Vault page component
@@ -13,6 +14,7 @@ const Vault = () => {
     const [isDoorOpening, setIsDoorOpening] = useState(false);
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [isZoomedIn, setIsZoomedIn] = useState(false);
+    const [images, setImages] = useState([]);
 
     const { currentUser } = useContext(AuthContext);
     const playlists = currentUser.playlists;
@@ -20,6 +22,24 @@ const Vault = () => {
     useEffect(() => {
         console.log("Playlists:", playlists);
     }, [playlists]);
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const response = await axios.get("https://api.unsplash.com/search/photos", {
+                    params: { query: 'green', per_page: playlists.length },
+                    headers: {
+                        Authorization: `Client-ID l1-Il-e6HmCC1wWoocR78p9Sssyz77o_-KKTgUcK8xk`
+                    }
+                });
+                setImages(response.data.results);
+            } catch (error) {
+                console.error("Error fetching images from Unsplash:", error);
+            }
+        };
+
+        fetchImages();
+    }, [playlists.length]);
 
     const handleOpenVault = () => {
         setIsWheelTurning(true);
@@ -34,6 +54,10 @@ const Vault = () => {
             }, 500);
         }, 700);
     };
+
+    useEffect(() => {
+        handleOpenVault(); // Automatically start the animation when the component mounts
+    }, []);
 
     useEffect(() => {
         if (isContentVisible) {
@@ -80,7 +104,7 @@ const Vault = () => {
             className={`vault-container ${isZoomedIn ? "zoom-in" : ""} ${isContentVisible ? "zoom-out" : ""}`}
         >
             {!isContentVisible ? (
-                <div className="vault-door-outer" onClick={handleOpenVault}>
+                <div className="vault-door-outer">
                     <div className="vault-hinges">
                         <div className="hinge"></div>
                         <div className="hinge"></div>
@@ -119,7 +143,7 @@ const Vault = () => {
                                         <div
                                             className="swiper-slide"
                                             style={{
-                                                backgroundImage: `url(https://unsplash.it/1920/500?image=${index + 1})`,
+                                                backgroundImage: `url(${images[index]?.urls?.regular})`,
                                             }}
                                             data-year={`Playlist ${playlists.length - index}:`}
                                             key={index}
