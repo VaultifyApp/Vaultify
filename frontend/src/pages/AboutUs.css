@@ -2,17 +2,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     color: white;
-    padding: 40px;
     box-sizing: border-box;
 }
 
 .about-content {
-    max-width: 1500px !important; /* Increase the max-width */
+    margin-top: 15vw;
     text-align: left;
-    padding: 40px;
+    color: white;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 25vw;
+    width: 76vw;
 }
 
 .about-content h1 {
@@ -32,12 +37,14 @@
 }
 
 .about-content p {
+    margin-right: 10vw;
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 2rem;
 }
 
 .profile-pictures {
+    margin-right: 20vw;
     display: flex;
     justify-content: space-between;
     gap: 10px;

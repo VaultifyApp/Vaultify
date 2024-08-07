@@ -31,7 +31,7 @@ const Home = () => {
         }));
 
     // determine achievements
-    const achievements = [{name: "Site Explorer", description: "Navigate to the Profile Page."}];
+    const achievements = [{name: "Explorer", description: "Navigate to the Profile Page."}];
     if (currentUser.playlists.length > 0) {
         achievements.push({
             name: "Vaulting in",
