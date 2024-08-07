@@ -10,6 +10,10 @@ import profile5 from "../assets/matt.png";
  * About Us page componenet
  */
 const AboutUs = () => {
+    const clickThomas = () => {
+        window.open("https://www.linkedin.com/in/thomasorifici/");
+    };
+
     return (
         <div className="about-container">
             <div className="about-content">
@@ -17,14 +21,14 @@ const AboutUs = () => {
                 <h2>The Band</h2>
                 <h3>“Practice. Perform. Perfect.”</h3>
                 <p>
-                    We are The Band, a group of passionate juniors from RPI
-                    dedicated to revolutionizing how music enthusiasts interact
-                    with their musical libraries. Michelle Li, dual majoring in
-                    Computer Science and Information Technology & Web Science,
-                    brings her rich musical background and technical expertise
-                    to the project, driven by her love for piano, violin, and
-                    singing. Thomas Orifici, a Computer Science major with a
-                    minor in music, plays guitar and bass, and shares a personal
+                    The Band is a group of passionate juniors from RPI dedicated
+                    to revolutionizing how music enthusiasts interact with their
+                    musical libraries. Michelle Li, dual majoring in Computer
+                    Science and Information Technology & Web Science, brings her
+                    rich musical background and technical expertise to the
+                    project, driven by her love for piano, violin, and singing.
+                    Thomas Orifici, a Computer Science major with a minor in
+                    music, plays guitar and bass, and shares a personal
                     connection to Vaultify’s mission. Michael Lam, despite his
                     initial lack of experience, has honed his skills at RPI and
                     is eager to grow as a software engineer through this
@@ -39,11 +43,17 @@ const AboutUs = () => {
                     technology.
                 </p>
                 <div className="profile-pictures">
-                    <img src={profile1} alt="Profile 1" />
-                    <img src={profile2} alt="Profile 2" />
-                    <img src={profile3} alt="Profile 3" />
-                    <img src={profile4} alt="Profile 4" />
-                    <img src={profile5} alt="Profile 5" />
+                    <img src={profile1} alt="Michelle" />
+                    <a
+                        href="https://www.linkedin.com/in/thomasorifici/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={profile2} alt="Thomas" />
+                    </a>
+                    <img src={profile3} alt="Michael" />
+                    <img src={profile4} alt="Dillon" />
+                    <img src={profile5} alt="Matt" />
                 </div>
             </div>
         </div>

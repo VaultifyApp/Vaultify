@@ -61,6 +61,7 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
+                    console.log(err);
                     return res.status(400).json({ error: err });
                 }
             }
@@ -79,6 +80,7 @@ class Receiver {
                 const user: User = req.body;
                 this.model.updateUser(user);
             } catch (err) {
+                console.log(err);
                 return res.status(400).json({ error: err });
             }
         });
@@ -104,6 +106,7 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
+                    console.log(err);
                     return res.status(400).json({ error: err });
                 }
             }
@@ -126,6 +129,7 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
+                    console.log(err);
                     return res.status(400).json({ error: err });
                 }
             }

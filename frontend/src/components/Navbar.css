@@ -16,32 +16,31 @@ body {
 
 body .navbar {
     background: linear-gradient(to bottom, #242424, #000000) !important;
-    width: 270px;
+    width: 15vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000; /* Ensure navbar is on top */
 }
 
 .navbar {
     background: linear-gradient(to bottom, #242424, #000000);
-    width: 270px;
     height: 100vh;
-    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
     box-sizing: border-box;
+    z-index: 1000; /* Ensure navbar is on top */
 }
 
 .navbar-title {
-    font-size: 2.75rem;
+    font-size: min(3vw, 6vh);
     font-weight: bold;
     color: white;
-    margin-top: 50px;
+    margin-top: 10vh;
     text-align: center;
 }
 
@@ -51,7 +50,7 @@ body .navbar {
 }
 
 .navbar-logo img {
-    width: 150px;
+    width: min(11vw, 22vh);
 }
 
 .navbar ul {
@@ -60,19 +59,22 @@ body .navbar {
     padding: 0;
     width: 100%;
     text-align: center;
+    margin-bottom: 15vh;
 }
 
 .navbar li {
     width: 100%;
-    text-align: center;
 }
 
 .navbar li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 1vh 1vh;
     text-decoration: none;
+    font-size: min(1.3vw, 2.5vh);
+    padding-top: 1.9vh;
+    padding-bottom: 1.9vh;
 }
 
 .navbar li a:hover,
@@ -81,8 +83,6 @@ body .navbar {
 }
 
 .main-content {
-    margin-left: 270px;
-    padding: 20px;
     flex-grow: 1;
     height: 100vh;
     overflow: auto;
@@ -90,56 +90,7 @@ body .navbar {
 }
 
 #root {
-    max-width: 1280px;
     width: 100%;
     margin: 0 auto;
     text-align: center;
-}
-
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-}
-
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-.navbar-settings {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.navbar-settings img {
-    width: 40px;
-}
-
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
-    }
-}
-
-.card {
-    padding: 2em;
-}
-
-.read-the-docs {
-    color: #888;
 }

@@ -22,22 +22,21 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    border: none; /* Remove any borders */
 }
 
 .playlist-content {
     text-align: center;
     color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: none; /* Remove box shadow */
-    max-width: 600px;
-    width: 100%;
-    box-sizing: border-box; /* Ensure padding does not affect width */
-    border: none; /* Remove any borders */
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 15vw;
+    width: 81vw;
 }
 
 .playlist-title {
+    margin-top: 10vw;
     font-size: 2rem;
     margin-bottom: 10px;
 }
