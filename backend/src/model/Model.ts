@@ -86,8 +86,12 @@ class Model {
         user = await this.spotify.generatePlaylist(user, manual);
 
         if (user.settings.coverTheme && user.settings.coverTheme != "") {
-            let newPlaylist: Playlist = user.playlists[user.playlists.length - 1];
-            newPlaylist = await this.cover.generateCover(newPlaylist, user.settings.coverTheme);
+            let newPlaylist: Playlist =
+                user.playlists[user.playlists.length - 1];
+            newPlaylist = await this.cover.generateCover(
+                newPlaylist,
+                user.settings.coverTheme
+            );
             user.playlists[user.playlists.length - 1] = newPlaylist;
         }
 

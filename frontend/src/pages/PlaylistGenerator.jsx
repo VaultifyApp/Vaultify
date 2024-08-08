@@ -61,9 +61,9 @@ const PlaylistGenerator = () => {
                 monthly,
                 numSongs,
                 newOnly,
-                coverTheme,
-            )
-            currentUser.playlists = updated.playlists
+                coverTheme
+            );
+            currentUser.playlists = updated.playlists;
             setCurrentUser(updated);
             /**
              * ::: TODO:::

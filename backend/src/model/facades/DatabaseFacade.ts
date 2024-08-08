@@ -167,7 +167,7 @@ class DatabaseFacade {
                 coverTheme: {
                     type: String,
                     required: false,
-                }
+                },
             },
         });
         // stores user model to interact with db
