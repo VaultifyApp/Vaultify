@@ -16,7 +16,8 @@ const Home = () => {
     const [newBio, setNewBio] = useState(
         currentUser.bio || "Hello world! I’m new to Vaultify."
     );
-    // configs recent playlists
+
+    // Configs recent playlists
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
     const greens = [green1, green2, green3];
@@ -31,7 +32,7 @@ const Home = () => {
             url: playlist.url,
         }));
 
-    // determine achievements
+    // Determine achievements
     const achievements = [
         { name: "Explorer", description: "Navigate to the Profile Page." },
     ];
@@ -67,16 +68,55 @@ const Home = () => {
     }
 
     const handleSaveBio = async () => {
+        if (newBio.length > 250) {
+            alert("Bio cannot exceed 250 characters.");
+            return;
+        }
         const updatedBio = newBio.trim() || "Hello world!";
         currentUser.bio = updatedBio;
         setCurrentUser(currentUser);
         setEditing(false);
         try {
-            Server.updateUser(currentUser);
+            await Server.updateUser(currentUser);
         } catch (error) {
             console.error("Error updating bio", error);
         }
     };
+
+    const handleBioChange = (e) => {
+        if (e.target.value.length <= 300) {
+            setNewBio(e.target.value);
+        }
+    };
+
+    // Helper function to split bio text
+    const splitBioText = (bio) => {
+        const maxLength = 250;
+        const lineLength = 100;
+        const lines = [];
+
+        let currentLine = "";
+        let remainingBio = bio.substring(0, maxLength);
+
+        while (remainingBio.length > 0) {
+            if (remainingBio.length <= lineLength) {
+                lines.push(remainingBio);
+                break;
+            } else {
+                let splitIndex = remainingBio.lastIndexOf(" ", lineLength);
+                if (splitIndex === -1) {
+                    splitIndex = lineLength;
+                }
+                currentLine = remainingBio.substring(0, splitIndex) + "-";
+                lines.push(currentLine);
+                remainingBio = remainingBio.substring(splitIndex).trim();
+            }
+        }
+
+        return lines.slice(0, 3); // Return only the first 3 lines
+    };
+
+    const bioParts = splitBioText(currentUser.bio);
 
     return (
         <div className="home-content">
