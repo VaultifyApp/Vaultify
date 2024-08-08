@@ -163,7 +163,7 @@ const PlaylistGenerator = () => {
                             1 hour
                         </button>
                         <button
-                            onClick={() => setLength(60)}
+                            onClick={() => setNumSongs(60)}
                             className={numSongs === 60 ? "selected" : ""}
                         >
                             3 hours

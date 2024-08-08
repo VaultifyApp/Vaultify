@@ -55,7 +55,8 @@ body {
 .length-type-options button,
 .length-options button {
     margin-top: 1vw;
-    padding: 0.5vw 1vw;
+    padding: 0.75vw 1.5vw;
+    font-size: 1.2vw;
     border: 0.17vw solid #00d76a; /* Green border for unhighlighted bubbles */
     border-radius: 9999vw; /* Make buttons round */
     background-color: #1a1a1a; /* Background */
@@ -92,7 +93,8 @@ button:hover {
 }
 
 select {
-    padding: 0.75vw;
+    margin-top: 1vw;
+    padding: 0.7vw;
     background-color: #1a1a1a;
     color: #00d76a;
     border: 0.17vw solid #00d76a;
@@ -109,9 +111,9 @@ select {
 .playlist-text {
     margin-top: 1.5vw;
     margin-bottom: 5vw;
-    font-size: 1vw;
+    font-size: 1.2vw;
     line-height: 1.5;
-    width: 30vw;
+    width: 43vw;
     text-align: center;
     justify-content: center;
 }

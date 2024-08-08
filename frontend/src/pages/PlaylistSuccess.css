@@ -1,5 +1,4 @@
 /* src/pages/PlaylistSuccess.css */
-
 .success-content {
     text-align: center;
     color: white;
@@ -14,19 +13,27 @@
     overflow-x: hidden;
 }
 
-.success-icon {
-    font-size: 5rem;
-    color: #00d76a;
-    margin: 20px 0;
+.success-content h1 {
+    font-size: 3.5vw;
 }
 
-.success-link {
+.success-content h2 {
+    font-size: 8vw;
+    color: #00d76a;
+    margin: 1.7vw 0;
+}
+
+.success-content h3 {
+    font-size: 2vw;
+    padding-top: 0.75vw;
+    padding-bottom: 0.75vw;
+}
+
+.button {
     background-color: #00d76a;
     color: white;
-    font-size: 1.5rem;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 1vw;
     cursor: pointer;
     text-decoration: none;
 }

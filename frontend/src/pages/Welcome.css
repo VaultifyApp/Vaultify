@@ -46,6 +46,7 @@ body {
 }
 
 .welcome-button {
+    width: 17vw;
     margin-top: 2vw;
     padding: 0.75vw 1.5vw;
     font-size: 1.5vw;
@@ -74,4 +75,8 @@ body {
     line-height: 1.5;
     width: 60vw;
     text-align: center;
+}
+
+.button {
+    width: 10vw;
 }
