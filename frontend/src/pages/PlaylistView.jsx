@@ -30,7 +30,7 @@ const PlaylistView = () => {
         navigator.clipboard
             .writeText(url)
             .then(() => {
-                alert("Link copied to clipboard!");
+                alert("Playlist link copied to clipboard!");
             })
             .catch((err) => {
                 console.error("Failed to copy: ", err);
