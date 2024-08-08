@@ -1,47 +1,38 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #494949; /* Set the page background color to match the vault */
-}
-
 .vault-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Hide any overflow to prevent scrollbars */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    position: relative; /* Added to position contents correctly */
-    overflow: hidden; /* Ensure no scrollbars */
 }
 
 .vault-door-outer {
     position: relative;
-    width: 60vw; /* Increase the width to take up more of the page */
-    height: 60vw; /* Increase the height to take up more of the page */
-    max-width: 100%; /* Ensure the vault does not get too large */
+    width: 100vw; /* Increase the width to take up more of the page */
+    height: 100vw; /* Increase the height to take up more of the page */
+    max-width: 50%; /* Ensure the vault does not get too large */
     max-height: 100%; /* Ensure the vault does not get too large */
-    border-radius: 6%;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: transform 2s ease;
-    margin-left: 20%;
+    margin-left: 10%;
 }
 
+/* Adjust the viewhole to take up the entire parent container */
 .vault-viewhole {
     position: absolute;
-    width: 31%; /* Adjust the size of the viewhole */
-    height: 31%;
-    background: linear-gradient(to bottom, #494949, #101010) !important;
-    border-radius: 50%;
+    width: 65%; /* Make the viewhole take up full width */
+    height: 65%; /* Make the viewhole take up full height */
+    background: linear-gradient(to bottom, #282828, #101010) !important;
+    border-radius: 50%; /* Makes it a circle */
     top: 50%;
-    left: 40%;
+    left: 45%;
     transform: translate(-50%, -50%);
     transition: transform 0.3s ease;
-    z-index: 1; /* Ensures the viewhole is behind the inner door */
+    z-index: 2; /* Ensures the viewhole is behind the inner door */
 }
 
 .vault-door-inner {
@@ -116,8 +107,8 @@ html {
 .vault-door-handle {
     position: absolute;
     border: solid 23px rgb(214, 214, 214);
-    width: 30%;
-    height: 30%;
+    width: 200px; /* Fixed width */
+    height: 200px; /* Fixed height */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -228,12 +219,12 @@ html {
 }
 
 .timeline .swiper-wrapper {
-    transition: 2s cubic-bezier(0.68, -0.4, 0.27, 1.34) 0.2s;
+    transition: 2s cubic-bezier(0.3, -0.05, 0.2, 1.1) 0.01s;
 }
 
 .timeline .swiper-slide {
     position: relative;
-    color: #d4a024;
+    color: #3b3b3b;
     overflow: hidden;
     background-size: cover;
     background-repeat: no-repeat;
@@ -272,7 +263,7 @@ html {
     font-size: 42px;
     margin-bottom: 50px;
     transform: translate3d(20px, 0, 0);
-    color: #d4a024;
+    color: #2e2e2e;
     font-weight: 300;
     opacity: 0;
     transition: 0.2s ease 0.4s;
@@ -308,18 +299,7 @@ html {
     transition: 0.4s ease 1.6s;
 }
 
-.timeline .swiper-pagination {
-    right: 15% !important;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 18px;
-    z-index: 1;
-}
-
+/* Line next to text */
 .timeline .swiper-pagination::before {
     content: "";
     position: absolute;
@@ -328,49 +308,6 @@ html {
     height: 100%;
     width: 1px;
     background-color: rgba(255, 255, 255, 0.2);
-}
-
-.timeline .swiper-pagination-bullet {
-    width: auto;
-    height: auto;
-    text-align: center;
-    opacity: 1;
-    background: transparent;
-    color: #d4a024;
-    margin: 15px 0 !important;
-    position: relative;
-    transform: translateX(500px);
-}
-
-.timeline .swiper-pagination-bullet::before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: -32.5px;
-    width: 6px;
-    height: 6px;
-    border-radius: 100%;
-    background-color: #d4a024;
-    transform: scale(0);
-    transition: 0.2s;
-}
-
-.timeline .swiper-pagination-bullet-active,
-.timeline .swiper-pagination-bullet-active::before {
-    transform: scale(1);
-    transform: translateX(500px);
-}
-
-.timeline .swiper-button-next,
-.timeline .swiper-button-prev {
-    background-size: 20px 20px;
-    top: 15%;
-    width: 20px;
-    height: 20px;
-    margin-top: 0;
-    z-index: 2;
-    transition: 0.2s;
-    right: 50px;
 }
 
 @media screen and (min-width: 768px) {

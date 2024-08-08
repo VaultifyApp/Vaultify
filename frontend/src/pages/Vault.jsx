@@ -29,7 +29,7 @@ const Vault = () => {
                 const response = await axios.get(
                     "https://api.unsplash.com/search/photos",
                     {
-                        params: { query: "green", per_page: playlists.length },
+                        params: { query: "colorful", per_page: playlists.length },
                         headers: {
                             Authorization: `Client-ID l1-Il-e6HmCC1wWoocR78p9Sssyz77o_-KKTgUcK8xk`,
                         },
