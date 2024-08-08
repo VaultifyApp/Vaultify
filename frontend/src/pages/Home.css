@@ -175,6 +175,7 @@ body {
 .edit-bio-button button {
     background-color: #00d76a;
     color: white;
+    font-size: 1vw;
 }
 
 .edit-bio-button button:hover {
