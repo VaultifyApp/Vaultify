@@ -40,7 +40,13 @@ const AboutUs = () => {
                 background, and our shared passion for music and technology.
             </p>
             <div className="profile-pictures">
-                <img src={profile1} alt="Michelle" />
+                <a
+                    href="https://www.linkedin.com/in/limish/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src={profile1} alt="Michelle" />
+                </a>
                 <a
                     href="https://www.linkedin.com/in/thomasorifici/"
                     target="_blank"
