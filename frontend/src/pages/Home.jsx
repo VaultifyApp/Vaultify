@@ -7,7 +7,11 @@ import green3 from "../assets/green3.jpg";
 import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
+import {
+    faSignOutAlt,
+    faEdit,
+    faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Home page component
@@ -173,7 +177,10 @@ const Home = () => {
                                                 className="save-bio-button"
                                                 onClick={handleSaveBio}
                                             >
-                                                <FontAwesomeIcon icon={faSave} /> Save
+                                                <FontAwesomeIcon
+                                                    icon={faSave}
+                                                />{" "}
+                                                Save
                                             </button>
                                         </div>
                                     ) : (
@@ -195,8 +202,12 @@ const Home = () => {
                                 </button>
                             </div>
                             <div className="logout-button">
-                                <button className="btn btn-danger btn-lg" onClick={handleLogout}>
-                                    <FontAwesomeIcon icon={faSignOutAlt} /> Log out
+                                <button
+                                    className="btn btn-danger btn-lg"
+                                    onClick={handleLogout}
+                                >
+                                    <FontAwesomeIcon icon={faSignOutAlt} /> Log
+                                    out
                                 </button>
                             </div>
                         </div>
