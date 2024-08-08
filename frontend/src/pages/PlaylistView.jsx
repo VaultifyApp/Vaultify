@@ -1,47 +1,61 @@
-import React, { useEffect, useState, useContext } from 'react';
-import AuthContext from "../utils/AuthContext";
+import React, { useContext } from 'react';
+import { AuthContext } from "../utils/AuthContext";
+import './PlaylistView.css'; // Ensure your styles are correctly linked
 
 const PlaylistView = () => {
-  const [playlist, setPlaylist] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [ currentUser, setCurrentUser ] = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+  const playlist = currentUser.playlists[currentUser.playlists.length - 1];
 
-  useEffect(() => {
-    console.log("Attempting to retrieve playlist data...");
-    const savedPlaylist = currentUser.playlists[currentUser.playlists.length - 1]
-    if (savedPlaylist) {
-      const parsedData = savedPlaylist;
-      if (parsedData && Array.isArray(parsedData.songs)) {
-        setPlaylist(parsedData);
-        console.log("Playlist data found and valid:", parsedData);
-      } else {
-        console.error("Invalid or missing playlist data:", parsedData);
-      }
-    } else {
-      console.log("No playlist data found.");
-    }
-    setLoading(false);
-  }, []);
-
-  if (loading) {
-    return <div>Loading playlist...</div>;
+  if (!playlist || !playlist.tracks) {
+    return <div className="no-playlist">No playlist found</div>;
   }
 
-  if (!playlist) {
-    return <div>No playlist found or the playlist is missing necessary data.</div>;
-  }
+  // Calculate mood score
+  const moodScore = Math.round(playlist.mood * 10);
 
   return (
     <div className="playlist-container">
-      <h2>{playlist.title}</h2>
-      <ul>
-        {playlist.songs.map((song, index) => (
-          <li key={index}>
-            {song.title} by {song.artist}
-            <input type="text" placeholder="Add a note..." />
-          </li>
-        ))}
-      </ul>
+      <header className="playlist-header">
+        <img 
+          src={playlist.image.url} 
+          alt="Playlist cover" 
+          className="playlist-cover"
+          style={{ width: '250px', height: '250px' }} // Adjusted size
+        />
+        <div className="playlist-info">
+          <h1>{playlist.title}</h1>
+          <p className="playlist-description">{playlist.description}</p>
+          <div className="playlist-tags">
+            {/* Mood tag dynamically generated from mood score */}
+            <span className="tag">Mood: {moodScore}</span>
+          </div>
+        </div>
+      </header>
+      <table className="playlist-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Artists</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {playlist.tracks.map((track, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>
+                <img src={track.image.url} alt="Track" className="track-image" />
+                <a href={track.url} target="_blank" rel="noopener noreferrer">{track.title}</a>
+              </td>
+              <td>{track.artists.join(', ')}</td>
+              <td>
+                <input type="text" placeholder="Add a note..." className="note-input" />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

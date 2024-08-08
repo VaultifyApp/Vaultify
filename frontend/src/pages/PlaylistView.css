@@ -1,49 +1,89 @@
-/* PlaylistView.css */
-.view-container {
-    background-color: #333; /* Dark grey background for visibility */
-    color: white;
+.playlist-container {
+    font-family: Arial, sans-serif;
+    color: #FFFFFF;
+    background-color: #333;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.5);
-    margin: 20px;
 }
 
-.no-playlist {
-    color: red; /* Make this text red for high visibility */
-    font-size: 24px;
-    text-align: center;
-    margin-top: 50px;
-}
-
-.song-list {
-    list-style: none; /* Remove bullet points from list */
-    padding: 0;
-}
-
-.song-item {
-    background-color: #222; /* Darker background for each item */
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
+.playlist-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.song-info {
-    font-weight: bold;
-}
-
-.song-note {
-    flex-grow: 1;
-    margin-left: 10px;
-    padding: 8px;
-    border: 2px solid #666; /* Lighter border for input */
-    background-color: #555; /* Light grey background for inputs */
-    color: white;
-}
-
-.playlist-title {
-    text-align: center;
     margin-bottom: 20px;
+}
+
+.playlist-cover {
+    width: 100px; /* Smaller image size */
+    height: 100px;
+    margin-right: 20px;
+    border-radius: 10px; /* Rounded rectangle */
+}
+
+
+.playlist-info {
+    flex-grow: 1;
+}
+
+.playlist-info h1 {
+    margin: 0;
+    color: #fff;
+}
+
+.playlist-description {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.playlist-tags {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background: #666;
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.playlist-table {
+    width: 100%; /* Ensure the table uses the full width of its container */
+    border-collapse: collapse; /* Optional: removes space between cells */
+ 
+}
+  
+.playlist-table th, .playlist-table td {
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Align text to the left */
+  
+}
+  
+.track-image {
+    width: 30px; /* Keep the track image small */
+    height: 30px; /* Ensure images are square */
+    margin-right: 10px; /* Add space between the image and title */
+    vertical-align: middle; /* Align images vertically in the middle */
+  
+}
+  
+.note-input {
+    width: 100%;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333; /* Dark gray background */
+    color: rgb(243, 246, 243); 
+    outline: none;
+}
+  
+.note-input:focus {
+    box-shadow: 0 0 5px rgb(240, 242, 240); /* Green glow for focus */
+}
+  
+.no-playlist {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    background-color: #444;
 }
