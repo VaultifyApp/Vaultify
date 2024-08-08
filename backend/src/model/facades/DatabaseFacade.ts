@@ -166,7 +166,7 @@ class DatabaseFacade {
                 },
                 coverTheme: {
                     type: String,
-                    required: true,
+                    required: false,
                 }
             },
         });

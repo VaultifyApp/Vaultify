@@ -2,16 +2,15 @@ import Playlist from "../interfaces/Playlist";
 import Image from "../interfaces/Image";
 import OpenAI from "openai";
 
-// Initialize OpenAI API
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
 /**
  * The CoverGenerator class is responsible for generating
  * playlist covers using OpenAI
  */
 class CoverGenerator {
+    private readonly openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+
     /**
      * @param {Playlist} playlist - the playlist to generate a cover for
      * @param {string} theme - cover theme, can be "Oil Painting", "Futuristic", or "Sky"
@@ -23,7 +22,7 @@ class CoverGenerator {
             const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" inspired by a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood * 10}, Additionally, please contain no words or letters.`;
 
             // Generate image using OpenAI API
-            const response = await openai.images.generate({
+            const response = await this.openai.images.generate({
                 prompt: prompt,
                 model: "dall-e-3",
                 n: 1,
