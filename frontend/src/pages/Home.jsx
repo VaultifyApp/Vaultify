@@ -94,7 +94,7 @@ const Home = () => {
         const lineLength = 100;
         const lines = [];
 
-        let currentLine = '';
+        let currentLine = "";
         let remainingBio = bio.substring(0, maxLength);
 
         while (remainingBio.length > 0) {
@@ -102,11 +102,11 @@ const Home = () => {
                 lines.push(remainingBio);
                 break;
             } else {
-                let splitIndex = remainingBio.lastIndexOf(' ', lineLength);
+                let splitIndex = remainingBio.lastIndexOf(" ", lineLength);
                 if (splitIndex === -1) {
                     splitIndex = lineLength;
                 }
-                currentLine = remainingBio.substring(0, splitIndex) + '-';
+                currentLine = remainingBio.substring(0, splitIndex) + "-";
                 lines.push(currentLine);
                 remainingBio = remainingBio.substring(splitIndex).trim();
             }
