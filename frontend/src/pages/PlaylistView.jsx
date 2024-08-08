@@ -23,10 +23,14 @@ const PlaylistView = () => {
           style={{ width: '250px', height: '250px' }} // Adjusted size
         />
         <div className="playlist-info">
-          <h1>{playlist.title}</h1>
+          {/* Wrap the title with a link to the Spotify playlist */}
+          <h1>
+            <a href={playlist.url} target="_blank" rel="noopener noreferrer">
+              {playlist.title}
+            </a>
+          </h1>
           <p className="playlist-description">{playlist.description}</p>
           <div className="playlist-tags">
-            {/* Mood tag dynamically generated from mood score */}
             <span className="tag">Mood: {moodScore}</span>
           </div>
         </div>
