@@ -56,7 +56,6 @@ class Receiver {
                     return res.status(400).json({ error: "Invalid params" });
                 }
                 try {
-                    console.log(req.query.coverTheme)
                     let user: User = await this.model.configGeneration(
                         req.query._id,
                         JSON.parse(req.query.monthly),
