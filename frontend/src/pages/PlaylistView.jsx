@@ -27,11 +27,14 @@ const PlaylistView = () => {
     };
 
     const handleCopyToClipboard = (url) => {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("Link copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy: ", err);
-        });
+        navigator.clipboard
+            .writeText(url)
+            .then(() => {
+                alert("Link copied to clipboard!");
+            })
+            .catch((err) => {
+                console.error("Failed to copy: ", err);
+            });
     };
 
     return (
