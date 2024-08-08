@@ -1,6 +1,6 @@
-/* src/pages/PlaylistGenerator.css */
 html,
-body {
+body,
+#root {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -15,6 +15,15 @@ body {
     color: white;
 }
 
+#playlist-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin-top: -7%;
+}
+
 .playlist-content {
     text-align: center;
     color: white;
@@ -23,42 +32,42 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    padding-left: 15vw;
-    padding-right: 0vw;
-    width: 100vw;
-    overflow-x: hidden;
+    margin-left: 15vw;
+    width: 81vw;
 }
 
 .playlist-title {
-    margin-top: 7vw;
-    font-size: 2.75vw;
-    margin-bottom: 1vw;
+    margin-top: 10vw;
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .playlist-subtitle {
-    font-size: 1.25vw;
-    margin-bottom: 2vw;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 1.5vw;
-    font-size: 1.2vw;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .length-type-options,
 .length-options {
     display: flex;
     justify-content: center;
-    gap: 0.7vw;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .length-type-options button,
 .length-options button {
-    margin-top: 1vw;
-    padding: 0.75vw 1.5vw;
-    font-size: 1.2vw;
-    border: 0.17vw solid #00d76a; /* Green border for unhighlighted bubbles */
-    border-radius: 9999vw; /* Make buttons round */
+    padding: 0.5rem 1rem;
+    border: 2px solid #00d76a; /* Green border for unhighlighted bubbles */
+    border-radius: 9999px; /* Make buttons round */
     background-color: #1a1a1a; /* Background */
     color: #00d76a; /* Green text */
     cursor: pointer;
@@ -79,8 +88,8 @@ select {
     background-color: #00d76a;
     color: white;
     border: none;
-    border-radius: 0.5vw;
-    padding: 1vw 2vw;
+    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
 }
 
@@ -93,29 +102,33 @@ button:hover {
 }
 
 select {
-    margin-top: 1vw;
-    padding: 0.7vw;
+    padding: 10px;
     background-color: #1a1a1a;
     color: #00d76a;
-    border: 0.17vw solid #00d76a;
+    border: 2px solid #00d76a;
     border-radius: 9999px;
 }
 
 .error {
     color: red;
-    margin-top: 2vw;
+    margin-top: 20px;
     text-align: center;
-    font-size: 2vw;
+}
+
+.playlist {
+    margin-top: 20px;
+}
+
+.playlist-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .playlist-text {
-    margin-top: 1.5vw;
-    margin-bottom: 5vw;
-    font-size: 1.2vw;
-    line-height: 1.5;
-    width: 43vw;
     text-align: center;
-    justify-content: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .modal {
@@ -132,28 +145,20 @@ select {
 
 .modal-content {
     background: #333;
-    padding: 2vw;
-    border-radius: 1vw;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    width: 30vw;
-    height: 17vw;
-    font-size: 1vw;
-}
-
-.modal-content h3 {
-    margin-top: 0.2vw;
-    font-size: 1.5vw;
+    max-width: 400px;
+    width: 100%;
 }
 
 button {
     background-color: #00d76a;
     color: white;
     border: none;
-    border-radius: 0.5vw;
-    padding: 1vw 2vw;
+    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 1vw;
-    margin-top: 0.5vw;
 }
 
 button:hover {
