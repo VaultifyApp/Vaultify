@@ -14,7 +14,7 @@
     align-items: flex-start;
     border-bottom: 0.15vw solid #ccc;
     width: 100%;
-    padding-bottom: 1.75vw;
+    padding-bottom: 0vw;
     margin-bottom: 1vw;
 }
 
@@ -44,6 +44,7 @@
 .playlist-tags {
     margin-top: 1vw;
     margin-left: 0.5vw;
+    margin-bottom: -2vw;
 }
 
 .tag {
@@ -55,13 +56,11 @@
 }
 
 .share-button {
-    margin-left: 50vw;
+    margin-left: 32vw;
     width: 5vw;
     height: 5vw;
     border-radius: 0.5vw;
-    align-self: flex-start;
     padding: 0.25vw 0.25vw;
-    justify-content: center;
 }
 
 .share-icon {

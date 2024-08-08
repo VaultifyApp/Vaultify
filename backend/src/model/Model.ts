@@ -1,4 +1,5 @@
 import User from "./interfaces/User.js";
+import Playlist from "./interfaces/Playlist.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
 import EmailFacade from "./facades/EmailFacade.js";
@@ -62,12 +63,14 @@ class Model {
         _id: string,
         notifs: boolean,
         numSongs: number,
-        newOnly: boolean
+        newOnly: boolean,
+        coverTheme: string
     ): Promise<User> {
         let user: User = await this.db.getUser(_id);
         user.settings.notifs = notifs;
         user.settings.numSongs = numSongs;
         user.settings.newOnly = newOnly;
+        user.settings.coverTheme = coverTheme;
         user = await this.generatePlaylist(user, true);
         this.db.updateUser(user);
         return user;
@@ -81,6 +84,17 @@ class Model {
      */
     async generatePlaylist(user: User, manual: boolean): Promise<User> {
         user = await this.spotify.generatePlaylist(user, manual);
+
+        if (user.settings.coverTheme && user.settings.coverTheme != "") {
+            let newPlaylist: Playlist =
+                user.playlists[user.playlists.length - 1];
+            newPlaylist = await this.cover.generateCover(
+                newPlaylist,
+                user.settings.coverTheme
+            );
+            user.playlists[user.playlists.length - 1] = newPlaylist;
+        }
+
         if (!manual) user.numMonths = user.numMonths + 1;
         this.db.updateUser(user);
         return user;

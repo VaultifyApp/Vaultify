@@ -1,27 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Vault.css";
-import Swiper from "swiper/bundle";
+import green1 from "../assets/green1.jpg";
+import green2 from "../assets/green2.jpg";
+import green3 from "../assets/green3.jpg";
 import axios from "axios";
 
 /**
- * Vault page component
+ * Home page component
  */
 const Vault = () => {
     const navigate = useNavigate();
-    const [isWheelTurning, setIsWheelTurning] = useState(false);
-    const [isDoorOpening, setIsDoorOpening] = useState(false);
-    const [isContentVisible, setIsContentVisible] = useState(false);
-    const [isZoomedIn, setIsZoomedIn] = useState(false);
+    const { currentUser } = useContext(AuthContext);
+    const [timelineView, setTimelineView] = useState(false);
     const [images, setImages] = useState([]);
 
-    const { currentUser } = useContext(AuthContext);
-    const playlists = currentUser.playlists;
+    const greens = [green1, green2, green3];
 
-    useEffect(() => {
-        console.log("Playlists:", playlists);
-    }, [playlists]);
+    const format = (str, max) => {
+        if (str.length < max) {
+            return str;
+        }
+        return str.slice(0, max - 3) + "...";
+    };
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -31,7 +33,7 @@ const Vault = () => {
                     {
                         params: {
                             query: "colorful",
-                            per_page: playlists.length,
+                            per_page: currentUser.playlists.length,
                         },
                         headers: {
                             Authorization: `Client-ID l1-Il-e6HmCC1wWoocR78p9Sssyz77o_-KKTgUcK8xk`,
@@ -45,138 +47,163 @@ const Vault = () => {
         };
 
         fetchImages();
-    }, [playlists.length]);
-
-    const handleOpenVault = () => {
-        setIsWheelTurning(true);
-        setTimeout(() => {
-            setIsWheelTurning(false);
-            setIsDoorOpening(true);
-            setTimeout(() => {
-                setIsZoomedIn(true);
-                setTimeout(() => {
-                    setIsContentVisible(true);
-                }, 3000);
-            }, 500);
-        }, 700);
-    };
-
-    useEffect(() => {
-        handleOpenVault(); // Automatically start the animation when the component mounts
-    }, []);
-
-    useEffect(() => {
-        if (isContentVisible) {
-            const timelineSwiper = new Swiper(".timeline .swiper-container", {
-                direction: "vertical", // Ensure vertical direction
-                loop: false,
-                speed: 700,
-                allowTouchMove: false, // Disable touch interactions
-                mousewheel: true, // Disable mousewheel interactions
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                    renderBullet: function (index, className) {
-                        const year = document
-                            .querySelectorAll(".swiper-slide")
-                            [index].getAttribute("data-year");
-                        return `<span class="${className}">${year}</span>`;
-                    },
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-            });
-
-            const preventDefault = (e) => {
-                e.preventDefault();
-            };
-
-            // Add event listeners to disable scroll events
-            document
-                .querySelector(".timeline .swiper-container")
-                .addEventListener("wheel", preventDefault, { passive: false });
-            document
-                .querySelector(".timeline .swiper-container")
-                .addEventListener("touchmove", preventDefault, {
-                    passive: false,
-                });
-        }
-    }, [isContentVisible]);
+    }, [currentUser.playlists.length]);
 
     return (
-        <div
-            className={`vault-container ${isZoomedIn ? "zoom-in" : ""} ${isContentVisible ? "zoom-out" : ""}`}
-        >
-            {!isContentVisible ? (
-                <div className="vault-door-outer">
-                    <div className="vault-hinges">
-                        <div className="hinge"></div>
-                        <div className="hinge"></div>
-                    </div>
-                    <div className="vault-viewhole"></div>
-                    <div
-                        className={`vault-door-inner ${isWheelTurning ? "turning" : ""} ${isDoorOpening ? "opening" : ""}`}
+        <div className="vault-content">
+            <div className="header">
+                <h1>Vault - {timelineView ? "Timeline View" : "List View"}</h1>
+                <div className="view-button">
+                    <button
+                        onClick={() =>
+                            timelineView
+                                ? setTimelineView(false)
+                                : setTimelineView(true)
+                        }
                     >
-                        <div className="vault-inner-hinges">
-                            <div className="hinge"></div>
-                            <div className="hinge"></div>
-                        </div>
-                        <div className="vault-door-lock-wrapper">
-                            <div className="vault-door-lock vault-door-circle"></div>
-                            <div className="vault-door-lock vault-door-pistons">
-                                <div className="piston piston1"></div>
-                                <div className="piston piston2"></div>
-                                <div className="piston piston3"></div>
-                                <div className="piston piston4"></div>
+                        {timelineView ? "List View" : "Timeline View"}
+                    </button>
+                </div>
+            </div>
+            {!timelineView ? (
+                <div className="list-container">
+                    <h3 className="heading">Recent Playlists</h3>
+                    <div className="playlists-list">
+                        {currentUser.playlists.length > 0 ? (
+                            [...currentUser.playlists]
+                                .reverse()
+                                .map((playlist, index) => (
+                                    <div key={index} className="playlist">
+                                        <div
+                                            className="playlist-link"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/playlist-view/${currentUser.playlists.length - 1 - index}`
+                                                )
+                                            }
+                                        >
+                                            <img
+                                                src={
+                                                    playlist.image
+                                                        ? playlist.image.url
+                                                        : greens[
+                                                              index %
+                                                                  greens.length
+                                                          ]
+                                                }
+                                                alt={playlist.title}
+                                                width="100"
+                                            />
+                                            {playlist.title.length > 15
+                                                ? playlist.title.substr(0, 14) +
+                                                  "..."
+                                                : playlist.title}
+                                        </div>
+                                    </div>
+                                ))
+                        ) : (
+                            <div className="playlist">
+                                <p>
+                                    No Playlists available... Get started with
+                                    our Playlist Generator!
+                                </p>
                             </div>
-                        </div>
-                        <div className="vault-door-handle">
-                            <div className="handle-bar bar1"></div>
-                            <div className="handle-bar bar2"></div>
-                        </div>
+                        )}
                     </div>
                 </div>
             ) : (
                 <div className="timeline-container">
-                    <div className="container">
-                        <h1 className="title">My Vault</h1>
-                        <div className="timeline">
-                            <div className="swiper-container">
-                                <div className="swiper-wrapper">
-                                    {playlists.map((playlist, index) => (
-                                        <div
-                                            className="swiper-slide"
-                                            style={{
-                                                backgroundImage: `url(${images[index]?.urls?.regular})`,
-                                            }}
-                                            data-year={`Playlist ${playlists.length - index}:`}
-                                            key={index}
+                    {currentUser.playlists.length > 0 ? (
+                        [...currentUser.playlists]
+                            .reverse()
+                            .map((playlist, index) => (
+                                <div className="timeline-item">
+                                    <div className="timeline-title">
+                                        <a
+                                            href={playlist.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                         >
-                                            <div className="swiper-slide-content">
-                                                <span className="timeline-year">
-                                                    {playlist.title}:
-                                                </span>
-                                                <button
-                                                    onClick={() =>
-                                                        window.open(
-                                                            playlist.url
-                                                        )
+                                            {playlist.title}
+                                        </a>
+                                    </div>
+                                    <div className="items">
+                                        <div
+                                            key={index}
+                                            className="timeline-cover"
+                                        >
+                                            <div
+                                                className="playlist-link"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/playlist-view/${currentUser.playlists.length - 1 - index}`
+                                                    )
+                                                }
+                                            >
+                                                <img
+                                                    src={
+                                                        playlist.image
+                                                            ? playlist.image.url
+                                                            : greens[
+                                                                  index %
+                                                                      greens.length
+                                                              ]
                                                     }
-                                                >
-                                                    Open in Spotify
-                                                </button>
+                                                    alt={playlist.title}
+                                                    width="100"
+                                                />
                                             </div>
                                         </div>
-                                    ))}
+                                        <div className="tag">
+                                            <p>
+                                                Mood:{" "}
+                                                {Math.round(
+                                                    playlist.mood * 100
+                                                ) / 10}{" "}
+                                                / 10
+                                            </p>
+                                        </div>
+                                        <div className="top-songs">
+                                            {playlist.tracks
+                                                .slice(0, 5)
+                                                .map((track, index) => (
+                                                    <div className="track">
+                                                        <a
+                                                            href={track.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            {index + 1}
+                                                            {index + 1 == 1
+                                                                ? " "
+                                                                : ""}
+                                                            <img
+                                                                src={
+                                                                    track.image
+                                                                        .url
+                                                                }
+                                                                alt="Track"
+                                                                className="track-image"
+                                                            />
+                                                            {format(
+                                                                track.title,
+                                                                30
+                                                            )}
+                                                        </a>
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="swiper-button-prev"></div>
-                                <div className="swiper-button-next"></div>
-                                <div className="swiper-pagination"></div>
-                            </div>
+                            ))
+                    ) : (
+                        <div className="playlist">
+                            <p>
+                                No Playlists available... Get started with our
+                                Playlist Generator!
+                            </p>
                         </div>
-                    </div>
+                    )}
                 </div>
             )}
         </div>

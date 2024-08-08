@@ -1,368 +1,200 @@
-.vault-container {
-    position: relative;
+html,
+body {
     height: 100%;
     width: 100%;
-    overflow: hidden; /* Hide any overflow to prevent scrollbars */
+    margin: 0;
+    padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
+    flex: 1;
 }
 
-.vault-door-outer {
-    position: relative;
-    width: 100vw; /* Increase the width to take up more of the page */
-    height: 100vw; /* Increase the height to take up more of the page */
-    max-width: 50%; /* Ensure the vault does not get too large */
-    max-height: 100%; /* Ensure the vault does not get too large */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 2s ease;
-    margin-left: 10%;
+body {
+    font-family: Arial, sans-serif;
+    color: white;
 }
 
-/* Adjust the viewhole to take up the entire parent container */
-.vault-viewhole {
-    position: absolute;
-    width: 65%; /* Make the viewhole take up full width */
-    height: 65%; /* Make the viewhole take up full height */
-    background: linear-gradient(to bottom, #282828, #101010) !important;
-    border-radius: 50%; /* Makes it a circle */
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.3s ease;
-    z-index: 2; /* Ensures the viewhole is behind the inner door */
-}
-
-.vault-door-inner {
-    position: absolute; /* Changed from relative to absolute */
-    width: 85%; /* Adjust the size of the inner door */
-    height: 85%;
-    background: linear-gradient(to bottom, #676767, #4c4c4c) !important;
-    border-radius: 25%;
-    transform-origin: left center;
-    transition: transform 2s ease;
-    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
-    z-index: 2; /* Ensures the inner door is above the viewhole */
-}
-
-.vault-door-lock-wrapper {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.vault-door-lock {
-    background: rgb(107, 107, 107);
-}
-
-.vault-door-circle {
-    position: absolute;
-    width: 80%;
-    height: 80%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-}
-
-.vault-door-pistons {
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: none;
-}
-
-.piston {
-    position: absolute;
-    background: rgb(185, 185, 185);
-    width: 100%;
-    height: 8%;
-    border-radius: 8px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.7s ease-out; /* Adjusted transition timing */
-}
-
-.piston2 {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.piston3 {
-    transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.piston4 {
-    transform: translate(-50%, -50%) rotate(135deg);
-}
-
-.vault-door-handle {
-    position: absolute;
-    border: solid 23px rgb(214, 214, 214);
-    width: 200px; /* Fixed width */
-    height: 200px; /* Fixed height */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    transition: transform 0.7s ease-in-out; /* Updated transition timing */
-}
-
-.handle-bar {
-    position: absolute;
-    background: rgb(214, 214, 214);
-    height: 8%;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.bar1 {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.bar2 {
-    transform: translate(-50%, -50%) rotate(135deg);
-}
-
-.turning .vault-door-handle {
-    transform: translate(-50%, -50%) rotate(-180deg);
-}
-
-.turning .piston {
-    width: 90%;
-}
-
-.opening {
-    transform: perspective(1200px) rotateY(-105deg); /* Updated door opening animation */
-}
-
-.zoom-in {
-    animation: zoomIn 3s forwards;
-}
-
-.zoom-out {
-    animation: zoomOut 2s forwards;
-}
-
-@keyframes zoomIn {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(3.5); /* Increased zoom level */
-    }
-}
-
-@keyframes zoomOut {
-    0% {
-        transform: scale(3.5);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Timeline CSS */
-.timeline-container {
-    width: 100vw; /* Ensure it takes full viewport width */
-    height: 100vh; /* Ensure it takes full viewport height */
-    display: flex; /* Flexbox for alignment */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    flex-direction: column; /* Ensure column layout */
-    background-color: transparent; /* Background color for timeline */
-    margin-left: 15%;
-}
-
-.container {
-    background: transparent; /* Match the background color of the page */
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.title {
-    font-size: 38px;
-    color: #ffffff;
-    font-style: italic;
-    font-weight: 800;
-    margin-bottom: 3%;
-}
-
-.timeline {
-    width: 90%;
-    height: 70%;
-    box-shadow: 0 5px 25px 5px rgba(0, 0, 0, 0.2);
-    position: relative; /* Ensure it can be layered with z-index */
-    z-index: 1; /* Lower than the .title */
-}
-
-.timeline .swiper-container {
-    height: 70%;
-    width: 100%;
-    position: relative;
-}
-
-.timeline .swiper-wrapper {
-    transition: 2s cubic-bezier(0.3, 0.2, 1.1) 0.01s;
-}
-
-.timeline .swiper-slide {
-    position: relative;
-    color: #3b3b3b;
-    overflow: hidden;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 100%;
-}
-
-.timeline .swiper-slide::after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    right: -115%;
-    bottom: -10%;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: -230px 0 150px 60vw rgba(0, 0, 0, 0.7);
-    border-radius: 100%;
-}
-
-.timeline .swiper-slide-content {
-    position: absolute;
-    text-align: center;
-    width: 80%;
-    max-width: 310px;
-    right: 50%;
-    top: 13%;
-    transform: translate(50%, 0);
-    font-size: 12px;
-    z-index: 2;
-}
-
-.timeline .swiper-slide .timeline-year {
+.vault-content {
     display: block;
-    font-style: italic;
-    font-size: 42px;
-    margin-bottom: 50px;
-    transform: translate3d(20px, 0, 0);
-    color: #2e2e2e;
-    font-weight: 300;
-    opacity: 0;
-    transition: 0.2s ease 0.4s;
-    margin-left: 100px;
+    justify-content: right;
+    align-items: right;
+    height: 100vh;
+    padding-right: 5vw;
+    padding-left: 20vw;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
-.timeline .swiper-slide .timeline-title {
-    font-weight: 800;
-    font-size: 34px;
-    margin: 0 0 30px;
-    opacity: 0;
-    transform: translate3d(20px, 0, 0);
-    transition: 0.2s ease 0.5s;
+.heading {
+    font-size: 1.75vw;
+    text-align: left;
 }
 
-.timeline .swiper-slide .timeline-text {
-    line-height: 1.5;
-    opacity: 0;
-    /*transform: translate3d(20px, 0, 0);*/
-    transition: 0.2s ease 0.6s;
+.playlist-content {
+    text-align: center;
+    color: white;
+    box-shadow: none; /* Remove box shadow */
+    width: 100%;
 }
 
-.timeline .swiper-slide .timeline-year,
-.timeline .swiper-slide .timeline-title,
-.timeline .swiper-slide .timeline-text {
-    color: #ffffff; /* Ensure text is visible */
-    opacity: 1; /* Ensure opacity is set to 1 */
-    transform: translate3d(
-        0,
-        0,
-        0
-    ); /* Ensure text is in the correct position */
-    transition: 0.4s ease 1.6s;
+.header {
+    margin-top: 3vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 0.15vw solid #ccc;
+    width: 100%;
+    padding-bottom: 1.75vw;
+    margin-bottom: 1.75vw;
 }
 
-@media screen and (min-width: 768px) {
-    .timeline .swiper-slide::after {
-        right: -30%;
-        bottom: -8%;
-        width: 240px;
-        height: 50%;
-        box-shadow: -230px 0 150px 50vw rgba(0, 0, 0, 0.7);
-    }
-
-    .timeline .swiper-slide-content {
-        right: 30%;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 310px;
-        font-size: 11px;
-        text-align: right;
-    }
-
-    .timeline .swiper-slide .timeline-year {
-        margin-bottom: 0;
-        font-size: 32px;
-        text-align: right;
-    }
-
-    .timeline .swiper-slide .timeline-title {
-        font-size: 46px;
-        margin: 0;
-    }
-
-    .timeline .swiper-pagination {
-        display: flex;
-    }
-
-    .timeline .swiper-button-prev {
-        top: 15%;
-        left: auto;
-        right: 7%;
-        transform: rotate(90deg) translate(0, 10px);
-        &:hover {
-            transform: rotate(90deg) translate(-3px, 10px);
-        }
-    }
-
-    .timeline .swiper-button-next {
-        top: auto;
-        bottom: 15%;
-        right: 7%;
-        transform: rotate(90deg) translate(0, 10px);
-        &:hover {
-            transform: rotate(90deg) translate(3px, 10px);
-        }
-    }
+.header h1 {
+    margin-top: 1vw;
+    font-size: 4vw;
 }
 
-@media screen and (min-width: 1024px) {
-    .timeline .swiper-slide::after {
-        right: -20%;
-        bottom: -12%;
-        width: 240px;
-        height: 50%;
-        box-shadow: -230px 0 150px 39vw rgba(0, 0, 0, 0.7);
-    }
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
 
-    .timeline .swiper-slide-content {
-        right: 25%;
-    }
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
+.view-button button {
+    width: 12vw;
+    height: 5vw;
+    border-radius: 2vw;
+    align-self: flex-start;
+    font-size: 1.5vw;
+    padding: 0.75vw;
+}
+
+.view-button button {
+    background-color: #00d76a;
+    color: white;
+}
+
+.view-button button:hover {
+    background-color: #16a34a;
+}
+
+.list-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8vw;
+}
+
+.playlists-list {
+    margin-top: 1.5vw;
+    padding: 0 2vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 1.75vw;
+}
+
+.playlist {
+    text-align: center;
+}
+
+.playlist img {
+    border-radius: 0.7vw;
+    display: block;
+    width: 10vw;
+    height: 10vw;
+}
+
+.playlist-link {
+    cursor: pointer;
+    color: white;
+    text-decoration: underline;
+    font-size: 1.1vw;
+}
+
+.playlist-link:hover {
+    color: #888888;
+}
+
+.timeline-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8vw;
+}
+
+.timeline-item {
+    height: 15vw;
+    border-bottom: 0.15vw solid #ccc;
+    padding-bottom: 1.75vw;
+    margin-bottom: 1vw;
+}
+
+.timeline-title {
+    font-size: 2vw;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 0.5vw;
+    margin-left: 1vw;
+}
+
+.timeline-cover {
+    margin-left: 2vw;
+    text-align: center;
+}
+
+.timeline-cover img {
+    border-radius: 0.7vw;
+    display: block;
+    width: 10vw;
+    height: 10vw;
+}
+
+.tag {
+    display: inline-block;
+    background: #666;
+    border-radius: 1vw;
+    margin-left: 3vw;
+    margin-bottom: 5.5vw;
+}
+
+.tag p {
+    width: 10vw;
+    font-size: 1.5vw;
+}
+
+.items {
+    display: flex;
+    height: 10vw;
+}
+
+.top-songs {
+    margin-left: 15vw;
+    margin-top: -3.6vw;
+    display: block;
+    text-align: left;
+}
+
+.track {
+    width: 35vw;
+    justify-content: left;
+    margin-bottom: 0.25vw;
+    font-size: 1.2vw;
+}
+
+.track-image {
+    width: 2.5vw; /* Keep the track image small */
+    height: 2.5vw; /* Ensure images are square */
+    margin-right: 0.7vw; /* Add space between the image and title */
+    vertical-align: middle; /* Align images vertically in the middle */
+    border-radius: 0.2vw;
+    margin-left: 0.5vw;
 }
