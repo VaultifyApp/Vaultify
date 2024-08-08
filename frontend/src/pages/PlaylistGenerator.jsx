@@ -88,7 +88,7 @@ const PlaylistGenerator = () => {
             <div className="playlist-content">
                 <h1 className="playlist-title">Playlist Generator</h1>
                 <h2 className="playlist-subtitle">
-                    Vault your Listening through a Custom Playlist.
+                    Vault your listening with a custom playlist.
                 </h2>
 
                 <div className="form-group">
@@ -109,95 +109,106 @@ const PlaylistGenerator = () => {
                     </div>
                 </div>
 
-                {lengthType === "songs" ? (
-                    <div className="form-group">
-                        <label>Length:</label>
-                        <div className="length-options">
-                            <button
-                                onClick={() => setNumSongs(25)}
-                                className={numSongs === 25 ? "selected" : ""}
-                            >
-                                25 songs
-                            </button>
-                            <button
-                                onClick={() => setNumSongs(50)}
-                                className={numSongs === 50 ? "selected" : ""}
-                            >
-                                50 songs
-                            </button>
-                            <button
-                                onClick={() => setNumSongs(100)}
-                                className={numSongs === 100 ? "selected" : ""}
-                            >
-                                100 songs
-                            </button>
-                            <button
-                                onClick={() => setIsModalOpen(true)}
-                                className={
-                                    !(
+                <div className="form-group">
+                    <label>Length:</label>
+                    <div className="length-options">
+                        {lengthType === "songs" ? (
+                            <>
+                                <button
+                                    onClick={() => setNumSongs(25)}
+                                    className={
+                                        numSongs === 25 ? "selected" : ""
+                                    }
+                                >
+                                    25 songs
+                                </button>
+                                <button
+                                    onClick={() => setNumSongs(50)}
+                                    className={
+                                        numSongs === 50 ? "selected" : ""
+                                    }
+                                >
+                                    50 songs
+                                </button>
+                                <button
+                                    onClick={() => setNumSongs(100)}
+                                    className={
+                                        numSongs === 100 ? "selected" : ""
+                                    }
+                                >
+                                    100 songs
+                                </button>
+                                <button
+                                    onClick={() => setIsModalOpen(true)}
+                                    className={
+                                        !(
+                                            numSongs === 25 ||
+                                            numSongs === 50 ||
+                                            numSongs === 100
+                                        )
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    {!(
                                         numSongs === 25 ||
                                         numSongs === 50 ||
                                         numSongs === 100
                                     )
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                {!(
-                                    numSongs === 25 ||
-                                    numSongs === 50 ||
-                                    numSongs === 100
-                                )
-                                    ? `${numSongs} ${numSongs === 1 ? "song" : "songs"}`
-                                    : "Custom"}
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="form-group">
-                        <label>Length:</label>
-                        <div className="length-options">
-                            <button
-                                onClick={() => setNumSongs(20)}
-                                className={numSongs === 20 ? "selected" : ""}
-                            >
-                                1 hour
-                            </button>
-                            <button
-                                onClick={() => setLength(60)}
-                                className={numSongs === 60 ? "selected" : ""}
-                            >
-                                3 hours
-                            </button>
-                            <button
-                                onClick={() => setNumSongs(100)}
-                                className={numSongs === 100 ? "selected" : ""}
-                            >
-                                5 hours
-                            </button>
-                            <button
-                                onClick={() => setIsModalOpen(true)}
-                                className={
-                                    !(
+                                        ? `${numSongs} ${numSongs === 1 ? "song" : "songs"}`
+                                        : "Custom"}
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={() => setNumSongs(20)}
+                                    className={
+                                        numSongs === 20 ? "selected" : ""
+                                    }
+                                >
+                                    1 hour
+                                </button>
+                                <button
+                                    onClick={() => setNumSongs(60)}
+                                    className={
+                                        numSongs === 60 ? "selected" : ""
+                                    }
+                                >
+                                    3 hours
+                                </button>
+                                <button
+                                    onClick={() => setNumSongs(100)}
+                                    className={
+                                        numSongs === 100 ? "selected" : ""
+                                    }
+                                >
+                                    5 hours
+                                </button>
+                                <button
+                                    onClick={() => setIsModalOpen(true)}
+                                    className={
+                                        !(
+                                            numSongs === 20 ||
+                                            numSongs === 60 ||
+                                            numSongs === 100
+                                        )
+                                            ? "selected"
+                                            : ""
+                                    }
+                                >
+                                    {!(
                                         numSongs === 20 ||
                                         numSongs === 60 ||
                                         numSongs === 100
                                     )
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                {!(
-                                    numSongs === 20 ||
-                                    numSongs === 60 ||
-                                    numSongs === 100
-                                )
-                                    ? `${(numSongs * 3) / 60} hours`
-                                    : "Custom"}
-                            </button>
-                        </div>
+                                        ? `${(numSongs * 3) / 60} hours`
+                                        : "Custom"}
+                                </button>
+                            </>
+                        )}
                     </div>
-                )}
+                </div>
 
                 <div className="form-group">
                     <label>Cover Theme:&nbsp;</label>
@@ -246,8 +257,9 @@ const PlaylistGenerator = () => {
 
                 <p className="playlist-text">
                     Vaultify generates personalized playlists for you based on
-                    your listening habits. Click the button above to generate a
-                    new playlist with your top songs!
+                    your listening habits.
+                    <br></br>Click the button above to generate a new playlist
+                    with your top songs!
                 </p>
 
                 {isModalOpen && (
