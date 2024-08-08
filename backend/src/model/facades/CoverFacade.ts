@@ -1,6 +1,6 @@
 import Playlist from "../interfaces/Playlist";
 import Image from "../interfaces/Image";
-import OpenAI from 'openai';
+import OpenAI from "openai";
 import dotenv from "dotenv";
 dotenv.config({ path: "../../.env" });
 
@@ -22,7 +22,7 @@ class CoverGenerator {
     async generateCover(playlist: Playlist, theme: string): Promise<Playlist> {
         try {
             // Prepare the prompt for OpenAI based on the theme
-            const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" with a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood*10}`;
+            const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" inspired by a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood * 10}, Additionally, please contain no words or letters.`;
 
             // Generate image using OpenAI API
             const response = await openai.images.generate({
