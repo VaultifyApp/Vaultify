@@ -15,15 +15,6 @@ body {
     color: white;
 }
 
-#playlist-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    margin-top: -7%;
-}
-
 .playlist-content {
     text-align: center;
     color: white;

@@ -16,15 +16,8 @@ body {
     color: white;
 }
 
-#home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 .home-content {
+    overflow-x: hidden;
     display: block;
     justify-content: center;
     align-items: center;
@@ -165,11 +158,34 @@ body {
     background-color: #16a34a;
 }
 
-.edit-bio-button {
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
+.edit-bio-button button,
+.logout-button button {
     width: 10vw;
     height: 3vw;
+    border-radius: 0.35vw;
     align-self: flex-start;
     font-size: 1vw;
+    padding: 0.75vw;
+}
+
+.logout-button button {
+    margin-top: 0.5vw;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    font-size: 1vw;
+}
+
+.logout-button button:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
 }
 
 .edit-bio-button button {
@@ -250,22 +266,4 @@ body {
 
 .achievement-description {
     font-size: 0.9vw;
-}
-
-.logout-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.logout-button .btn {
-    background-color: #d9534f;
-    border-color: #d43f3a;
-    font-size: 1vw;
-}
-
-.logout-button .btn:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
 }

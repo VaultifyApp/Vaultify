@@ -6,6 +6,7 @@ import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
 import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faSignOutAlt,
@@ -17,6 +18,7 @@ import {
  * Home page component
  */
 const Home = () => {
+    const navigate = useNavigate();
     const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(
@@ -124,12 +126,11 @@ const Home = () => {
     const bioParts = splitBioText(currentUser.bio);
 
     const handleLogout = () => {
-        // Implement your logout functionality here
-        console.log("Logout clicked");
+        localStorage.removeItem("_id");
+        navigate("/");
     };
 
     return (
-        <div className="home-container">
             <div className="home-content">
                 <div className="profile-content">
                     <div className="profile-details-left">
@@ -260,7 +261,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 
