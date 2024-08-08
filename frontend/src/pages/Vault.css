@@ -131,6 +131,15 @@ body {
     margin-bottom: 8vw;
 }
 
+.playlist-title {
+    cursor: pointer;
+    margin-top: -0.9vw;
+}
+
+.playlist-title:hover {
+    color: #888888;
+}
+
 .timeline-item {
     height: 15vw;
     border-bottom: 0.15vw solid #ccc;

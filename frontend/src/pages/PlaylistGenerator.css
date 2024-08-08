@@ -105,6 +105,10 @@ select {
     line-height: 1.5;
 }
 
+.playlist-button {
+    margin-left: 0.5vw;
+}
+
 .modal {
     position: fixed;
     top: 0;

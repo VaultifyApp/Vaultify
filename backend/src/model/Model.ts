@@ -121,6 +121,23 @@ class Model {
         this.db.updateUser(user);
     }
 
+     /**
+     * @effects updates user in db
+     */
+     async updateSettings(
+        _id: string,
+        notifs: boolean,
+        numSongs: number,
+        newOnly: boolean,
+        coverTheme: string): Promise<void> {
+        let user: User = await this.db.getUser(_id);
+        user.settings.notifs = notifs;
+        user.settings.newOnly = newOnly;
+        user.settings.numSongs = numSongs;
+        user.settings.coverTheme = coverTheme;
+        this.db.updateUser(user);
+    }
+
     /**
      * @param user the user to be updated in the db
      * @effects updates user in db

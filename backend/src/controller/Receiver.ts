@@ -19,6 +19,7 @@ class Receiver {
         this.handleUpdateUser();
         this.handleUpdateBio();
         this.handleUpdateNote();
+        this.handleUpdateSettings();
     }
 
     /**
@@ -28,7 +29,6 @@ class Receiver {
      */
     private removeTokens(user: User) {
         const {
-            settings,
             spotifyID,
             href,
             uri,
@@ -89,6 +89,29 @@ class Receiver {
             }
         });
     }
+
+        /**
+     * @effects updates the given user in the db
+     */
+        private async handleUpdateSettings(): Promise<void> {
+            this.app.post("/update-settings", async (req: Request, res: Response) => {
+                if (!req.body) {
+                    return res.status(400).json({ error: "user param invalid" });
+                }
+                try {
+                    this.model.updateSettings(
+                        req.body._id,
+                        JSON.parse(req.body.monthly),
+                        Number(req.body.numSongs),
+                        JSON.parse(req.body.newOnly),
+                        req.body.coverTheme
+                    );
+                } catch (err) {
+                    console.log(err);
+                    return res.status(400).json({ error: err });
+                }
+            });
+        }
 
     /**
      * @effects updates the given user in the db

@@ -106,10 +106,10 @@ const PlaylistView = () => {
                                         alt="Track"
                                         className="track-image"
                                     />
-                                    {format(track.title, 38)}
+                                    {format(track.title, 30)}
                                 </a>
                             </td>
-                            <td>{format(track.artists.join(", "), 30)}</td>
+                            <td>{format(track.artists.join(", "), 25)}</td>
                             <td>
                                 <div className="notes-row">
                                     <input
