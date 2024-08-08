@@ -63,13 +63,13 @@ const PlaylistView = () => {
                     <p>{playlist.description}</p>
                     <div className="playlist-tags">
                         <span className="tag">Mood: {moodScore} / 10</span>
-                    </div>
-                    <button
-                        onClick={() => handleCopyToClipboard(playlist.url)}
-                        className="share-button"
-                    >
-                        <img src={share} alt="Share" className="share-icon" />
-                    </button>
+                        <button
+                            onClick={() => handleCopyToClipboard(playlist.url)}
+                            className="share-button"
+                        >
+                            <img src={share} alt="Share" className="share-icon" />
+                        </button>
+                        </div>
                 </div>
             </div>
             <table className="playlist-table">
