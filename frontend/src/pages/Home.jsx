@@ -1,16 +1,24 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
 import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSignOutAlt,
+    faEdit,
+    faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Home page component
  */
 const Home = () => {
+    const navigate = useNavigate();
     const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(
@@ -78,6 +86,11 @@ const Home = () => {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("_id");
+        navigate('/');
+    };
+
     return (
         <div className="home-content">
             <div className="profile-content">
@@ -125,7 +138,10 @@ const Home = () => {
                                             className="save-bio-button"
                                             onClick={handleSaveBio}
                                         >
-                                            Save
+                                            <FontAwesomeIcon
+                                                icon={faSave}
+                                            />{" "}
+                                             Save
                                         </button>
                                     </div>
                                 ) : (
@@ -138,11 +154,22 @@ const Home = () => {
                     </div>
                 </div>
                 {!editing && (
-                    <div className="edit-bio-button">
-                        <button onClick={() => setEditing(true)}>
-                            Edit Bio
-                        </button>
-                    </div>
+                    <div className="edit-bio-logout">
+                        <div className="edit-bio-button">
+                            <button onClick={() => setEditing(true)}>
+                                <FontAwesomeIcon icon={faEdit} /> Edit Bio
+                            </button>
+                        </div>
+                        <div className="logout-button">
+                            <button
+                                className="btn btn-danger btn-lg"
+                                onClick={handleLogout}
+                            >
+                                <FontAwesomeIcon icon={faSignOutAlt} /> Log
+                                out
+                            </button>
+                        </div>
+                </div>
                 )}
             </div>
             <div className="playlists-container">
