@@ -1,8 +1,6 @@
 import Playlist from "../interfaces/Playlist";
 import Image from "../interfaces/Image";
 import OpenAI from "openai";
-import dotenv from "dotenv";
-dotenv.config({ path: "../../.env" });
 
 // Initialize OpenAI API
 const openai = new OpenAI({

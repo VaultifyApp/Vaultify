@@ -12,7 +12,7 @@ class Model {
     private db: DatabaseFacade;
     private spotify: SpotifyFacade;
     private email: EmailFacade;
-    private cover: CoverFacade;
+    //private cover: CoverFacade;
 
     /**
      * @effects constructs facades
@@ -21,7 +21,7 @@ class Model {
         this.db = new DatabaseFacade();
         this.spotify = new SpotifyFacade();
         this.email = new EmailFacade();
-        this.cover = new CoverFacade();
+        //this.cover = new CoverFacade();
     }
 
     /**
@@ -83,9 +83,9 @@ class Model {
     async generatePlaylist(user: User, manual: boolean): Promise<User> {
         user = await this.spotify.generatePlaylist(user, manual);
 
-        let newPlaylist: Playlist = user.playlists[user.playlists.length - 1];
-        newPlaylist = await this.cover.generateCover(newPlaylist, "Skulls");
-        user.playlists[user.playlists.length - 1] = newPlaylist;
+        //let newPlaylist: Playlist = user.playlists[user.playlists.length - 1];
+        //newPlaylist = await this.cover.generateCover(newPlaylist, "Skulls");
+        //user.playlists[user.playlists.length - 1] = newPlaylist;
 
         if (!manual) user.numMonths = user.numMonths + 1;
         this.db.updateUser(user);

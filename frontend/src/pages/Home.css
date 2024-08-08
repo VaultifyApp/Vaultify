@@ -1,13 +1,12 @@
 html,
-body,
-#root {
+body {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
     flex: 1;
 }
 
@@ -16,21 +15,15 @@ body {
     color: white;
 }
 
-#home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 .home-content {
     display: block;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
     height: 100vh;
-    margin-left: 20vw;
-    width: 81vw;
+    padding-right: 5vw;
+    padding-left: 20vw;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .heading {
@@ -50,8 +43,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 0.15vw solid #8d8d8d;
-    width: 92%;
+    border-bottom: 0.15vw solid #ccc;
+    width: 100%;
     padding-bottom: 1.75vw;
     margin-bottom: 1.75vw;
 }
@@ -69,23 +62,17 @@ body {
 .profile-pic {
     width: 10vw; /* Container width */
     height: 10vw; /* Container height */
-    overflow: hidden; /* Hide overflow */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
     margin-right: 2vw;
 }
 
 .profile-pic img {
     border-radius: 50%;
-    width: 100%; /* Scale the image to fit the container */
-    height: 100%; /* Ensure the height scales proportionally */
-    object-fit: cover; /* Cover the element while maintaining aspect ratio */
-    image-rendering: high-quality; /* For high-quality rendering */
-    image-rendering: -webkit-optimize-contrast; /* Optimize contrast for better rendering in WebKit-based browsers */
-    image-rendering: crisp-edges; /* Improve image rendering for sharp edges */
-    transform: scale(1.1); /* Slightly scale up the image */
+    width: 10vw;
+    height: 10vw;
+    object-fit: cover;
+    image-rendering: high-quality;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .profile-details {
@@ -114,34 +101,27 @@ body {
     margin-top: 0.75vw;
 }
 
-.bio-textarea {
-    width: 50vw; /* Increase the width of the textarea */
-    height: 10vh;
-    resize: none;
-    font-size: 1em;
-    flex-grow: 1; /* Allow textarea to grow in the flex container */
-}
-
-.char-counter {
-    font-size: 0.9em;
-    color: grey;
-    margin-top: 5px;
+.bio-text {
+    width: 30vw;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: left;
+    text-align: left;
+    font-size: 1.1vw;
 }
 
 .edit-bio-section {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the start (top) */
+    align-items: center;
 }
 
-.bio-text {
-    width: 50vw;
-    display: flex;
-    flex-wrap: wrap;
+.bio-textarea {
+    width: 100%;
+    height: 4vw;
+    margin-right: 1vw;
+    border-radius: 0.25vw;
+    border: 0.1vw solid #ccc;
     font-size: 1.1vw;
-    text-align: left;
-    line-height: 0.5; /* Adjust this value to make the distance between lines smaller */
 }
 
 .button {
@@ -155,27 +135,50 @@ body {
 .save-bio-button {
     background-color: #00d76a;
     color: white;
-    width: 7vw;
+    width: 10vw;
     height: 3vw;
     align-self: flex-start;
     font-size: 1vw;
+    padding: 0.75vw;
 }
 
 .save-bio-button:hover {
     background-color: #16a34a;
 }
 
-.edit-bio-button {
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
+.edit-bio-button button,
+.logout-button button {
     width: 10vw;
     height: 3vw;
+    border-radius: 0.35vw;
     align-self: flex-start;
     font-size: 1vw;
+    padding: 0.75vw;
+}
+
+.logout-button button {
+    margin-top: 0.5vw;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    font-size: 1vw;
+}
+
+.logout-button button:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
 }
 
 .edit-bio-button button {
     background-color: #00d76a;
     color: white;
-    font-size: 1vw;
 }
 
 .edit-bio-button button:hover {
@@ -189,18 +192,18 @@ body {
 }
 
 .playlists-container {
-    padding-bottom: 4vh;
+    padding-bottom: 2vw;
     margin-bottom: 1.75vw;
     border-bottom: 0.15vw solid #ccc;
-    width: 92%;
 }
 
 .playlists {
+    margin-top: 1.5vw;
     padding: 0 2vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    gap: 2vw;
+    gap: 1.75vw;
 }
 
 .playlist,
@@ -216,6 +219,7 @@ body {
 }
 
 .playlist-link {
+    cursor: pointer;
     color: white;
     text-decoration: underline;
     font-size: 1.1vw;
@@ -231,6 +235,7 @@ body {
     flex-wrap: wrap;
     justify-content: left;
     gap: 1vw;
+    padding-bottom: 10vw;
 }
 
 .achievement {
@@ -251,22 +256,4 @@ body {
 
 .achievement-description {
     font-size: 0.9vw;
-}
-
-.logout-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.logout-button .btn {
-    background-color: #d9534f;
-    border-color: #d43f3a;
-    font-size: 1vw;
-}
-
-.logout-button .btn:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
 }

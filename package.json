@@ -13,14 +13,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^6.6.0",
-        "@fortawesome/free-solid-svg-icons": "^6.6.0",
-        "@fortawesome/react-fontawesome": "^0.2.2",
         "concurrently": "^8.2.2",
-        "dotenv": "^16.4.5",
         "eslint-config-prettier": "^9.1.0",
         "node-cron": "^3.0.3",
-        "openai": "^4.55.0",
         "prettier": "^3.3.2",
         "swiper": "^11.1.5"
     },
