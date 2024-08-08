@@ -207,7 +207,7 @@ const Home = () => {
                                     onClick={handleLogout}
                                 >
                                     <FontAwesomeIcon icon={faSignOutAlt} /> Log
-                                    out
+                                    Out
                                 </button>
                             </div>
                         </div>
