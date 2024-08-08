@@ -15,7 +15,6 @@ body {
     color: white;
 }
 
-
 .home-content {
     display: block;
     justify-content: right;
@@ -131,7 +130,6 @@ body {
 .save-bio-button:hover {
     background-color: #16a34a;
 }
-
 
 .edit-bio-button button {
     background-color: #00d76a;

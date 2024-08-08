@@ -22,13 +22,13 @@ const PlaylistSuccess = () => {
     };
 
     return (
-            <div className="success-content">
-                <h1>Playlist successfully created.</h1>
-                <div className="success-icon">✔</div>
-                <button onClick={handleOpenPlaylist} className="success-link">
-                    Open playlist here
-                </button>
-            </div>
+        <div className="success-content">
+            <h1>Playlist successfully created.</h1>
+            <div className="success-icon">✔</div>
+            <button onClick={handleOpenPlaylist} className="success-link">
+                Open playlist here
+            </button>
+        </div>
     );
 };
 
