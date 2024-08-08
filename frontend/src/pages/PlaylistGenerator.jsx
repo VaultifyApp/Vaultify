@@ -88,7 +88,7 @@ const PlaylistGenerator = () => {
             <div className="playlist-content">
                 <h1 className="playlist-title">Playlist Generator</h1>
                 <h2 className="playlist-subtitle">
-                    Vault your Listening through a Custom Playlist.
+                    Vault your listening with a custom playlist.
                 </h2>
 
                 <div className="form-group">
@@ -246,8 +246,9 @@ const PlaylistGenerator = () => {
 
                 <p className="playlist-text">
                     Vaultify generates personalized playlists for you based on
-                    your listening habits. Click the button above to generate a
-                    new playlist with your top songs!
+                    your listening habits.
+                    <br></br>Click the button above to generate a new playlist
+                    with your top songs!
                 </p>
 
                 {isModalOpen && (

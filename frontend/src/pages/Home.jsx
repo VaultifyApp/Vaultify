@@ -6,6 +6,12 @@ import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
 import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSignOutAlt,
+    faEdit,
+    faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Home page component
@@ -16,7 +22,8 @@ const Home = () => {
     const [newBio, setNewBio] = useState(
         currentUser.bio || "Hello world! I’m new to Vaultify."
     );
-    // configs recent playlists
+
+    // Configs recent playlists
     const truncate = (str, n) =>
         str.length > n ? str.substr(0, n - 1) + "..." : str;
     const greens = [green1, green2, green3];
@@ -30,7 +37,7 @@ const Home = () => {
             url: playlist.url,
         }));
 
-    // determine achievements
+    // Determine achievements
     const achievements = [
         { name: "Explorer", description: "Navigate to the Profile Page." },
     ];
@@ -66,15 +73,59 @@ const Home = () => {
     }
 
     const handleSaveBio = async () => {
+        if (newBio.length > 250) {
+            alert("Bio cannot exceed 250 characters.");
+            return;
+        }
         const updatedBio = newBio.trim() || "Hello world!";
         currentUser.bio = updatedBio;
         setCurrentUser(currentUser);
         setEditing(false);
         try {
-            Server.updateUser(currentUser);
+            await Server.updateUser(currentUser);
         } catch (error) {
             console.error("Error updating bio", error);
         }
+    };
+
+    const handleBioChange = (e) => {
+        if (e.target.value.length <= 300) {
+            setNewBio(e.target.value);
+        }
+    };
+
+    // Helper function to split bio text
+    const splitBioText = (bio) => {
+        const maxLength = 250;
+        const lineLength = 100;
+        const lines = [];
+
+        let currentLine = "";
+        let remainingBio = bio.substring(0, maxLength);
+
+        while (remainingBio.length > 0) {
+            if (remainingBio.length <= lineLength) {
+                lines.push(remainingBio);
+                break;
+            } else {
+                let splitIndex = remainingBio.lastIndexOf(" ", lineLength);
+                if (splitIndex === -1) {
+                    splitIndex = lineLength;
+                }
+                currentLine = remainingBio.substring(0, splitIndex) + "-";
+                lines.push(currentLine);
+                remainingBio = remainingBio.substring(splitIndex).trim();
+            }
+        }
+
+        return lines.slice(0, 3); // Return only the first 3 lines
+    };
+
+    const bioParts = splitBioText(currentUser.bio);
+
+    const handleLogout = () => {
+        // Implement your logout functionality here
+        console.log("Logout clicked");
     };
 
     return (
@@ -102,12 +153,12 @@ const Home = () => {
                                 </div>
                                 <p className="profile-counters">
                                     {currentUser.playlists.length}{" "}
-                                    {currentUser.playlists.length == 1
+                                    {currentUser.playlists.length === 1
                                         ? "Playlist"
                                         : "Playlists"}
                                     {" | "}
                                     {achievements.length}{" "}
-                                    {achievements.length == 1
+                                    {achievements.length === 1
                                         ? "Achievement"
                                         : "Achievements"}
                                 </p>
@@ -117,31 +168,48 @@ const Home = () => {
                                             <textarea
                                                 className="bio-textarea"
                                                 value={newBio}
-                                                onChange={(e) =>
-                                                    setNewBio(e.target.value)
-                                                }
+                                                onChange={handleBioChange}
                                             />
+                                            <div className="char-counter">
+                                                {newBio.length}/250
+                                            </div>
                                             <button
                                                 className="save-bio-button"
                                                 onClick={handleSaveBio}
                                             >
+                                                <FontAwesomeIcon
+                                                    icon={faSave}
+                                                />{" "}
                                                 Save
                                             </button>
                                         </div>
                                     ) : (
-                                        <p className="bio-text">
-                                            {currentUser.bio}
-                                        </p>
+                                        <div className="bio-text">
+                                            {bioParts.map((part, index) => (
+                                                <p key={index}>{part}</p>
+                                            ))}
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         </div>
                     </div>
                     {!editing && (
-                        <div className="edit-bio-button">
-                            <button onClick={() => setEditing(true)}>
-                                Edit Bio
-                            </button>
+                        <div className="edit-bio-logout">
+                            <div className="edit-bio-button">
+                                <button onClick={() => setEditing(true)}>
+                                    <FontAwesomeIcon icon={faEdit} /> Edit Bio
+                                </button>
+                            </div>
+                            <div className="logout-button">
+                                <button
+                                    className="btn btn-danger btn-lg"
+                                    onClick={handleLogout}
+                                >
+                                    <FontAwesomeIcon icon={faSignOutAlt} /> Log
+                                    Out
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
