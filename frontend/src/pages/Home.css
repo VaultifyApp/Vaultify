@@ -69,6 +69,10 @@ body {
     border-radius: 50%;
     width: 10vw;
     height: 10vw;
+    object-fit: cover;
+    image-rendering: high-quality;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .profile-details {
@@ -215,6 +219,7 @@ body {
 }
 
 .playlist-link {
+    cursor: pointer;
     color: white;
     text-decoration: underline;
     font-size: 1.1vw;

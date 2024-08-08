@@ -1,15 +1,4 @@
 /* src/pages/PlaylistGenerator.css */
-html,
-body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 body {
     font-family: Arial, sans-serif;
     color: white;
@@ -24,13 +13,12 @@ body {
     align-items: center;
     height: 100vh;
     padding-left: 15vw;
-    padding-right: 0vw;
     width: 100vw;
     overflow-x: hidden;
 }
 
 .playlist-title {
-    margin-top: 7vw;
+    margin-top: 3vw;
     font-size: 2.75vw;
     margin-bottom: 1vw;
 }
@@ -112,10 +100,9 @@ select {
     margin-top: 1.5vw;
     margin-bottom: 5vw;
     font-size: 1.2vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
     line-height: 1.5;
-    width: 45vw;
-    text-align: center;
-    justify-content: center;
 }
 
 .modal {
@@ -150,9 +137,9 @@ button {
     color: white;
     border: none;
     border-radius: 0.5vw;
-    padding: 1vw 2vw;
+    padding: 0.8vw 1.6vw;
     cursor: pointer;
-    font-size: 1vw;
+    font-size: 1.3vw;
     margin-top: 0.5vw;
 }
 

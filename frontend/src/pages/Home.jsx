@@ -80,7 +80,7 @@ const Home = () => {
         setCurrentUser(currentUser);
         setEditing(false);
         try {
-            Server.updateUser(currentUser);
+            Server.updateBio(currentUser);
         } catch (error) {
             console.error("Error updating bio", error);
         }
@@ -88,7 +88,7 @@ const Home = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("_id");
-        navigate('/');
+        navigate("/");
     };
 
     return (
@@ -138,10 +138,8 @@ const Home = () => {
                                             className="save-bio-button"
                                             onClick={handleSaveBio}
                                         >
-                                            <FontAwesomeIcon
-                                                icon={faSave}
-                                            />{" "}
-                                             Save
+                                            <FontAwesomeIcon icon={faSave} />{" "}
+                                            Save
                                         </button>
                                     </div>
                                 ) : (
@@ -165,11 +163,10 @@ const Home = () => {
                                 className="btn btn-danger btn-lg"
                                 onClick={handleLogout}
                             >
-                                <FontAwesomeIcon icon={faSignOutAlt} /> Log
-                                out
+                                <FontAwesomeIcon icon={faSignOutAlt} /> Log out
                             </button>
                         </div>
-                </div>
+                    </div>
                 )}
             </div>
             <div className="playlists-container">
@@ -178,11 +175,13 @@ const Home = () => {
                     {recentPlaylists.length > 0 ? (
                         recentPlaylists.map((playlist, index) => (
                             <div key={index} className="playlist">
-                                <a
+                                <div
                                     className="playlist-link"
-                                    href={playlist.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    onClick={() =>
+                                        navigate(
+                                            `/playlist-view/${currentUser.playlists.length - 1 - index}`
+                                        )
+                                    }
                                 >
                                     <img
                                         src={playlist.image}
@@ -190,7 +189,7 @@ const Home = () => {
                                         width="100"
                                     />
                                     {playlist.title}
-                                </a>
+                                </div>
                             </div>
                         ))
                     ) : (

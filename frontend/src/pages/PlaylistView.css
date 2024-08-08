@@ -1,0 +1,136 @@
+.playlist-content {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    padding-top: 7vh;
+    display: block;
+    padding-left: 20vw;
+    padding-right: 5vw;
+    overflow-x: hide;
+}
+
+.playlist-header {
+    margin-top: 0vw;
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 0.15vw solid #ccc;
+    width: 100%;
+    padding-bottom: 1.75vw;
+    margin-bottom: 1vw;
+}
+
+.playlist-cover img {
+    width: 15vw;
+    height: 15vw;
+    margin-right: 3vw;
+    border-radius: 1vw; /* Rounded rectangle */
+    align-self: left;
+}
+
+.playlist-info {
+    justify-content: left;
+    text-align: left;
+}
+.playlist-info h1 {
+    font-size: 3.6vw;
+    font-weight: bold;
+    margin-bottom: 1vw;
+}
+
+.playlist-info p {
+    margin-left: 0.5vw;
+    font-size: 1.6vw;
+}
+
+.playlist-tags {
+    margin-top: 1vw;
+    margin-left: 0.5vw;
+}
+
+.tag {
+    display: inline-block;
+    background: #666;
+    padding: 1vw 1.5vw;
+    border-radius: 1vw;
+    font-size: 1.5vw;
+}
+
+.share-button {
+    margin-left: 50vw;
+    width: 5vw;
+    height: 5vw;
+    border-radius: 0.5vw;
+    align-self: flex-start;
+    padding: 0.25vw 0.25vw;
+    justify-content: center;
+}
+
+
+.share-icon {
+    width: 4.5vw;
+    height: 4.5vw;
+}
+
+.share-icon img {
+    width: 1vw;
+    height: 1vw;
+}
+
+.share-button button {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 0.35vw;
+    align-self: flex-start;
+    padding: 0.75vw;
+}
+
+.playlist-table {
+    width: 100%; /* Ensure the table uses the full width of its container */
+    border-collapse: collapse; /* Optional: removes space between cells */
+    margin-bottom: 10vw;
+}
+
+.playlist-table th {
+    padding: 0.2vw 0.6vw; /* Adjust padding as needed */
+    font-size: 1.2vw;
+    text-align: left; /* Align text to the left */
+}
+
+.num-row {
+    text-align: right;
+    margin-right: 0.2vw;
+    margin-left: -1vw;
+}
+
+.notes-row {
+    margin-left: 1vw;
+}
+
+.playlist-table td {
+    padding: 0.2vw 0.6vw; /* Adjust padding as needed */
+    font-size: 1.3vw;
+    text-align: left; /* Align text to the left */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.track-image {
+    width: 2.5vw; /* Keep the track image small */
+    height: 2.5vw; /* Ensure images are square */
+    margin-right: 0.7vw; /* Add space between the image and title */
+    vertical-align: middle; /* Align images vertically in the middle */
+    border-radius: 0.2vw;
+}
+
+.note-input {
+    width: 25vw;
+    padding: 0.4vw;
+    border: none;
+    border-radius: 4px;
+    background-color: #333; /* Dark gray background */
+    color: rgb(243, 246, 243);
+    outline: none;
+}
+
+.note-input:focus {
+    box-shadow: 0 0 0.5vw rgb(240, 242, 240); /* Green glow for focus */
+}

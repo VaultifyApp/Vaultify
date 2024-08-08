@@ -64,7 +64,7 @@ const PlaylistGenerator = () => {
                     newOnly
                 )
             );
-            navigate("/playlist-success");
+            navigate(`/playlist-view/${currentUser.playlists.length - 1}`);
         } catch (error) {
             setError(true);
             console.error(error);
@@ -242,11 +242,11 @@ const PlaylistGenerator = () => {
             </button>
 
             {error && <p className="error">Error Generating Playlist</p>}
-            <div className="playlist-text">
+            <h3 className="playlist-text">
                 Vaultify generates personalized playlists for you based on your
                 listening habits. Click the button above to generate a new
                 playlist with your top songs!
-            </div>
+            </h3>
             {isModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
