@@ -50,8 +50,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 0.15vw solid #ccc;
-    width: 100%;
+    border-bottom: 0.15vw solid #8d8d8d;
+    width: 92%;
     padding-bottom: 1.75vw;
     margin-bottom: 1.75vw;
 }
@@ -66,10 +66,26 @@ body {
     align-items: center;
 }
 
+.profile-pic {
+    width: 10vw; /* Container width */
+    height: 10vw; /* Container height */
+    overflow: hidden; /* Hide overflow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 2vw;
+}
+
 .profile-pic img {
     border-radius: 50%;
-    margin-right: 2vw; /* Adjust margin for better scaling */
-    width: 10vw;
+    width: 100%; /* Scale the image to fit the container */
+    height: 100%; /* Ensure the height scales proportionally */
+    object-fit: cover; /* Cover the element while maintaining aspect ratio */
+    image-rendering: high-quality; /* For high-quality rendering */
+    image-rendering: -webkit-optimize-contrast; /* Optimize contrast for better rendering in WebKit-based browsers */
+    image-rendering: crisp-edges; /* Improve image rendering for sharp edges */
+    transform: scale(1.1); /* Slightly scale up the image */
 }
 
 .profile-details {
@@ -98,26 +114,34 @@ body {
     margin-top: 0.75vw;
 }
 
-.bio-text {
-    width: 2vw;
-    display: flex;
-    flex-wrap: wrap;
+.bio-textarea {
+    width: 50vw; /* Increase the width of the textarea */
+    height: 10vh;
+    resize: none;
+    font-size: 1em;
+    flex-grow: 1; /* Allow textarea to grow in the flex container */
+}
+
+.char-counter {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 5px;
     justify-content: left;
-    font-size: 1.1vw;
 }
 
 .edit-bio-section {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start (top) */
 }
 
-.bio-textarea {
-    width: 100%;
-    height: 4vw;
-    margin-right: 1vw;
-    border-radius: 0.25vw;
-    border: 0.1vw solid #ccc;
+.bio-text {
+    width: 50vw;
+    display: flex;
+    flex-wrap: wrap;
     font-size: 1.1vw;
+    text-align: left;
+    line-height: 0.5; /* Adjust this value to make the distance between lines smaller */
 }
 
 .save-bio-button {
@@ -131,6 +155,7 @@ body {
     font-size: 1.1vw;
     text-align: center;
     padding: 0.7vw;
+    align-self: flex-start; /* Align the button to the top */
 }
 
 .save-bio-button:hover {
@@ -167,6 +192,7 @@ body {
     padding-bottom: 4vh;
     margin-bottom: 1.75vw;
     border-bottom: 0.15vw solid #ccc;
+    width: 92%;
 }
 
 .playlists {
