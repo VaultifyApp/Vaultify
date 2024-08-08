@@ -6,6 +6,8 @@ import green2 from "../assets/green2.jpg";
 import green3 from "../assets/green3.jpg";
 import Server from "../utils/Server";
 import defaultImage from "../assets/default.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt, faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Home page component
@@ -117,6 +119,11 @@ const Home = () => {
 
     const bioParts = splitBioText(currentUser.bio);
 
+    const handleLogout = () => {
+        // Implement your logout functionality here
+        console.log("Logout clicked");
+    };
+
     return (
         <div className="home-container">
             <div className="home-content">
@@ -166,7 +173,7 @@ const Home = () => {
                                                 className="save-bio-button"
                                                 onClick={handleSaveBio}
                                             >
-                                                Save
+                                                <FontAwesomeIcon icon={faSave} /> Save
                                             </button>
                                         </div>
                                     ) : (
@@ -181,10 +188,17 @@ const Home = () => {
                         </div>
                     </div>
                     {!editing && (
-                        <div className="edit-bio-button">
-                            <button onClick={() => setEditing(true)}>
-                                Edit Bio
-                            </button>
+                        <div className="edit-bio-logout">
+                            <div className="edit-bio-button">
+                                <button onClick={() => setEditing(true)}>
+                                    <FontAwesomeIcon icon={faEdit} /> Edit Bio
+                                </button>
+                            </div>
+                            <div className="logout-button">
+                                <button className="btn btn-danger btn-lg" onClick={handleLogout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt} /> Log out
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
