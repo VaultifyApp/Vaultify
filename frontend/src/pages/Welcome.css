@@ -1,7 +1,6 @@
 /* Welcome.css */
 html,
-body,
-#root {
+body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -18,48 +17,43 @@ body {
     color: white;
 }
 
-#welcome-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 .welcome-content {
+    text-align: center;
+    color: white;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 800px;
-    padding: 1rem;
+    height: 100vh;
     text-align: center;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .welcome-logo {
-    width: 150px;
-    height: 150px;
+    width: 13vw;
 }
 
 .welcome-title {
-    margin-top: 2rem;
-    font-size: 3rem;
+    margin-top: 2vw;
+    font-size: 3vw;
     font-weight: bold;
 }
 
 .welcome-subtitle {
-    margin-top: 1rem;
-    font-size: 1.25rem;
+    margin-top: 1vw;
+    font-size: 1.5vw;
 }
 
 .welcome-button {
-    margin-top: 2rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.5rem;
+    width: 17vw;
+    margin-top: 2vw;
+    padding: 0.75vw 1.5vw;
+    font-size: 1.5vw;
     font-weight: 600;
     background-color: #00d76a;
-    border: 2px solid #00d76a;
-    border-radius: 9999px;
+    border: 0.2vw solid #00d76a;
+    border-radius: 9999vw;
     color: white;
     cursor: pointer;
 }
@@ -69,15 +63,20 @@ body {
 }
 
 .welcome-section-title {
-    margin-top: 3rem;
-    font-size: 2rem;
+    margin-top: 3vw;
+    font-size: 2vw;
     font-weight: semi-bold;
 }
 
 .welcome-text {
-    margin-top: 1.5rem;
-    font-size: 1rem;
+    margin-top: 1vw;
+    margin-bottom: 5vw;
+    font-size: 1vw;
     line-height: 1.5;
-    max-width: 800px;
+    width: 60vw;
     text-align: center;
+}
+
+.button {
+    width: 10vw;
 }

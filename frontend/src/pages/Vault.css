@@ -1,4 +1,6 @@
 .vault-container {
+    overflow-x: hidden;
+    overflow-y: hidden;
     position: relative;
     height: 100%;
     width: 100%;
@@ -17,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 2s ease;
+    transition: transform 0.2s ease;
     margin-left: 10%;
 }
 
@@ -26,12 +28,11 @@
     position: absolute;
     width: 65%; /* Make the viewhole take up full width */
     height: 65%; /* Make the viewhole take up full height */
-    background: linear-gradient(to bottom, #282828, #101010) !important;
     border-radius: 50%; /* Makes it a circle */
     top: 50%;
     left: 45%;
     transform: translate(-50%, -50%);
-    transition: transform 0.3s ease;
+    transition: transform 0.15s ease;
     z-index: 2; /* Ensures the viewhole is behind the inner door */
 }
 
@@ -42,7 +43,7 @@
     background: linear-gradient(to bottom, #676767, #4c4c4c) !important;
     border-radius: 25%;
     transform-origin: left center;
-    transition: transform 2s ease;
+    transition: transform 0.5s ease;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.5);
     z-index: 2; /* Ensures the inner door is above the viewhole */
 }
@@ -113,7 +114,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    transition: transform 0.7s ease-in-out; /* Updated transition timing */
+    transition: transform 0.3s ease-in-out; /* Updated transition timing */
 }
 
 .handle-bar {
@@ -147,11 +148,11 @@
 }
 
 .zoom-in {
-    animation: zoomIn 3s forwards;
+    animation: zoomIn 1s forwards;
 }
 
 .zoom-out {
-    animation: zoomOut 2s forwards;
+    animation: zoomOut 1s forwards;
 }
 
 @keyframes zoomIn {

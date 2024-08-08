@@ -1,58 +1,48 @@
-.about-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    color: white;
-    box-sizing: border-box;
-}
-
 .about-content {
-    margin-top: 15vw;
+    display: block;
     text-align: left;
     color: white;
-    display: block;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin-left: 25vw;
-    width: 76vw;
+    padding-left: 25vw;
+    padding-right: 15vw;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .about-content h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    margin-top: 5vw;
+    font-size: 4vw;
+    margin-bottom: 0.75vw;
 }
 
 .about-content h2 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.75vw;
+    margin-bottom: 0.75vw;
 }
 
 .about-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 2vw;
+    margin-bottom: 0.75vw;
     font-style: italic;
 }
 
 .about-content p {
-    margin-right: 10vw;
-    font-size: 1rem;
+    font-size: 1vw;
     line-height: 1.5;
-    margin-bottom: 2rem;
+    margin-bottom: 2vw;
 }
 
 .profile-pictures {
-    margin-right: 20vw;
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
+    gap: 2vw;
+    padding-bottom: 10vw;
 }
 
 .profile-pictures img {
-    width: 150px;
-    height: 150px;
+    width: 10vw;
     border-radius: 50%;
     object-fit: cover;
 }

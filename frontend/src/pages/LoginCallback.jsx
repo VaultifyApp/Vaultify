@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useContext } from "react";
 import { AuthContext } from "../utils/AuthContext";
 import Server from "../utils/Server";
+import "./Login.css";
 
 /**
  * handles OAuth callback from Spotify. Uses code to fetch profile from server
@@ -29,7 +30,7 @@ const LoginCallback = () => {
         loginFromCode();
     }, [setIsLoggedIn, setCurrentUser, navigate]);
     return (
-        <div>
+        <div className="login-content">
             <h1>Logging in...</h1>
         </div>
     );

@@ -3,8 +3,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../utils/AuthContext";
 import Server from "../utils/Server";
-import querystring from "querystring";
-import axios from "axios";
+import "./Login.css";
 
 /**
  * logs the user in to spotify either through OAuth or the server
@@ -47,7 +46,7 @@ const Login = () => {
     }, [setIsLoggedIn, setCurrentUser, navigate]);
 
     return (
-        <div>
+        <div className="login-content">
             <h1>Logging in...</h1>
         </div>
     );
