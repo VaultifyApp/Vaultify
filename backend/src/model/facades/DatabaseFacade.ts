@@ -197,6 +197,7 @@ class DatabaseFacade {
             _id: _id,
         }).lean();
         if (!user) {
+            console.log(_id);
             throw new Error("User not found in DB");
         }
         return user;

@@ -14,6 +14,30 @@ class Server {
     }
 
     /**
+     * @effects updates the current user in the db
+     */
+    static async updateBio(user) {
+        const body = {
+            _id: user._id,
+            bio: user.bio,
+        };
+        await axios.post(Server.serverURI + "/update-bio", body);
+    }
+
+    /**
+     * @effects updates the current user in the db
+     */
+    static async updateNote(user, playlistIndex, trackIndex) {
+        const body = {
+            _id: user._id,
+            note: user.playlists[playlistIndex].tracks[trackIndex].note,
+            playlistIndex: playlistIndex,
+            trackIndex: trackIndex,
+        };
+        await axios.post(Server.serverURI + "/update-note", body);
+    }
+
+    /**
      * @effects generates a playlist for the current user
      */
     static async generatePlaylist(user, monthly, numSongs, newOnly) {
