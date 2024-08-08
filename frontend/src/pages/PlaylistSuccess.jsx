@@ -15,7 +15,7 @@ const PlaylistSuccess = () => {
         const timer = setInterval(() => {
             setCountdown((currentCountdown) => {
                 if (currentCountdown <= 1) {
-                    navigate('/playlist-view'); // Redirect to the PlaylistView page
+                    navigate("/playlist-view"); // Redirect to the PlaylistView page
                     clearInterval(timer);
                     return 0;
                 }

@@ -62,7 +62,7 @@ const PlaylistGenerator = () => {
                 numSongs,
                 newOnly
             );
-            localStorage.setItem('playlistData', JSON.stringify(playlistData)); // Store playlist data in localStorage
+            localStorage.setItem("playlistData", JSON.stringify(playlistData)); // Store playlist data in localStorage
             setCurrentUser(playlistData);
             navigate("/playlist-success");
         } catch (error) {
@@ -72,7 +72,6 @@ const PlaylistGenerator = () => {
             setLoading(false);
         }
     };
-
 
     // handles switching between time and num songs
     const handleLengthTypeChange = (type) => {

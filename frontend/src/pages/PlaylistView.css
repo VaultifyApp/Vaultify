@@ -1,6 +1,6 @@
 .playlist-container {
     font-family: Arial, sans-serif;
-    color: #FFFFFF;
+    color: #ffffff;
     background-color: #333;
     padding: 20px;
 }
@@ -17,7 +17,6 @@
     margin-right: 20px;
     border-radius: 10px; /* Rounded rectangle */
 }
-
 
 .playlist-info {
     flex-grow: 1;
@@ -50,37 +49,35 @@
 .playlist-table {
     width: 100%; /* Ensure the table uses the full width of its container */
     border-collapse: collapse; /* Optional: removes space between cells */
- 
 }
-  
-.playlist-table th, .playlist-table td {
+
+.playlist-table th,
+.playlist-table td {
     padding: 8px; /* Adjust padding as needed */
     text-align: left; /* Align text to the left */
-  
 }
-  
+
 .track-image {
     width: 30px; /* Keep the track image small */
     height: 30px; /* Ensure images are square */
     margin-right: 10px; /* Add space between the image and title */
     vertical-align: middle; /* Align images vertically in the middle */
-  
 }
-  
+
 .note-input {
     width: 100%;
     padding: 6px;
     border: none;
     border-radius: 4px;
     background-color: #333; /* Dark gray background */
-    color: rgb(243, 246, 243); 
+    color: rgb(243, 246, 243);
     outline: none;
 }
-  
+
 .note-input:focus {
     box-shadow: 0 0 5px rgb(240, 242, 240); /* Green glow for focus */
 }
-  
+
 .no-playlist {
     text-align: center;
     padding: 20px;
