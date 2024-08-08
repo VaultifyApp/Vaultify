@@ -67,9 +67,13 @@ const PlaylistView = () => {
                             onClick={() => handleCopyToClipboard(playlist.url)}
                             className="share-button"
                         >
-                            <img src={share} alt="Share" className="share-icon" />
+                            <img
+                                src={share}
+                                alt="Share"
+                                className="share-icon"
+                            />
                         </button>
-                        </div>
+                    </div>
                 </div>
             </div>
             <table className="playlist-table">
