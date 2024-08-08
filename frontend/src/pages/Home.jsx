@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import green1 from "../assets/green1.jpg";
 import green2 from "../assets/green2.jpg";
@@ -12,11 +13,18 @@ import {
     faEdit,
     faSave,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSignOutAlt,
+    faEdit,
+    faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Home page component
  */
 const Home = () => {
+    const navigate = useNavigate();
     const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [editing, setEditing] = useState(false);
     const [newBio, setNewBio] = useState(
@@ -82,10 +90,15 @@ const Home = () => {
         setCurrentUser(currentUser);
         setEditing(false);
         try {
-            await Server.updateUser(currentUser);
+            Server.updateBio(currentUser);
         } catch (error) {
             console.error("Error updating bio", error);
         }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("_id");
+        navigate("/");
     };
 
     const handleBioChange = (e) => {
@@ -180,7 +193,8 @@ const Home = () => {
                                                 <FontAwesomeIcon
                                                     icon={faSave}
                                                 />{" "}
-                                                Save
+                                                <FontAwesomeIcon icon={faSave} />{" "}
+                                            Save
                                             </button>
                                         </div>
                                     ) : (
@@ -196,9 +210,10 @@ const Home = () => {
                     </div>
                     {!editing && (
                         <div className="edit-bio-logout">
-                            <div className="edit-bio-button">
-                                <button onClick={() => setEditing(true)}>
-                                    <FontAwesomeIcon icon={faEdit} /> Edit Bio
+                            <div className="edit-bio-logout">
+                        <div className="edit-bio-button">
+                                    <button onClick={() => setEditing(true)}>
+                                    <FontAwesomeIcon icon={faEdit} />     <FontAwesomeIcon icon={faEdit} /> Edit Bio
                                 </button>
                             </div>
                             <div className="logout-button">
@@ -208,9 +223,18 @@ const Home = () => {
                                 >
                                     <FontAwesomeIcon icon={faSignOutAlt} /> Log
                                     Out
-                                </button>
-                            </div>
+                                    </button>
                         </div>
+                        <div className="logout-button">
+                            <button
+                                className="btn btn-danger btn-lg"
+                                onClick={handleLogout}
+                            >
+                                <FontAwesomeIcon icon={faSignOutAlt} /> Log out
+                            </button>
+                            </div>
+                            </div>
+                    </div>
                     )}
                 </div>
                 <div className="playlists-container">
@@ -219,11 +243,13 @@ const Home = () => {
                         {recentPlaylists.length > 0 ? (
                             recentPlaylists.map((playlist, index) => (
                                 <div key={index} className="playlist">
-                                    <a
+                                    <div
                                         className="playlist-link"
-                                        href={playlist.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                        onClick={() =>
+                                        navigate(
+                                            `/playlist-view/${currentUser.playlists.length - 1 - index}`
+                                            )
+                                        }
                                     >
                                         <img
                                             src={playlist.image}
@@ -231,7 +257,7 @@ const Home = () => {
                                             width="100"
                                         />
                                         {playlist.title}
-                                    </a>
+                                    </div>
                                 </div>
                             ))
                         ) : (

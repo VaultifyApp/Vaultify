@@ -17,6 +17,8 @@ class Receiver {
         this.handleGeneration();
         this.handleGetUser();
         this.handleUpdateUser();
+        this.handleUpdateBio();
+        this.handleUpdateNote();
     }
 
     /**
@@ -79,6 +81,39 @@ class Receiver {
             try {
                 const user: User = req.body;
                 this.model.updateUser(user);
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json({ error: err });
+            }
+        });
+    }
+
+    /**
+     * @effects updates the given user in the db
+     */
+    private async handleUpdateBio(): Promise<void> {
+        this.app.post("/update-bio", async (req: Request, res: Response) => {
+            try {
+                this.model.updateBio(req.body._id, req.body.bio);
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json({ error: err });
+            }
+        });
+    }
+
+    /**
+     * @effects updates the given user in the db
+     */
+    private async handleUpdateNote(): Promise<void> {
+        this.app.post("/update-note", async (req: Request, res: Response) => {
+            try {
+                this.model.updateNote(
+                    req.body._id,
+                    req.body.note,
+                    Number(req.body.playlistIndex),
+                    Number(req.body.trackIndex)
+                );
             } catch (err) {
                 console.log(err);
                 return res.status(400).json({ error: err });

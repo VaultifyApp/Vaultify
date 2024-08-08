@@ -101,6 +101,31 @@ class Model {
      * @param user the user to be updated in the db
      * @effects updates user in db
      */
+    async updateBio(_id: string, bio: string): Promise<void> {
+        let user: User = await this.db.getUser(_id);
+        user.bio = bio;
+        this.db.updateUser(user);
+    }
+
+    /**
+     * @param user the user to be updated in the db
+     * @effects updates user in db
+     */
+    async updateNote(
+        _id: string,
+        note: string,
+        playlistIndex: number,
+        trackIndex: number
+    ) {
+        let user: User = await this.db.getUser(_id);
+        user.playlists[playlistIndex].tracks[trackIndex].note = note;
+        this.db.updateUser(user);
+    }
+
+    /**
+     * @param user the user to be updated in the db
+     * @effects updates user in db
+     */
     async updateUser(user: User): Promise<void> {
         this.db.updateUser(user);
     }

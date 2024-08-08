@@ -69,6 +69,12 @@ body {
 .profile-pic {
     width: 10vw; /* Container width */
     height: 10vw; /* Container height */
+    margin-right: 2vw;
+}
+
+.profile-pic {
+    width: 10vw; /* Container width */
+    height: 10vw; /* Container height */
     overflow: hidden; /* Hide overflow */
     display: flex;
     align-items: center;
@@ -79,13 +85,12 @@ body {
 
 .profile-pic img {
     border-radius: 50%;
-    width: 100%; /* Scale the image to fit the container */
-    height: 100%; /* Ensure the height scales proportionally */
-    object-fit: cover; /* Cover the element while maintaining aspect ratio */
-    image-rendering: high-quality; /* For high-quality rendering */
-    image-rendering: -webkit-optimize-contrast; /* Optimize contrast for better rendering in WebKit-based browsers */
-    image-rendering: crisp-edges; /* Improve image rendering for sharp edges */
-    transform: scale(1.1); /* Slightly scale up the image */
+    width: 10vw;
+    height: 10vw;
+    object-fit: cover;
+    image-rendering: high-quality;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .profile-details {
@@ -152,24 +157,64 @@ body {
     border: none;
 }
 
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
 .save-bio-button {
     background-color: #00d76a;
     color: white;
-    width: 7vw;
+    width: 10vw;
     height: 3vw;
     align-self: flex-start;
     font-size: 1vw;
+    padding: 0.75vw;
 }
 
 .save-bio-button:hover {
     background-color: #16a34a;
 }
 
-.edit-bio-button {
+.button {
+    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    font-size: 1vw;
+    padding: 0.7vw;
+    cursor: pointer;
+    border: none;
+}
+
+.edit-bio-button button,
+.logout-button button {
     width: 10vw;
     height: 3vw;
+    border-radius: 0.35vw;
     align-self: flex-start;
     font-size: 1vw;
+    padding: 0.75vw;
+}
+
+.logout-button button {
+    margin-top: 0.5vw;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    font-size: 1vw;
+}
+
+.logout-button button:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
 }
 
 .edit-bio-button button {
@@ -189,7 +234,7 @@ body {
 }
 
 .playlists-container {
-    padding-bottom: 4vh;
+    padding-bottom: 2vw;
     margin-bottom: 1.75vw;
     border-bottom: 0.15vw solid #ccc;
     width: 92%;
@@ -200,7 +245,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    gap: 2vw;
+    gap: 1.75vw;
 }
 
 .playlist,
@@ -216,6 +261,7 @@ body {
 }
 
 .playlist-link {
+    cursor: pointer;
     color: white;
     text-decoration: underline;
     font-size: 1.1vw;
