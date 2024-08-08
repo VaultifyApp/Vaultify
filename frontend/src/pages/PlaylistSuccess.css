@@ -1,22 +1,17 @@
 /* src/pages/PlaylistSuccess.css */
-.success-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: transparent;
-}
 
 .success-content {
     text-align: center;
     color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: none; /* Remove box shadow */
-    max-width: 600px;
-    width: 100%;
-    box-sizing: border-box; /* Ensure padding does not affect width */
-    background-color: transparent; /* Ensure background is transparent */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding-left: 15vw;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .success-icon {

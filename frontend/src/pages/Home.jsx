@@ -22,6 +22,7 @@ const Home = () => {
     const greens = [green1, green2, green3];
     const recentPlaylists = currentUser.playlists
         .slice(-6)
+        .reverse()
         .map((playlist, index) => ({
             title: truncate(playlist.title, 15),
             image: playlist.image
@@ -78,7 +79,6 @@ const Home = () => {
     };
 
     return (
-        <div className="home-container">
             <div className="home-content">
                 <div className="profile-content">
                     <div className="profile-details-left">
@@ -192,7 +192,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

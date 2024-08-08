@@ -1,13 +1,12 @@
 html,
-body,
-#root {
+body {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
     flex: 1;
 }
 
@@ -16,22 +15,16 @@ body {
     color: white;
 }
 
-#home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
 
 .home-content {
     display: block;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
     height: 100vh;
-    margin-left: 20vw;
-    margin-right: 5vw;
-    width: 76vw;
+    padding-right: 5vw;
+    padding-left: 20vw;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .heading {
@@ -139,20 +132,19 @@ body {
     background-color: #16a34a;
 }
 
-.edit-bio-button {
-    padding: 0.7vw;
-    align-self: flex-start;
-    width: 10vw;
-    height: 3vw;
-    border-radius: 0.35vw;
-    font-size: 1.1vw;
-}
 
 .edit-bio-button button {
     background-color: #00d76a;
     color: white;
     border: none;
     cursor: pointer;
+    width: 7vw;
+    height: 3vw;
+    border-radius: 0.35vw;
+    cursor: pointer;
+    font-size: 1.1vw;
+    text-align: center;
+    padding: 0.7vw;
 }
 
 .edit-bio-button button:hover {
@@ -207,6 +199,7 @@ body {
     flex-wrap: wrap;
     justify-content: left;
     gap: 1vw;
+    padding-bottom: 10vw;
 }
 
 .achievement {

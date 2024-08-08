@@ -84,7 +84,6 @@ const PlaylistGenerator = () => {
     };
 
     return (
-        <div id="playlist-container">
             <div className="playlist-content">
                 <h1 className="playlist-title">Playlist Generator</h1>
                 <h2 className="playlist-subtitle">
@@ -243,13 +242,11 @@ const PlaylistGenerator = () => {
                 </button>
 
                 {error && <p className="error">Error Generating Playlist</p>}
-
-                <p className="playlist-text">
-                    Vaultify generates personalized playlists for you based on
-                    your listening habits. Click the button above to generate a
-                    new playlist with your top songs!
-                </p>
-
+                    <div className="playlist-text">
+                        Vaultify generates personalized playlists for you based on
+                        your listening habits. Click the button above to generate a
+                        new playlist with your top songs!
+                    </div>
                 {isModalOpen && (
                     <div className="modal">
                         <div className="modal-content">
@@ -277,7 +274,6 @@ const PlaylistGenerator = () => {
                         </div>
                     </div>
                 )}
-            </div>
         </div>
     );
 };

@@ -14,7 +14,6 @@ const Welcome = () => {
     };
 
     return (
-        <div id="welcome-container" className="welcome-container">
             <div className="welcome-content">
                 <img src={logo} alt="Vaultify Logo" className="welcome-logo" />
                 <h1 className="welcome-title">Welcome to Vaultify.</h1>
@@ -35,7 +34,6 @@ const Welcome = () => {
                     personal story that your music history tells.
                 </p>
             </div>
-        </div>
     );
 };
 

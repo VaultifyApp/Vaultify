@@ -22,7 +22,6 @@ const PlaylistSuccess = () => {
     };
 
     return (
-        <div className="success-container">
             <div className="success-content">
                 <h1>Playlist successfully created.</h1>
                 <div className="success-icon">✔</div>
@@ -30,7 +29,6 @@ const PlaylistSuccess = () => {
                     Open playlist here
                 </button>
             </div>
-        </div>
     );
 };
 

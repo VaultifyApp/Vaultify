@@ -15,7 +15,6 @@ const AboutUs = () => {
     };
 
     return (
-        <div className="about-container">
             <div className="about-content">
                 <h1>About Us</h1>
                 <h2>The Band</h2>
@@ -56,7 +55,6 @@ const AboutUs = () => {
                     <img src={profile5} alt="Matt" />
                 </div>
             </div>
-        </div>
     );
 };
 
