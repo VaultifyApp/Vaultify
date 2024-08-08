@@ -64,7 +64,7 @@ const PlaylistGenerator = () => {
                     newOnly
                 )
             );
-            navigate(`/playlist-view/${currentUser.playlists.length - 1}`);
+            navigate("/playlist-success");
         } catch (error) {
             setError(true);
             console.error(error);

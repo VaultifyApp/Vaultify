@@ -72,17 +72,6 @@ body {
     margin-right: 2vw;
 }
 
-.profile-pic {
-    width: 10vw; /* Container width */
-    height: 10vw; /* Container height */
-    overflow: hidden; /* Hide overflow */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin-right: 2vw;
-}
-
 .profile-pic img {
     border-radius: 50%;
     width: 10vw;
@@ -187,40 +176,18 @@ body {
     background-color: #16a34a;
 }
 
-.button {
-    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
-    font-size: 1vw;
-    padding: 0.7vw;
-    cursor: pointer;
-    border: none;
-}
-
-.edit-bio-button button,
-.logout-button button {
-    width: 10vw;
-    height: 3vw;
-    border-radius: 0.35vw;
-    align-self: flex-start;
-    font-size: 1vw;
-    padding: 0.75vw;
-}
-
-.logout-button button {
-    margin-top: 0.5vw;
-    background-color: #d9534f;
-    border-color: #d43f3a;
-    font-size: 1vw;
-}
-
-.logout-button button:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
-}
-
 .edit-bio-button button {
     background-color: #00d76a;
     color: white;
-    font-size: 1vw;
+    border: none;
+    cursor: pointer;
+    width: 7vw;
+    height: 3vw;
+    border-radius: 0.35vw;
+    cursor: pointer;
+    font-size: 1.1vw;
+    text-align: center;
+    padding: 0.7vw;
 }
 
 .edit-bio-button button:hover {
