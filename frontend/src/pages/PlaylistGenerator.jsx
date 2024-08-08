@@ -56,14 +56,20 @@ const PlaylistGenerator = () => {
         setLoading(true);
         setError(false);
         try {
-            setCurrentUser(
-                await Server.generatePlaylist(
-                    currentUser,
-                    monthly,
-                    numSongs,
-                    newOnly
-                )
-            );
+            const updated = await Server.generatePlaylist(
+                currentUser,
+                monthly,
+                numSongs,
+                newOnly,
+                coverTheme,
+            )
+            currentUser.playlists = updated.playlists
+            setCurrentUser(updated);
+            /**
+             * ::: TODO:::
+             * fix setCurrentUser
+             */
+
             navigate(`/playlist-view/${currentUser.playlists.length - 1}`);
         } catch (error) {
             setError(true);
@@ -205,9 +211,9 @@ const PlaylistGenerator = () => {
                     onChange={(e) => setCoverTheme(e.target.value)}
                 >
                     <option value="">Select one</option>
-                    <option value="theme1">Oil painting</option>
-                    <option value="theme2">Futuristic</option>
-                    <option value="theme3">Sky</option>
+                    <option value="oil painting">Oil painting</option>
+                    <option value="futuristic">Futuristic</option>
+                    <option value="sky">Sky</option>
                 </select>
             </div>
 

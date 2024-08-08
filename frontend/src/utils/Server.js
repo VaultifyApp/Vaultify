@@ -40,10 +40,7 @@ class Server {
     /**
      * @effects generates a playlist for the current user
      */
-    static async generatePlaylist(user, monthly, numSongs, newOnly) {
-        const body = {
-            monthly: monthly,
-        };
+    static async generatePlaylist(user, monthly, numSongs, newOnly, theme) {
         const response = await axios.get(
             Server.serverURI + "/generate-playlist",
             {
@@ -52,6 +49,7 @@ class Server {
                     monthly: monthly,
                     numSongs: numSongs,
                     newOnly: newOnly,
+                    coverTheme: theme,
                 },
             }
         );

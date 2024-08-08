@@ -50,7 +50,8 @@ class Receiver {
                     typeof req.query._id !== "string" ||
                     typeof req.query.monthly != "string" ||
                     typeof req.query.newOnly != "string" ||
-                    typeof req.query.numSongs != "string"
+                    typeof req.query.numSongs != "string" ||
+                    typeof req.query.coverTheme != "string"
                 ) {
                     return res.status(400).json({ error: "Invalid params" });
                 }
@@ -59,7 +60,8 @@ class Receiver {
                         req.query._id,
                         JSON.parse(req.query.monthly),
                         Number(req.query.numSongs),
-                        JSON.parse(req.query.newOnly)
+                        JSON.parse(req.query.newOnly),
+                        req.query.coverTheme
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {

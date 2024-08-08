@@ -21,6 +21,7 @@ interface User {
         notifs: boolean;
         newOnly: boolean;
         numSongs: number;
+        coverTheme: string;
     };
 }
 

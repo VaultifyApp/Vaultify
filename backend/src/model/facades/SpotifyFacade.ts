@@ -118,6 +118,7 @@ class SpotifyFacade {
                 notifs: false,
                 numSongs: 50,
                 newOnly: false,
+                coverTheme: "",
             },
             numMonths: 0,
         };
