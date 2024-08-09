@@ -30,7 +30,7 @@ class Model {
      */
     async addUser(queryCode: string): Promise<User> {
         const user: User = await this.spotify.getProfile(queryCode);
-        return this.db.addUser(user);
+        return await this.db.addUser(user);
     }
 
     /**
@@ -72,6 +72,7 @@ class Model {
         user.settings.newOnly = newOnly;
         user.settings.coverTheme = coverTheme;
         user = await this.generatePlaylist(user, true);
+        if (user.playlists.length==1) this.email.sendWelcomeEmail(user);
         this.db.updateUser(user);
         return user;
     }
