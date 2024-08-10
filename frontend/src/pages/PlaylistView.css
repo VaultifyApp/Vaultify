@@ -1,3 +1,4 @@
+/* Playlist view Page CSS */
 .playlist-content {
     font-family: Arial, sans-serif;
     color: #ffffff;
@@ -22,7 +23,7 @@
     width: 15vw;
     height: 15vw;
     margin-right: 3vw;
-    border-radius: 1vw; /* Rounded rectangle */
+    border-radius: 1vw;
     align-self: left;
 }
 
@@ -82,15 +83,15 @@
 }
 
 .playlist-table {
-    width: 100%; /* Ensure the table uses the full width of its container */
-    border-collapse: collapse; /* Optional: removes space between cells */
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 10vw;
 }
 
 .playlist-table th {
-    padding: 0.2vw 0.6vw; /* Adjust padding as needed */
+    padding: 0.2vw 0.6vw;
     font-size: 1.2vw;
-    text-align: left; /* Align text to the left */
+    text-align: left;
 }
 
 .num-row {
@@ -104,18 +105,18 @@
 }
 
 .playlist-table td {
-    padding: 0.2vw 0.6vw; /* Adjust padding as needed */
+    padding: 0.2vw 0.6vw;
     font-size: 1.3vw;
-    text-align: left; /* Align text to the left */
+    text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .track-image {
-    width: 2.5vw; /* Keep the track image small */
-    height: 2.5vw; /* Ensure images are square */
-    margin-right: 0.7vw; /* Add space between the image and title */
-    vertical-align: middle; /* Align images vertically in the middle */
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-right: 0.7vw;
+    vertical-align: middle;
     border-radius: 0.2vw;
 }
 
@@ -123,12 +124,12 @@
     width: 25vw;
     padding: 0.4vw;
     border: none;
-    border-radius: 4px;
-    background-color: #333; /* Dark gray background */
+    border-radius: 0.4vw;
+    background-color: #333;
     color: rgb(243, 246, 243);
     outline: none;
 }
 
 .note-input:focus {
-    box-shadow: 0 0 0.5vw rgb(240, 242, 240); /* Green glow for focus */
+    box-shadow: 0 0 0.5vw rgb(240, 242, 240);
 }

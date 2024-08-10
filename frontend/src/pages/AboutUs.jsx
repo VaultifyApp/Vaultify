@@ -54,7 +54,13 @@ const AboutUs = () => {
                 >
                     <img src={profile2} alt="Thomas" />
                 </a>
-                <img src={profile3} alt="Michael" />
+                <a
+                    href="https://www.linkedin.com/in/lammiko/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src={profile3} alt="Michael" />
+                </a>
                 <img src={profile4} alt="Dillon" />
                 <img src={profile5} alt="Matt" />
             </div>

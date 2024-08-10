@@ -9,19 +9,22 @@ import "./PlaylistGenerator.css";
  * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [lengthType, setLengthType] = useState("songs");
-    const [numSongs, setNumSongs] = useState(25);
-    const [coverTheme, setCoverTheme] = useState("");
-    const [newOnly, setNewOnly] = useState(false);
-    const [monthly, setMonthly] = useState(true);
+    const [numSongs, setNumSongs] = useState(currentUser.settings.numSongs);
+    const [coverTheme, setCoverTheme] = useState(
+        currentUser.settings.coverTheme
+    );
+    const [newOnly, setNewOnly] = useState(currentUser.settings.newOnly);
+    const [monthly, setMonthly] = useState(currentUser.settings.notifs);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState(false);
+    const [saved, setSaved] = useState(false);
 
     const navigate = useNavigate(); // Initialize useNavigate
-
-    const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const maxSongs = 100;
     const maxTimeInHours = (maxSongs * 3) / 60; // Assuming 3 minutes per song
@@ -49,6 +52,16 @@ const PlaylistGenerator = () => {
                 `Please enter a valid number of ${lengthType === "songs" ? `songs (1-${maxSongs})` : `hours (1-${maxTimeInHours})`}.`
             );
         }
+    };
+
+    const saveSettings = async () => {
+        setSaved(true);
+        currentUser.settings.numSongs = numSongs;
+        currentUser.settings.newOnly = newOnly;
+        currentUser.settings.notifs = monthly;
+        currentUser.settings.coverTheme = coverTheme;
+        setCurrentUser(currentUser);
+        Server.updateSettings(currentUser);
     };
 
     // calls the server to generate a playlist for the user
@@ -238,14 +251,18 @@ const PlaylistGenerator = () => {
                     {" Monthly generation and notifications"}
                 </label>
             </div>
-
-            <button
-                className="playlist-button"
-                onClick={generatePlaylist}
-                disabled={loading}
-            >
-                {loading ? "Generating..." : "Generate"}
+            <button className="playlist-button" onClick={saveSettings}>
+                Save Settings
             </button>
+            {saved && (
+                <button
+                    className="playlist-button"
+                    onClick={generatePlaylist}
+                    disabled={loading}
+                >
+                    {loading ? "Generating..." : "Generate Playlist"}
+                </button>
+            )}
 
             {error && <p className="error">Error Generating Playlist</p>}
             <h3 className="playlist-text">

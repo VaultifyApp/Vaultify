@@ -57,6 +57,24 @@ class Server {
     }
 
     /**
+     * @effects generates a playlist for the current user
+     */
+    static async updateSettings(user) {
+        const body = {
+            _id: user._id,
+            numSongs: user.settings.numSongs,
+            newOnly: user.settings.newOnly,
+            coverTheme: user.settings.coverTheme,
+            monthly: user.settings.notifs,
+        };
+        const response = await axios.post(
+            Server.serverURI + "/update-settings",
+            body
+        );
+        return response.data;
+    }
+
+    /**
      * @param _id db ID of current user
      * @effects fetches user from db
      */

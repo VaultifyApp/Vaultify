@@ -30,7 +30,7 @@ class Model {
      */
     async addUser(queryCode: string): Promise<User> {
         const user: User = await this.spotify.getProfile(queryCode);
-        return this.db.addUser(user);
+        return await this.db.addUser(user);
     }
 
     /**
@@ -72,6 +72,7 @@ class Model {
         user.settings.newOnly = newOnly;
         user.settings.coverTheme = coverTheme;
         user = await this.generatePlaylist(user, true);
+        if (user.playlists.length == 1) this.email.sendWelcomeEmail(user);
         this.db.updateUser(user);
         return user;
     }
@@ -118,6 +119,24 @@ class Model {
     async updateBio(_id: string, bio: string): Promise<void> {
         let user: User = await this.db.getUser(_id);
         user.bio = bio;
+        this.db.updateUser(user);
+    }
+
+    /**
+     * @effects updates user in db
+     */
+    async updateSettings(
+        _id: string,
+        notifs: boolean,
+        numSongs: number,
+        newOnly: boolean,
+        coverTheme: string
+    ): Promise<void> {
+        let user: User = await this.db.getUser(_id);
+        user.settings.notifs = notifs;
+        user.settings.newOnly = newOnly;
+        user.settings.numSongs = numSongs;
+        user.settings.coverTheme = coverTheme;
         this.db.updateUser(user);
     }
 

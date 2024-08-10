@@ -1,3 +1,5 @@
+/* Vault Page CSS */
+
 html,
 body {
     height: 100%;
@@ -129,6 +131,15 @@ body {
     width: 100%;
     text-align: center;
     margin-bottom: 8vw;
+}
+
+.playlist-title {
+    cursor: pointer;
+    margin-top: -0.9vw;
+}
+
+.playlist-title:hover {
+    color: #888888;
 }
 
 .timeline-item {
