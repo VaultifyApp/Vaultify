@@ -104,7 +104,7 @@ class Model {
     /**
      * @effects generates playlists and sends emails to all opted in users
      */
-    async monthlyGenerate(): Promise<void> {
+    async monthlyActions(): Promise<void> {
         let users: [User] = await this.db.getOptedInUsers();
         for (let i = 0; i < users.length; i++) {
             users[i] = await this.generatePlaylist(users[i], false);

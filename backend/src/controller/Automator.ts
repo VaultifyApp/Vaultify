@@ -7,20 +7,18 @@ import Model from "../model/Model.js";
  * The Automator class is responsible for automatically generating content for users on a monthly basic.
  */
 class Automator {
-    private app: Express;
     private model: Model;
 
-    constructor(app: Express, model: Model) {
-        this.app = app;
+    constructor(model: Model) {
         this.model = model;
-        this.monthlyGenerate();
+        this.monthlyActions();
     }
 
-    private monthlyGenerate() {
+    private monthlyActions() {
         schedule.scheduleJob("00 12 01 * *", async () => {
             console.log("Generating Playlists...");
             try {
-                await this.model.monthlyGenerate();
+                await this.model.monthlyActions();
             } catch (err) {
                 console.log(err);
             }
