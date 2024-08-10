@@ -9,7 +9,6 @@ import "./PlaylistGenerator.css";
  * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
-
     // establishes hooks
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 

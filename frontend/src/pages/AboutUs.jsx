@@ -10,7 +10,6 @@ import profile5 from "../assets/matt.png";
  * About Us page componenet
  */
 const AboutUs = () => {
-
     return (
         <div className="about-content">
             <h1>About Us</h1>
