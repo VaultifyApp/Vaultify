@@ -60,8 +60,8 @@ body {
 }
 
 .profile-pic {
-    width: 10vw; /* Container width */
-    height: 10vw; /* Container height */
+    width: 10vw;
+    height: 10vw; 
     margin-right: 2vw;
 }
 
@@ -125,7 +125,7 @@ body {
 }
 
 .button {
-    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    border-radius: 0.35vw;
     font-size: 1vw;
     padding: 0.7vw;
     cursor: pointer;
@@ -147,7 +147,7 @@ body {
 }
 
 .button {
-    border-radius: 0.35vw; /* Set a consistent roundness for all buttons */
+    border-radius: 0.35vw; 
     font-size: 1vw;
     padding: 0.7vw;
     cursor: pointer;
