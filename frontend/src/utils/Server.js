@@ -65,10 +65,11 @@ class Server {
             numSongs: user.settings.numSongs,
             newOnly: user.settings.newOnly,
             coverTheme: user.settings.coverTheme,
-            monthly: user.settings.notifs
-        }
+            monthly: user.settings.notifs,
+        };
         const response = await axios.post(
-            Server.serverURI + "/update-settings", body
+            Server.serverURI + "/update-settings",
+            body
         );
         return response.data;
     }
