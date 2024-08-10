@@ -9,19 +9,20 @@ import "./PlaylistGenerator.css";
  * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
-
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [lengthType, setLengthType] = useState("songs");
     const [numSongs, setNumSongs] = useState(currentUser.settings.numSongs);
-    const [coverTheme, setCoverTheme] = useState(currentUser.settings.coverTheme);
+    const [coverTheme, setCoverTheme] = useState(
+        currentUser.settings.coverTheme
+    );
     const [newOnly, setNewOnly] = useState(currentUser.settings.newOnly);
     const [monthly, setMonthly] = useState(currentUser.settings.notifs);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState(false);
-    const [saved, setSaved]  = useState(false);
+    const [saved, setSaved] = useState(false);
 
     const navigate = useNavigate(); // Initialize useNavigate
 
@@ -61,7 +62,7 @@ const PlaylistGenerator = () => {
         currentUser.settings.coverTheme = coverTheme;
         setCurrentUser(currentUser);
         Server.updateSettings(currentUser);
-    }
+    };
 
     // calls the server to generate a playlist for the user
     const generatePlaylist = async () => {
@@ -250,21 +251,18 @@ const PlaylistGenerator = () => {
                     {" Monthly generation and notifications"}
                 </label>
             </div>
-            <button
-                className="playlist-button"
-                onClick={saveSettings}
-            >
+            <button className="playlist-button" onClick={saveSettings}>
                 Save Settings
             </button>
-            {saved && 
-            <button
-                className="playlist-button"
-                onClick={generatePlaylist}
-                disabled={loading}
-            >
-                {loading ? "Generating..." : "Generate Playlist"}
-            </button>
-            }
+            {saved && (
+                <button
+                    className="playlist-button"
+                    onClick={generatePlaylist}
+                    disabled={loading}
+                >
+                    {loading ? "Generating..." : "Generate Playlist"}
+                </button>
+            )}
 
             {error && <p className="error">Error Generating Playlist</p>}
             <h3 className="playlist-text">

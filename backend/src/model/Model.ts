@@ -72,7 +72,7 @@ class Model {
         user.settings.newOnly = newOnly;
         user.settings.coverTheme = coverTheme;
         user = await this.generatePlaylist(user, true);
-        if (user.playlists.length==1) this.email.sendWelcomeEmail(user);
+        if (user.playlists.length == 1) this.email.sendWelcomeEmail(user);
         this.db.updateUser(user);
         return user;
     }
@@ -122,15 +122,16 @@ class Model {
         this.db.updateUser(user);
     }
 
-     /**
+    /**
      * @effects updates user in db
      */
-     async updateSettings(
+    async updateSettings(
         _id: string,
         notifs: boolean,
         numSongs: number,
         newOnly: boolean,
-        coverTheme: string): Promise<void> {
+        coverTheme: string
+    ): Promise<void> {
         let user: User = await this.db.getUser(_id);
         user.settings.notifs = notifs;
         user.settings.newOnly = newOnly;

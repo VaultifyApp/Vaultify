@@ -119,16 +119,16 @@ const Vault = () => {
                             .map((playlist, index) => (
                                 <div className="timeline-item">
                                     <div className="timeline-title">
-                                    <h1
-                                        className="playlist-title"
-                                        onClick={() =>
-                                            navigate(
-                                                `/playlist-view/${currentUser.playlists.length - 1 - index}`
-                                            )
-                                        }
-                                    >
+                                        <h1
+                                            className="playlist-title"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/playlist-view/${currentUser.playlists.length - 1 - index}`
+                                                )
+                                            }
+                                        >
                                             {playlist.title}
-                                    </h1>
+                                        </h1>
                                     </div>
                                     <div className="items">
                                         <div

@@ -90,13 +90,17 @@ class Receiver {
         });
     }
 
-        /**
+    /**
      * @effects updates the given user in the db
      */
-        private async handleUpdateSettings(): Promise<void> {
-            this.app.post("/update-settings", async (req: Request, res: Response) => {
+    private async handleUpdateSettings(): Promise<void> {
+        this.app.post(
+            "/update-settings",
+            async (req: Request, res: Response) => {
                 if (!req.body) {
-                    return res.status(400).json({ error: "user param invalid" });
+                    return res
+                        .status(400)
+                        .json({ error: "user param invalid" });
                 }
                 try {
                     this.model.updateSettings(
@@ -110,8 +114,9 @@ class Receiver {
                     console.log(err);
                     return res.status(400).json({ error: err });
                 }
-            });
-        }
+            }
+        );
+    }
 
     /**
      * @effects updates the given user in the db
