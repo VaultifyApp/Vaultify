@@ -143,10 +143,10 @@ body {
 }
 
 .timeline-item {
-    height: 15vw;
+    height: 15.25vw;
     border-bottom: 0.15vw solid #ccc;
     padding-bottom: 1.75vw;
-    margin-bottom: 1vw;
+    margin-bottom: 2vw;
 }
 
 .timeline-title {

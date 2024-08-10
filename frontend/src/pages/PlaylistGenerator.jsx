@@ -9,6 +9,8 @@ import "./PlaylistGenerator.css";
  * Playlist Generator page component
  */
 const PlaylistGenerator = () => {
+
+    // establishes hooks
     const { currentUser, setCurrentUser } = useContext(AuthContext);
 
     const [loading, setLoading] = useState(false);
@@ -54,6 +56,7 @@ const PlaylistGenerator = () => {
         }
     };
 
+    // saves generation settings to db
     const saveSettings = async () => {
         setSaved(true);
         currentUser.settings.numSongs = numSongs;
@@ -102,6 +105,7 @@ const PlaylistGenerator = () => {
         }
     };
 
+    //html content
     return (
         <div className="playlist-content">
             <h1 className="playlist-title">Playlist Generator</h1>
