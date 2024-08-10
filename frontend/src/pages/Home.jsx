@@ -18,6 +18,7 @@ import {
  * Home page component
  */
 const Home = () => {
+    // establishes hooks
     const navigate = useNavigate();
     const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [editing, setEditing] = useState(false);
@@ -74,6 +75,7 @@ const Home = () => {
         });
     }
 
+    // saves bio to db
     const handleSaveBio = async () => {
         const updatedBio = newBio.trim() || "Hello world!";
         currentUser.bio = updatedBio;
@@ -91,6 +93,7 @@ const Home = () => {
         navigate("/");
     };
 
+    // html content
     return (
         <div className="home-content">
             <div className="profile-content">

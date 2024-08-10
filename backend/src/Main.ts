@@ -36,7 +36,7 @@ class Main {
 
         let model: Model = new Model();
         let web: Receiver = new Receiver(app, model);
-        let date: Automator = new Automator(app, model);
+        let date: Automator = new Automator(model);
 
         app.listen(port, () => {
             console.log(`Server is running on port: ${port}`);

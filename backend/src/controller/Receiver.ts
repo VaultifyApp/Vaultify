@@ -14,9 +14,8 @@ class Receiver {
     constructor(app: Express, model: Model) {
         this.app = app;
         this.model = model;
-        this.handleGeneration();
+        this.handleGeneratePlaylist();
         this.handleGetUser();
-        this.handleUpdateUser();
         this.handleUpdateBio();
         this.handleUpdateNote();
         this.handleUpdateSettings();
@@ -42,7 +41,7 @@ class Receiver {
     /**
      * @effects returns an updated user with a new playlist
      */
-    private async handleGeneration(): Promise<void> {
+    private async handleGeneratePlaylist(): Promise<void> {
         this.app.get(
             "/generate-playlist",
             async (req: Request, res: Response) => {
@@ -73,25 +72,7 @@ class Receiver {
     }
 
     /**
-     * @effects updates the given user in the db
-     */
-    private async handleUpdateUser(): Promise<void> {
-        this.app.post("/update-user", async (req: Request, res: Response) => {
-            if (!req.body) {
-                return res.status(400).json({ error: "user param invalid" });
-            }
-            try {
-                const user: User = req.body;
-                this.model.updateUser(user);
-            } catch (err) {
-                console.log(err);
-                return res.status(400).json({ error: err });
-            }
-        });
-    }
-
-    /**
-     * @effects updates the given user in the db
+     * @effects updates the user's settings in the db
      */
     private async handleUpdateSettings(): Promise<void> {
         this.app.post(
@@ -133,7 +114,7 @@ class Receiver {
     }
 
     /**
-     * @effects updates the given user in the db
+     * @effects updates the given track's note in the db
      */
     private async handleUpdateNote(): Promise<void> {
         this.app.post("/update-note", async (req: Request, res: Response) => {

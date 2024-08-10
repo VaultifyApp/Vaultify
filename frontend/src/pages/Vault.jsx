@@ -8,9 +8,10 @@ import green3 from "../assets/green3.jpg";
 import axios from "axios";
 
 /**
- * Home page component
+ * Vault page component
  */
 const Vault = () => {
+    // establish member variables
     const navigate = useNavigate();
     const { currentUser } = useContext(AuthContext);
     const [timelineView, setTimelineView] = useState(false);
@@ -25,30 +26,7 @@ const Vault = () => {
         return str.slice(0, max - 3) + "...";
     };
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const response = await axios.get(
-                    "https://api.unsplash.com/search/photos",
-                    {
-                        params: {
-                            query: "colorful",
-                            per_page: currentUser.playlists.length,
-                        },
-                        headers: {
-                            Authorization: `Client-ID l1-Il-e6HmCC1wWoocR78p9Sssyz77o_-KKTgUcK8xk`,
-                        },
-                    }
-                );
-                setImages(response.data.results);
-            } catch (error) {
-                console.error("Error fetching images from Unsplash:", error);
-            }
-        };
-
-        fetchImages();
-    }, [currentUser.playlists.length]);
-
+    // html content
     return (
         <div className="vault-content">
             <div className="header">

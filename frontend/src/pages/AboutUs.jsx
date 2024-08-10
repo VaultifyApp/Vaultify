@@ -10,10 +10,6 @@ import profile5 from "../assets/matt.png";
  * About Us page componenet
  */
 const AboutUs = () => {
-    const clickThomas = () => {
-        window.open("https://www.linkedin.com/in/thomasorifici/");
-    };
-
     return (
         <div className="about-content">
             <h1>About Us</h1>

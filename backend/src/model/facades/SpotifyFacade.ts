@@ -1,8 +1,7 @@
 import { Buffer } from "buffer";
-import axios, { Axios, AxiosResponse, isAxiosError } from "axios";
+import axios, { AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
 import User from "../interfaces/User.js";
-import Playlist from "../interfaces/Playlist.js";
 import Track from "../interfaces/Track.js";
 import { URLSearchParams } from "url";
 
@@ -15,7 +14,6 @@ class SpotifyFacade {
     private CLIENT_ID: string = process.env.CLIENT_ID || "";
     private CLIENT_SECRET: string = process.env.CLIENT_SECRET || "";
     private REDIRECT_URI: string = process.env.REDIRECT_URI || "";
-    private AxiosInstance = axios.create();
 
     /**
      * @param user the user to make a request for
