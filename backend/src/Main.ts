@@ -15,7 +15,7 @@ class Main {
     static main(): void {
         // intialize server environment
         const app: Express = express();
-        const port: number = Number(process.env.SERVER_PORT) || 3001;
+        const port: number = Number(process.env.PORT) || 3001;
 
         const allowedOrigins = [
             "https://accounts.spotify.com",
