@@ -22,6 +22,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+defaults:
+ run:
+  working-directory: ./backend
+
 env:
   AZURE_WEBAPP_NAME: Vaultify    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: ./backend # set this to the path to your web app project, defaults to the repository root
