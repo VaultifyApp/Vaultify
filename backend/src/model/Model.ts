@@ -40,7 +40,7 @@ class Model {
     async getUserByID(_id: string): Promise<User> {
         let user: User = await this.db.getUser(_id);
         user = await this.spotify.updateProfile(user);
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
         return user;
     }
 
@@ -73,7 +73,7 @@ class Model {
         user.settings.coverTheme = coverTheme;
         user = await this.generatePlaylist(user, true);
         if (user.playlists.length == 1) this.email.sendWelcomeEmail(user);
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
         return user;
     }
 
@@ -97,7 +97,7 @@ class Model {
         }
 
         if (!manual) user.numMonths = user.numMonths + 1;
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
         return user;
     }
 
@@ -108,7 +108,7 @@ class Model {
         let users: [User] = await this.db.getOptedInUsers();
         for (let i = 0; i < users.length; i++) {
             users[i] = await this.generatePlaylist(users[i], false);
-            this.email.sendNewPlaylistEmail(users[i]);
+            this.email.sendNewPlaylistEmail(users[i]).catch(console.error);
         }
     }
 
@@ -119,7 +119,7 @@ class Model {
     async updateBio(_id: string, bio: string): Promise<void> {
         let user: User = await this.db.getUser(_id);
         user.bio = bio;
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
     }
 
     /**
@@ -137,7 +137,7 @@ class Model {
         user.settings.newOnly = newOnly;
         user.settings.numSongs = numSongs;
         user.settings.coverTheme = coverTheme;
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
     }
 
     /**
@@ -152,7 +152,7 @@ class Model {
     ) {
         let user: User = await this.db.getUser(_id);
         user.playlists[playlistIndex].tracks[trackIndex].note = note;
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
     }
 
     /**
@@ -160,7 +160,7 @@ class Model {
      * @effects updates user in db
      */
     async updateUser(user: User): Promise<void> {
-        this.db.updateUser(user);
+        this.db.updateUser(user).catch(console.error);
     }
 }
 
