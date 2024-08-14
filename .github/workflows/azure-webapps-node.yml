@@ -15,8 +15,7 @@ env:
     NODE_VERSION: "20.x" # set this to the node version to use
 
 defaults:
-    run:
-        working-directory: ./backend
+    
 
 jobs:
     build:
@@ -33,14 +32,17 @@ jobs:
             - name: npm install, build, and test
               run: |
                   npm install
+              working-directory: ./backend
+
             - name: Zip artifact for deployment
               run: zip release.zip ./* -r
+              working-directory: ./backend
 
             - name: Upload artifact for deployment job
               uses: actions/upload-artifact@v3
               with:
                   name: node-app
-                  path: release.zip
+                  path: ./backend/release.zip
 
     deploy:
         runs-on: ubuntu-latest
