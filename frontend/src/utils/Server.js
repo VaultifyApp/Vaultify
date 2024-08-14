@@ -4,7 +4,7 @@ import axios from "axios";
  * The Server class is responsible for communications with the server.
  */
 class Server {
-    static serverURI = "http://localhost:3001";
+    static serverURI = "https://vaultify-brbycgechbf5bxfj.eastus-01.azurewebsites.net/";
 
     /**
      * @effects updates the current user in the db
