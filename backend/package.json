@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "tsc && cd built && node Main.js",
-        "start": "npm run dev",
+        "start": "cd built && node Main.js",
         "predeploy": "npm run build",
         "lint": "eslint"
     },
