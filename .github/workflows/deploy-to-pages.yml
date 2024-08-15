@@ -11,6 +11,6 @@ jobs:
         steps:
             - name: deploy
               run: |
-                  cd frontend
                   npm install
                   npm deploy
+              working-directory: ./frontend
