@@ -22,7 +22,7 @@ class Main {
             "http://localhost:3000",
             "http://localhost:3001",
             "https://vaultifyapp.github.io/Vaultify",
-            "https://vaultify-app.vercel.app/"
+            "https://vaultify-app.vercel.app/",
         ];
 
         app.use(
