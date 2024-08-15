@@ -5,7 +5,7 @@ import axios from "axios";
  */
 class Server {
     static serverURI =
-        "https://vaultify-brbycgechbf5bxfj.eastus-01.azurewebsites.net/";
+        "https://vaultify-brbycgechbf5bxfj.eastus-01.azurewebsites.net";
 
     /**
      * @effects updates the current user in the db
