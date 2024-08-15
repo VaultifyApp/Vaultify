@@ -21,6 +21,7 @@ class Main {
             "https://accounts.spotify.com",
             "http://localhost:3000",
             "http://localhost:3001",
+            "https://vaultifyapp.github.io/Vaultify",
         ];
 
         app.use(
