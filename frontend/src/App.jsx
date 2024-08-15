@@ -75,9 +75,9 @@ const AppRoutes = () => {
                     path="*"
                     element={
                         isLoggedIn ? (
-                            <Navigate to="/Vaultify/home" />
+                            <Navigate to="/home" />
                         ) : (
-                            <Navigate to="/Vaultify/" />
+                            <Navigate to="/" />
                         )
                     }
                 />

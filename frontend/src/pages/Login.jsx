@@ -18,7 +18,7 @@ const Login = () => {
                 client_id: "79e0bbb20e714c1cb35b10742723ee7a",
                 response_type: "code",
                 redirect_uri:
-                    "https://vaultifyapp.github.io/Vaultify/#/login-callback",
+                    "https://vaultify-app.vercel.app/login-callback",
                 scope: "user-read-private user-read-email playlist-modify-public playlist-modify-private user-top-read",
             });
             window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
