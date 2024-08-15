@@ -89,7 +89,7 @@ const AppRoutes = () => {
 const App = () => {
     return (
         <AuthProvider>
-            <Router>
+            <Router basename="/Vaultify">
                 <AppRoutes />
             </Router>
         </AuthProvider>
