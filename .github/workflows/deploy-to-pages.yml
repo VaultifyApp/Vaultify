@@ -10,9 +10,9 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-            
+
             - name: deploy
               run: |
                   npm install
-                  npm deploy
+                  npm run deploy
               working-directory: ./frontend
