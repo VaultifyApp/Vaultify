@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Routes,
     Route,
     Navigate,
@@ -75,9 +75,9 @@ const AppRoutes = () => {
                     path="*"
                     element={
                         isLoggedIn ? (
-                            <Navigate to="/home" />
+                            <Navigate to="/Vaultify/home" />
                         ) : (
-                            <Navigate to="/" />
+                            <Navigate to="/Vaultify/" />
                         )
                     }
                 />
@@ -89,7 +89,7 @@ const AppRoutes = () => {
 const App = () => {
     return (
         <AuthProvider>
-            <Router basename="/Vaultify">
+            <Router>
                 <AppRoutes />
             </Router>
         </AuthProvider>
