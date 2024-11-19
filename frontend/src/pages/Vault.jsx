@@ -105,8 +105,8 @@ const Vault = () => {
                                                 )
                                             }
                                         >
-                                            {playlist.title.length > 25
-                                                ? playlist.title.substr(0, 14) +
+                                            {playlist.title.length > 28
+                                                ? playlist.title.substr(0, 25) +
                                                   "..."
                                                 : playlist.title}
                                         </h1>
