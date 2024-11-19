@@ -21,8 +21,8 @@
 
 ## Resources
 
-All pull requests will be automatically linted and checked for formatting. To check your code locally, run
-`npm run lint` and `npm run format:check`. To fix formatting errors, run `npm run format:fix`.
+All pull requests will be automatically linted and checked for formatting. To check your code locally, run `npm run lint` and `npm run format:check`.
+To fix formatting errors, run `npm run format:fix`.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
