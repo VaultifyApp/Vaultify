@@ -231,8 +231,8 @@ class DatabaseFacade {
     /**
      * @returns all users opted in for notifs
      */
-    async getOptedInUsers(): Promise<[User]> {
-        let users: [User] = await this.UserModel.find({
+    async getOptedInUsers(): Promise<User[]> {
+        let users: User[] = await this.UserModel.find({
             "settings.notifs": true,
         }).lean();
         return users;
