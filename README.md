@@ -5,7 +5,7 @@
 **👥 Team Members:** Matthew Bui, Michael Lam, Dillon (Hongwei) Li, Michelle Li, Thomas Orifici
 
 -   [Project Page](http://spotify.com/)
--   [Vaultify's GitHub Repository](https://github.com/misherelle/Vaultify)
+-   [Vaultify's GitHub Repository](https://github.com/Vaultify-App/Vaultify)
 
 ======================================================
 
