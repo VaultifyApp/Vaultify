@@ -1,4 +1,5 @@
 import User from "./interfaces/User.js";
+import Image from "./interfaces/Image.js";
 import Playlist from "./interfaces/Playlist.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
@@ -87,11 +88,14 @@ class Model {
         user = await this.spotify.generatePlaylist(user, manual);
 
         if (user.settings.coverTheme && user.settings.coverTheme != "") {
-            let newPlaylist: Playlist =
-                user.playlists[user.playlists.length - 1];
-            newPlaylist = await this.cover.generateCover(
-                newPlaylist,
+            let newCover: Image = await this.cover.generateCover(
+                user.playlists[user.playlists.length - 1],
                 user.settings.coverTheme
+            );
+            let newPlaylist: Playlist = await this.spotify.updatePlaylistCover(
+                user,
+                user.playlists[user.playlists.length - 1],
+                newCover
             );
             user.playlists[user.playlists.length - 1] = newPlaylist;
         }
@@ -105,7 +109,7 @@ class Model {
      * @effects generates playlists and sends emails to all opted in users
      */
     async monthlyActions(): Promise<void> {
-        let users: [User] = await this.db.getOptedInUsers();
+        let users: User[] = await this.db.getOptedInUsers();
         for (let i = 0; i < users.length; i++) {
             users[i] = await this.generatePlaylist(users[i], false);
             this.email.sendNewPlaylistEmail(users[i]).catch(console.error);

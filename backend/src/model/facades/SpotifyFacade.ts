@@ -1,8 +1,11 @@
 import { Buffer } from "buffer";
 import axios, { AxiosResponse, isAxiosError } from "axios";
 import querystring from "querystring";
+import sharp from "sharp";
 import User from "../interfaces/User.js";
 import Track from "../interfaces/Track.js";
+import Playlist from "../interfaces/Playlist.js";
+import Image from "../interfaces/Image.js";
 import { URLSearchParams } from "url";
 
 /**
@@ -323,6 +326,56 @@ class SpotifyFacade {
             tracks: tracks,
         });
         return user;
+    }
+
+    /**
+     * @effects updates the given playlist's cover image
+     * @returns an updated playlist object
+     */
+    async updatePlaylistCover(
+        user: User,
+        playlist: Playlist,
+        newCover: Image
+    ): Promise<Playlist> {
+        // download new cover image
+        const response = await axios.get(newCover.url, {
+            responseType: "arraybuffer",
+        });
+        let imageBuffer: Buffer = Buffer.from(response.data);
+        // reduce image size to 256 KB
+        let fileSize = imageBuffer.length;
+        // Set a starting compression quality
+        let quality = 90;
+        // Loop to keep adjusting the quality until the file size is under 256 KB
+        // In order for base 64 to be below 256, buffer must be below 192
+        while (fileSize > 180 * 1024 && quality > 5) {
+            // Prevent quality from going too low
+            imageBuffer = await sharp(imageBuffer)
+                .jpeg({ quality }) // Adjust quality to reduce size
+                .toBuffer();
+            fileSize = imageBuffer.length;
+            quality -= 5; // Decrease quality to reduce file size further
+        }
+        let addCoverBody = {
+            method: "put",
+            url: `https://api.spotify.com/v1/playlists/${playlist.spotifyID}/images`,
+            headers: {
+                "Content-Type": "image/jpeg",
+            },
+            data: imageBuffer.toString("base64"),
+        };
+        await this.makeRequest(user, addCoverBody);
+        let getCoverBody = {
+            method: "get",
+            url: `https://api.spotify.com/v1/playlists/${playlist.spotifyID}/images`,
+        };
+        let newImage: Image = (await this.makeRequest(user, getCoverBody))
+            .data[0];
+        if (newImage.width === null || newImage.height === null) {
+            newImage.width = newImage.height = 800;
+        }
+        playlist.image = newImage;
+        return playlist;
     }
 }
 

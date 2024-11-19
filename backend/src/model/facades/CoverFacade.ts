@@ -16,7 +16,7 @@ class CoverGenerator {
      * @param {string} theme - cover theme, can be "Oil Painting", "Futuristic", or "Sky"
      * @returns {Promise<Playlist>} updated playlist with the generated cover
      */
-    async generateCover(playlist: Playlist, theme: string): Promise<Playlist> {
+    async generateCover(playlist: Playlist, theme: string): Promise<Image> {
         try {
             // Prepare the prompt for OpenAI based on the theme
             const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" inspired by a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood * 10}, Additionally, please contain no words or letters.`;
@@ -35,17 +35,13 @@ class CoverGenerator {
                 imageUrl = "No Valid Url";
             }
 
-            // Create a new Image object
-            const coverImage: Image = {
+            let image: Image = {
                 url: imageUrl,
                 width: 1024,
                 height: 1024,
             };
 
-            // Update the playlist with the generated cover
-            playlist.image = coverImage;
-
-            return playlist;
+            return image;
         } catch (error) {
             console.error("Error generating cover:", error);
             throw new Error("Failed to generate cover");

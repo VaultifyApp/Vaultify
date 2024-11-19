@@ -1,5 +1,5 @@
 /**
- * The Image interface stores image informatin
+ * The Image interface stores image information
  */
 interface Image {
     url: string;

@@ -23,7 +23,8 @@
         "mongoose": "^8.5.0",
         "node-cron": "^3.0.3",
         "node-schedule": "^2.1.1",
-        "openai": "^4.55.1"
+        "openai": "^4.55.1",
+        "sharp": "^0.33.5"
     },
     "devDependencies": {
         "@eslint/compat": "^1.1.0",

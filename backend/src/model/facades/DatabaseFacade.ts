@@ -99,7 +99,7 @@ class DatabaseFacade {
             },
             image: {
                 type: ImageSchema,
-                required: false,
+                required: true,
             },
             tracks: {
                 type: [TrackSchema],
@@ -232,7 +232,9 @@ class DatabaseFacade {
      * @returns all users opted in for notifs
      */
     async getOptedInUsers(): Promise<[User]> {
-        let users: [User] = await this.UserModel.find({ notifs: true }).lean();
+        let users: [User] = await this.UserModel.find({
+            "settings.notifs": true,
+        }).lean();
         return users;
     }
 }

@@ -9,7 +9,7 @@ interface Playlist {
     description: string;
     url: string;
     spotifyID: string;
-    image?: Image;
+    image: Image;
     mood: number;
     tracks: Track[];
 }

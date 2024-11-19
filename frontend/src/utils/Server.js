@@ -11,7 +11,7 @@ class Server {
      * @effects updates the current user in the db
      */
     static async updateUser(user) {
-        await axios.post(Server.serverURI + "/update-user", user);
+        await axios.post(`${Server.serverURI}/update-user`, user);
     }
 
     /**
@@ -22,7 +22,7 @@ class Server {
             _id: user._id,
             bio: user.bio,
         };
-        await axios.post(Server.serverURI + "/update-bio", body);
+        await axios.post(`${Server.serverURI}/update-bio`, body);
     }
 
     /**
@@ -35,7 +35,7 @@ class Server {
             playlistIndex: playlistIndex,
             trackIndex: trackIndex,
         };
-        await axios.post(Server.serverURI + "/update-note", body);
+        await axios.post(`${Server.serverURI}/update-note`, body);
     }
 
     /**
@@ -43,7 +43,7 @@ class Server {
      */
     static async generatePlaylist(user, monthly, numSongs, newOnly, theme) {
         const response = await axios.get(
-            Server.serverURI + "/generate-playlist",
+            `${Server.serverURI}/generate-playlist`,
             {
                 params: {
                     _id: user._id,
@@ -69,7 +69,7 @@ class Server {
             monthly: user.settings.notifs,
         };
         const response = await axios.post(
-            Server.serverURI + "/update-settings",
+            `${Server.serverURI}/update-settings`,
             body
         );
         return response.data;
@@ -81,7 +81,7 @@ class Server {
      */
     static async getUserByID(_id) {
         const response = await axios.get(
-            Server.serverURI + `/get-user-by-_id?_id=${_id}`
+            `${Server.serverURI}/get-user-by-_id?_id=${_id}`
         );
         return response.data;
     }
@@ -92,7 +92,7 @@ class Server {
      */
     static async getUserByCode(code) {
         const response = await axios.get(
-            Server.serverURI + `/get-user-by-code?code=${code}`
+            `${Server.serverURI}/get-user-by-code?code=${code}`
         );
         return response.data;
     }
