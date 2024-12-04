@@ -188,7 +188,7 @@ class SpotifyFacade {
             name = `${month} ${currYear} Mid Month Recap`;
         } else {
             month = monthNames[monthIndex - 1];
-            name = `${month} ${currYear}`;
+            name = `${month} ${currYear} Recap`;
         }
         let description: string = `${user.username}'s top tracks for ${month} ${currYear}!`;
         // create playlist for user
@@ -253,7 +253,14 @@ class SpotifyFacade {
         // only analyze / add songs if user has songs
         if (toBeAdded.length > 0) {
             const ids = toBeAdded.map((item: { id: string }) => item.id);
+            /**
+             * :::NOTE:::
+             * Mood anaylsis has been deprecated from the spotify api,
+             * we need a new way to analyze the mood of playlists.
+             * ::::::::::
+             */
             // analyze mood of tracks
+            /*
             const analysisBody = {
                 method: "get",
                 url: "https://api.spotify.com/v1/audio-features",
@@ -282,6 +289,7 @@ class SpotifyFacade {
                 moodTotal += analysisData[i].valence;
             }
             averageMood = moodTotal / toBeAdded.length;
+            */
             // add tracks to playlist
             const uris = toBeAdded.map((item: { uri: string }) => item.uri);
             let addBody = {

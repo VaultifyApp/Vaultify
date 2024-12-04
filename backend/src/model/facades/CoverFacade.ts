@@ -19,7 +19,7 @@ class CoverGenerator {
     async generateCover(playlist: Playlist, theme: string): Promise<Image> {
         try {
             // Prepare the prompt for OpenAI based on the theme
-            const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" inspired by a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood * 10}, Additionally, please contain no words or letters.`;
+            const prompt = `Create an album cover in the style of ${theme} for the playlist titled "${playlist.title}" inspired by a mood score (0 to 10) with 0 being sad and 10 being happy: ${playlist.mood * 10}, Additionally, please contain no words, letters, or numbers, and incorporate elements of the month that the playlist falls in.`;
 
             // Generate image using OpenAI API
             const response = await this.openai.images.generate({
