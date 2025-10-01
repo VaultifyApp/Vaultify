@@ -3,10 +3,10 @@ import Image from "../interfaces/Image";
 import OpenAI from "openai";
 
 /**
- * The CoverGenerator class is responsible for generating
+ * The CoverGeneratorFacade class is responsible for generating
  * playlist covers using OpenAI
  */
-class CoverGenerator {
+class CoverGeneratorFacade {
     private readonly openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY,
     });
@@ -49,4 +49,4 @@ class CoverGenerator {
     }
 }
 
-export default CoverGenerator;
+export default CoverGeneratorFacade;

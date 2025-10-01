@@ -226,7 +226,7 @@ const PlaylistGenerator = () => {
                     value={coverTheme}
                     onChange={(e) => setCoverTheme(e.target.value)}
                 >
-                    <option value="">Select one</option>
+                    <option value="">No Theme</option>
                     <option value="oil painting">Oil painting</option>
                     <option value="futuristic">Futuristic</option>
                     <option value="sky">Sky</option>

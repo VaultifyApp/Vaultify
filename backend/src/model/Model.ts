@@ -4,7 +4,7 @@ import Playlist from "./interfaces/Playlist.js";
 import DatabaseFacade from "./facades/DatabaseFacade.js";
 import SpotifyFacade from "./facades/SpotifyFacade.js";
 import EmailFacade from "./facades/EmailFacade.js";
-import CoverFacade from "./facades/CoverFacade.js";
+import CoverGeneratorFacade from "./facades/CoverGeneratorFacade.js";
 
 /**
  * The Model class is responsible for modifying and fetching backend data
@@ -13,7 +13,7 @@ class Model {
     private db: DatabaseFacade;
     private spotify: SpotifyFacade;
     private email: EmailFacade;
-    private cover: CoverFacade;
+    private cover: CoverGeneratorFacade;
 
     /**
      * @effects constructs facades
@@ -22,7 +22,7 @@ class Model {
         this.db = new DatabaseFacade();
         this.spotify = new SpotifyFacade();
         this.email = new EmailFacade();
-        this.cover = new CoverFacade();
+        this.cover = new CoverGeneratorFacade();
     }
 
     /**
@@ -111,8 +111,12 @@ class Model {
     async monthlyActions(): Promise<void> {
         let users: User[] = await this.db.getOptedInUsers();
         for (let i = 0; i < users.length; i++) {
-            users[i] = await this.generatePlaylist(users[i], false);
-            this.email.sendNewPlaylistEmail(users[i]).catch(console.error);
+            try {
+                users[i] = await this.generatePlaylist(users[i], false);
+                this.email.sendNewPlaylistEmail(users[i]).catch(console.error);
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 

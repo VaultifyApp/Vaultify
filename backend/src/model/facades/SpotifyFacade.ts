@@ -255,7 +255,7 @@ class SpotifyFacade {
             const ids = toBeAdded.map((item: { id: string }) => item.id);
             /**
              * :::NOTE:::
-             * Mood anaylsis has been deprecated from the spotify api,
+             * Mood analysis has been deprecated from the spotify api,
              * we need a new way to analyze the mood of playlists.
              * ::::::::::
              */
@@ -273,6 +273,7 @@ class SpotifyFacade {
                 analysisBody
             );
             const analysisData = analysisResponse.data.audio_features;
+            */
             // construct Track objects
             let moodTotal = 0;
             for (let i = 0; i < toBeAdded.length; i++) {
@@ -286,10 +287,10 @@ class SpotifyFacade {
                     popularity: toBeAdded[i].popularity,
                     image: toBeAdded[i].album.images[0],
                 });
-                moodTotal += analysisData[i].valence;
+                // moodTotal += analysisData[i].valence;
             }
-            averageMood = moodTotal / toBeAdded.length;
-            */
+            // averageMood = moodTotal / toBeAdded.length;
+            averageMood = 0.5;
             // add tracks to playlist
             const uris = toBeAdded.map((item: { uri: string }) => item.uri);
             let addBody = {
