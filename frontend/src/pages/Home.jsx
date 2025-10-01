@@ -74,6 +74,13 @@ const Home = () => {
             description: "One year of automatic playlist generation. :0",
         });
     }
+    // easter egg
+    if (currentUser.email === "aditipillai@gmail.com") {
+        achievements.push({
+            name: "GOAT STATUS",
+            description: "Aditi Pillai is goated",
+        });
+    }
 
     // saves bio to db
     const handleSaveBio = async () => {
