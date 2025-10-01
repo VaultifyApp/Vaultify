@@ -7,7 +7,7 @@ import profile4 from "../assets/dillon.png";
 import profile5 from "../assets/matt.png";
 
 /**
- * About Us page componenet
+ * About Us page component
  */
 const AboutUs = () => {
     return (
@@ -36,29 +36,48 @@ const AboutUs = () => {
                 background, and our shared passion for music and technology.
             </p>
             <div className="profile-pictures">
-                <a
-                    href="https://www.linkedin.com/in/limish/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={profile1} alt="Michelle" />
-                </a>
-                <a
-                    href="https://www.linkedin.com/in/thomasorifici/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={profile2} alt="Thomas" />
-                </a>
-                <a
-                    href="https://www.linkedin.com/in/lammiko/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={profile3} alt="Michael" />
-                </a>
-                <img src={profile4} alt="Dillon" />
-                <img src={profile5} alt="Matt" />
+                <div className="profile">
+                    <a
+                        href="https://www.linkedin.com/in/limish/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={profile1} alt="Michelle" />
+                    </a>
+                    <p>Michelle Li</p>
+                </div>
+
+                <div className="profile">
+                    <a
+                        href="https://www.linkedin.com/in/thomasorifici/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={profile2} alt="Thomas" />
+                    </a>
+                    <p>Thomas Orifici</p>
+                </div>
+
+                <div className="profile">
+                    <a
+                        href="https://www.linkedin.com/in/lammiko/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img src={profile3} alt="Michael" />
+                    </a>
+                    <p>Michael Lam</p>
+                </div>
+
+                <div className="profile">
+                    <img src={profile4} alt="Dillon" />
+                    <p>Dillon Li</p>
+                </div>
+
+                <div className="profile">
+                    <img src={profile5} alt="Matt" />
+                    <p>Matthew Bui</p>
+                </div>
             </div>
         </div>
     );

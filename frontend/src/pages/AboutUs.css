@@ -39,10 +39,25 @@
     justify-content: center;
     gap: 2vw;
     padding-bottom: 10vw;
+    flex-wrap: wrap;
 }
 
-.profile-pictures img {
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile img {
     width: 10vw;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.profile p {
+    margin-top: 0.5vw;
+    font-size: 1vw;
+    font-weight: bold;
+    color: white;
 }
