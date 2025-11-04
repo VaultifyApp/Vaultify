@@ -221,39 +221,39 @@ const PlaylistGenerator = () => {
             )}
 
             <div className="form-group">
-                <label>Cover Theme:&nbsp;</label>
+            <label>Cover Theme:&nbsp;</label>
+            {coverTheme === "__custom__" ? (
+                <input
+                type="text"
+                className="form-control"
+                placeholder="Type your own theme..."
+                value={customTheme || ""}
+                onChange={(e) => setCustomTheme(e.target.value)}
+                onBlur={() => {
+                    // If user leaves input blank, reset to no theme
+                    if (!customTheme) setCoverTheme("");
+                }}
+                />
+            ) : (
                 <select
-                    value={coverTheme}
-                    onChange={(e) => setCoverTheme(e.target.value)}
+                value={coverTheme}
+                onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "__custom__") {
+                    setCoverTheme(val);
+                    } else {
+                    setCoverTheme(val);
+                    setCustomTheme(""); // clear custom input
+                    }
+                }}
                 >
-                    <option value="">No Theme</option>
-                    <option value="oil painting">Oil painting</option>
-                    <option value="futuristic">Futuristic</option>
-                    <option value="sky">Sky</option>
+                <option value="">No Theme</option>
+                <option value="oil painting">Oil painting</option>
+                <option value="futuristic">Futuristic</option>
+                <option value="sky">Sky</option>
+                <option value="__custom__">Custom...</option>
                 </select>
-            </div>
-
-            <div className="form-group">
-                <label>Cover Theme:&nbsp;</label>
-                <select
-                    value={coverTheme}
-                    onChange={(e) => setCoverTheme(e.target.value)}
-                >
-                    <option value="">No Theme</option>
-                    <option value="oil painting">Oil painting</option>
-                    <option value="futuristic">Futuristic</option>
-                    <option value="sky">Sky</option>
-                    <option value="custom">Custom...</option>
-                </select>
-
-                {coverTheme === "custom" && (
-                    <input
-                        type="text"
-                        placeholder="Enter your own theme"
-                        className="form-control"
-                        onChange={(e) => setCoverTheme(e.target.value)}
-                    />
-                )}
+            )}
             </div>
 
             <div className="form-group">
