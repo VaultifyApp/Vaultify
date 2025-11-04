@@ -234,14 +234,26 @@ const PlaylistGenerator = () => {
             </div>
 
             <div className="form-group">
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={newOnly}
-                        onChange={(e) => setNewOnly(e.target.checked)}
-                    />
-                    {" New to me only"}
-                </label>
+            <label>Cover Theme:&nbsp;</label>
+            <select
+                value={coverTheme}
+                onChange={(e) => setCoverTheme(e.target.value)}
+            >
+                <option value="">No Theme</option>
+                <option value="oil painting">Oil painting</option>
+                <option value="futuristic">Futuristic</option>
+                <option value="sky">Sky</option>
+                <option value="custom">Custom...</option>
+            </select>
+
+            {coverTheme === "custom" && (
+                <input
+                type="text"
+                placeholder="Enter your own theme"
+                className="form-control"
+                onChange={(e) => setCoverTheme(e.target.value)}
+                />
+            )}
             </div>
 
             <div className="form-group">
