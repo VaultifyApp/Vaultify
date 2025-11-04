@@ -24,7 +24,6 @@ const PlaylistGenerator = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState(false);
     const [saved, setSaved] = useState(false);
-    const [customTheme, setCustomTheme] = useState("");
 
     const navigate = useNavigate(); // Initialize useNavigate
 
@@ -222,39 +221,22 @@ const PlaylistGenerator = () => {
             )}
 
             <div className="form-group">
-            <label>Cover Theme:&nbsp;</label>
-            {coverTheme === "__custom__" ? (
-                <input
-                type="text"
+            <label htmlFor="coverTheme">Cover Theme:&nbsp;</label>
+            <input
+                id="coverTheme"
                 className="form-control"
-                placeholder="Type your own theme..."
-                value={customTheme || ""}
-                onChange={(e) => setCustomTheme(e.target.value)}
-                onBlur={() => {
-                    // If user leaves input blank, reset to no theme
-                    if (!customTheme) setCoverTheme("");
-                }}
-                />
-            ) : (
-                <select
+                list="cover-theme-options"
+                placeholder="Type or choose a theme…"
                 value={coverTheme}
-                onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === "__custom__") {
-                    setCoverTheme(val);
-                    } else {
-                    setCoverTheme(val);
-                    setCustomTheme(""); // clear custom input
-                    }
-                }}
-                >
-                <option value="">No Theme</option>
-                <option value="oil painting">Oil painting</option>
-                <option value="futuristic">Futuristic</option>
-                <option value="sky">Sky</option>
-                <option value="__custom__">Custom...</option>
-                </select>
-            )}
+                onChange={(e) => setCoverTheme(e.target.value)}
+                autoComplete="off"
+            />
+            <datalist id="cover-theme-options">
+                <option value="" label="No Theme" />
+                <option value="oil painting" label="Oil painting" />
+                <option value="futuristic" label="Futuristic" />
+                <option value="sky" label="Sky" />
+            </datalist>
             </div>
 
             <div className="form-group">
