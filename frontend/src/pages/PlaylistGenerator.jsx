@@ -24,6 +24,7 @@ const PlaylistGenerator = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [customLength, setCustomLength] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [customTheme, setCustomTheme] = useState("");
 
     const navigate = useNavigate(); // Initialize useNavigate
 
