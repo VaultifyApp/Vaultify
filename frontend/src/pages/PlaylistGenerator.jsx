@@ -221,22 +221,22 @@ const PlaylistGenerator = () => {
             )}
 
             <div className="form-group">
-            <label htmlFor="coverTheme">Cover Theme:&nbsp;</label>
-            <input
-                id="coverTheme"
-                className="form-control"
-                list="cover-theme-options"
-                placeholder="Type or choose a theme…"
-                value={coverTheme}
-                onChange={(e) => setCoverTheme(e.target.value)}
-                autoComplete="off"
-            />
-            <datalist id="cover-theme-options">
-                <option value="" label="No Theme" />
-                <option value="oil painting" label="Oil painting" />
-                <option value="futuristic" label="Futuristic" />
-                <option value="sky" label="Sky" />
-            </datalist>
+                <label htmlFor="coverTheme">Cover Theme:&nbsp;</label>
+                <input
+                    id="coverTheme"
+                    className="form-control"
+                    list="cover-theme-options"
+                    placeholder="Type or choose a theme…"
+                    value={coverTheme}
+                    onChange={(e) => setCoverTheme(e.target.value)}
+                    autoComplete="off"
+                />
+                <datalist id="cover-theme-options">
+                    <option value="" label="No Theme" />
+                    <option value="oil painting" label="Oil painting" />
+                    <option value="futuristic" label="Futuristic" />
+                    <option value="sky" label="Sky" />
+                </datalist>
             </div>
 
             <div className="form-group">
