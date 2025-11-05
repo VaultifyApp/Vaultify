@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { AuthContext } from "../utils/AuthContext";
 import Server from "../utils/Server";
@@ -220,22 +221,27 @@ const PlaylistGenerator = () => {
             )}
 
             <div className="form-group">
-                <label htmlFor="coverTheme">Cover Theme:&nbsp;</label>
-                <input
-                    id="coverTheme"
-                    className="form-control"
-                    list="cover-theme-options"
-                    placeholder="Type or choose a theme…"
+                <label>Cover Theme:&nbsp;</label>
+                <select
                     value={coverTheme}
                     onChange={(e) => setCoverTheme(e.target.value)}
-                    autoComplete="off"
-                />
-                <datalist id="cover-theme-options">
-                    <option value="" label="No Theme" />
-                    <option value="oil painting" label="Oil painting" />
-                    <option value="futuristic" label="Futuristic" />
-                    <option value="sky" label="Sky" />
-                </datalist>
+                >
+                    <option value="">No Theme</option>
+                    <option value="oil painting">Oil painting</option>
+                    <option value="futuristic">Futuristic</option>
+                    <option value="sky">Sky</option>
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={newOnly}
+                        onChange={(e) => setNewOnly(e.target.checked)}
+                    />
+                    {" New to me only"}
+                </label>
             </div>
 
             <div className="form-group">
