@@ -183,14 +183,19 @@ class SpotifyFacade {
         const currYear = currentDate.getFullYear();
         let name: string;
         let month: string;
+        let year: number;
         if (manualGeneration) {
             month = monthNames[monthIndex];
-            name = `${month} ${currYear} Mid Month Recap`;
+            year = currYear;
+            name = `${month} ${year} Mid Month Recap`;
         } else {
-            month = monthNames[monthIndex - 1];
-            name = `${month} ${currYear} Recap`;
+            // The automated run fires on the 1st and recaps the previous
+            // month, which is December of the prior year every January.
+            month = monthNames[(monthIndex + 11) % 12];
+            year = monthIndex === 0 ? currYear - 1 : currYear;
+            name = `${month} ${year} Recap`;
         }
-        let description: string = `${user.username}'s top tracks for ${month} ${currYear}!`;
+        let description: string = `${user.username}'s top tracks for ${month} ${year}!`;
         // create playlist for user
         let createBody = {
             method: "post",
