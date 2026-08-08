@@ -87,16 +87,25 @@ class Model {
         user = await this.spotify.generatePlaylist(user, manual);
 
         if (user.settings.coverTheme && user.settings.coverTheme != "") {
-            let newCover: Image = await this.cover.generateCover(
-                user.playlists[user.playlists.length - 1],
-                user.settings.coverTheme
-            );
-            let newPlaylist: Playlist = await this.spotify.updatePlaylistCover(
-                user,
-                user.playlists[user.playlists.length - 1],
-                newCover
-            );
-            user.playlists[user.playlists.length - 1] = newPlaylist;
+            // The playlist already exists on Spotify with its tracks. A cover
+            // failure must not abort the run, or the save below is skipped and
+            // the user is left with an orphaned playlist that is absent from
+            // their vault and duplicated on every retry.
+            try {
+                let newCover: Image = await this.cover.generateCover(
+                    user.playlists[user.playlists.length - 1],
+                    user.settings.coverTheme
+                );
+                let newPlaylist: Playlist =
+                    await this.spotify.updatePlaylistCover(
+                        user,
+                        user.playlists[user.playlists.length - 1],
+                        newCover
+                    );
+                user.playlists[user.playlists.length - 1] = newPlaylist;
+            } catch (err) {
+                console.error("Keeping playlist without custom cover:", err);
+            }
         }
 
         if (!manual) user.numMonths = user.numMonths + 1;

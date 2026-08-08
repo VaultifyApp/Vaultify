@@ -56,7 +56,11 @@ class CoverGeneratorFacade {
             return image;
         } catch (error) {
             console.error("Error generating cover:", error);
-            throw new Error("Failed to generate cover");
+            const reason =
+                error instanceof Error ? error.message : String(error);
+            throw new Error(`Failed to generate cover: ${reason}`, {
+                cause: error,
+            });
         }
     }
 }
