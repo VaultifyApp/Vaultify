@@ -1,5 +1,5 @@
-import Playlist from "../interfaces/Playlist";
-import Image from "../interfaces/Image";
+import Playlist from "../interfaces/Playlist.js";
+import Image from "../interfaces/Image.js";
 import OpenAI from "openai";
 
 /**
@@ -7,9 +7,22 @@ import OpenAI from "openai";
  * playlist covers using OpenAI
  */
 class CoverGeneratorFacade {
-    private readonly openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-    });
+    private openai: OpenAI | null = null;
+
+    /**
+     * @returns the OpenAI client, constructed on first use
+     * @throws Error if OPENAI_API_KEY is not configured
+     */
+    private client(): OpenAI {
+        if (!this.openai) {
+            const apiKey = process.env.OPENAI_API_KEY;
+            if (!apiKey) {
+                throw new Error("OPENAI_API_KEY is not configured");
+            }
+            this.openai = new OpenAI({ apiKey: apiKey });
+        }
+        return this.openai;
+    }
 
     /**
      * @param {Playlist} playlist - the playlist to generate a cover for
@@ -21,7 +34,7 @@ class CoverGeneratorFacade {
             // Prepare the prompt for OpenAI based on the theme
             const prompt = `Create an album cover in the style of ${theme} for a playlist titled "${playlist.title}". The cover should  not contain any words, letters, or numbers, and should incorporate thematic elements of the month that the playlist falls in.`;
             // Generate image using OpenAI API
-            const response = await this.openai.images.generate({
+            const response = await this.client().images.generate({
                 prompt: prompt,
                 model: "dall-e-3",
                 n: 1,

@@ -18,16 +18,16 @@ class DatabaseFacade {
     constructor() {
         // connects to database
         const uri: string = process.env.DATABASE_URI || "URI not found";
-        try {
-            mongoose.connect(uri);
-        } catch (err) {
-            throw err;
-        }
+        mongoose.connect(uri).catch((err) => {
+            console.error("Initial MongoDB connection failed:", err.message);
+        });
         mongoose.connection.once("open", (_) => {
             console.log("MongoDB connection established successfully");
         });
+        // Log rather than throw: an async throw here would take down the
+        // whole process on a transient outage. Mongoose retries on its own.
         mongoose.connection.on("error", (err) => {
-            throw err;
+            console.error("MongoDB connection error:", err.message);
         });
         // format for storing images in the db
         const ImageSchema = new mongoose.Schema<Image>({

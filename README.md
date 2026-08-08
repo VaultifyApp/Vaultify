@@ -11,11 +11,30 @@
 
 ## Installation
 
-1. Clone this repository into your GitHub desktop application.
-2. Open up the folder of the repo in your preferred IDE (i.e. Visual Studio Code).
-3. In the root folder ("Vaultify"), make sure you install dependencies using `npm run build`.
-4. Run `npm start` or `npm run dev` to start the application.
-5. Then, if any changes were made to the components, run the command `npm run build` in the client folder before running `npm start` again.
+1. Clone this repository and open it in your preferred IDE (i.e. Visual Studio Code).
+2. From the root folder ("Vaultify"), install all dependencies with `npm run install:all`.
+3. Copy `.env.example` to `.env` in the root folder and fill in your values.
+4. Run `npm run dev` to start the API (port 3001) and the Vite dev server (port 3000) together.
+
+## Environment
+
+All secrets live in a single `.env` at the repo root; see `.env.example` for the full list.
+`REDIRECT_URI` must exactly match a redirect URI registered on your
+[Spotify dashboard](https://developer.spotify.com/dashboard). The client derives its own
+redirect from `window.location.origin`, so register one entry per environment you run.
+
+## Deployment
+
+The app deploys to Render as a **single web service**: Express serves the JSON API and also
+serves the compiled React bundle from `frontend/dist`, so the client and API share one origin.
+
+-   `npm run build` installs both workspaces, builds the client, and compiles the server.
+-   `npm start` runs the compiled server, which serves both.
+-   `render.yaml` declares the service; set the secret values in the Render dashboard.
+
+The monthly playlist job runs in-process via `node-schedule` when `ENABLE_INTERNAL_CRON=true`.
+On hosts that idle the process, leave it unset and have a scheduler `POST /run-monthly` with
+an `Authorization: Bearer $CRON_SECRET` header instead.
 
 ======================================================
 

@@ -4,9 +4,9 @@
     "main": "server.js",
     "type": "module",
     "scripts": {
-        "dev": "tsc && cd built && node Main.js",
-        "start": "cd built && node Main.js",
-        "predeploy": "npm run build",
+        "build": "tsc",
+        "dev": "tsc && node built/Main.js",
+        "start": "node built/Main.js",
         "lint": "eslint"
     },
     "keywords": [],
@@ -24,7 +24,8 @@
         "node-cron": "^3.0.3",
         "node-schedule": "^2.1.1",
         "openai": "^4.55.1",
-        "sharp": "^0.33.5"
+        "sharp": "^0.33.5",
+        "vaultify": "file:.."
     },
     "devDependencies": {
         "@eslint/compat": "^1.1.0",

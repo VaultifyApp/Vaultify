@@ -11,7 +11,12 @@ class Automator {
 
     constructor(model: Model) {
         this.model = model;
-        this.monthlyActions();
+        // Only trust an in-process schedule when the host keeps the process
+        // alive. Otherwise the monthly run is driven by POST /run-monthly.
+        if (process.env.ENABLE_INTERNAL_CRON === "true") {
+            this.monthlyActions();
+            console.log("Internal monthly scheduler enabled");
+        }
     }
 
     private monthlyActions() {

@@ -4,8 +4,9 @@ import axios from "axios";
  * The Server class is responsible for communications with the server.
  */
 class Server {
-    static serverURI =
-        "https://vaultify-brbycgechbf5bxfj.eastus-01.azurewebsites.net";
+    // In production the API is served from the same origin as the client.
+    // In dev, Vite runs on :3000 and the API on :3001.
+    static serverURI = import.meta.env.DEV ? "http://localhost:3001" : "";
 
     /**
      * @effects updates the current user in the db

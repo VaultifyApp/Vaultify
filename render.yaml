@@ -1,0 +1,33 @@
+services:
+    - type: web
+      name: vaultify
+      runtime: node
+      plan: starter
+      region: oregon
+      buildCommand: npm run build
+      startCommand: npm start
+      healthCheckPath: /
+      autoDeploy: true
+      envVars:
+          - key: NODE_VERSION
+            value: 20.14.0
+          # Render injects PORT automatically; the server reads it.
+          - key: ENABLE_INTERNAL_CRON
+            value: "true"
+          # Set the values for everything below in the Render dashboard.
+          - key: DATABASE_URI
+            sync: false
+          - key: CLIENT_ID
+            sync: false
+          - key: CLIENT_SECRET
+            sync: false
+          - key: REDIRECT_URI
+            sync: false
+          - key: OPENAI_API_KEY
+            sync: false
+          - key: MAILER_KEY
+            sync: false
+          - key: EMAIL
+            sync: false
+          - key: CRON_SECRET
+            generateValue: true

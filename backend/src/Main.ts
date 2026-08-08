@@ -1,7 +1,13 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
+import path from "path";
+import { fileURLToPath } from "url";
+
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
+// repo root, resolved from the compiled location (backend/built)
+const rootDir = path.resolve(currentDir, "../..");
+dotenv.config({ path: path.join(rootDir, ".env") });
 
 import Model from "./model/Model.js";
 import Receiver from "./controller/Receiver.js";
@@ -17,12 +23,11 @@ class Main {
         const app: Express = express();
         const port: number = Number(process.env.PORT) || 3001;
 
+        // The client is served from this same origin in production, so the
+        // only cross-origin caller left is the Vite dev server.
         const allowedOrigins = [
-            "https://accounts.spotify.com",
             "http://localhost:3000",
-            "http://localhost:3001",
-            "https://vaultifyapp.github.io/Vaultify",
-            "https://vaultify-app.vercel.app/",
+            "http://127.0.0.1:3000",
         ];
 
         app.use(
@@ -40,7 +45,16 @@ class Main {
         let web: Receiver = new Receiver(app, model);
         let date: Automator = new Automator(model);
 
-        app.listen(port, () => {
+        // Serve the built client. Registered after the API routes so it never
+        // shadows them.
+        const clientDir = path.join(rootDir, "frontend", "dist");
+        app.use(express.static(clientDir));
+        // History fallback: any non-API path is handled by React Router.
+        app.get("*", (req: Request, res: Response) => {
+            res.sendFile(path.join(clientDir, "index.html"));
+        });
+
+        app.listen(port, "0.0.0.0", () => {
             console.log(`Server is running on port: ${port}`);
         });
     }

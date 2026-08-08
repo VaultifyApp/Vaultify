@@ -19,6 +19,33 @@ class Receiver {
         this.handleUpdateBio();
         this.handleUpdateNote();
         this.handleUpdateSettings();
+        this.handleRunMonthly();
+    }
+
+    /**
+     * @effects runs the monthly generation for all opted in users.
+     *          Protected by CRON_SECRET so only the scheduler can invoke it.
+     */
+    private async handleRunMonthly(): Promise<void> {
+        this.app.post("/run-monthly", async (req: Request, res: Response) => {
+            const secret = process.env.CRON_SECRET;
+            if (!secret) {
+                return res
+                    .status(503)
+                    .json({ error: "CRON_SECRET is not configured" });
+            }
+            if (req.headers.authorization !== `Bearer ${secret}`) {
+                return res.status(401).json({ error: "Unauthorized" });
+            }
+            // Respond immediately; generation can run for minutes.
+            res.status(202).json({ started: true });
+            try {
+                await this.model.monthlyActions();
+                console.log("Monthly generation complete");
+            } catch (err) {
+                console.log(err);
+            }
+        });
     }
 
     /**
