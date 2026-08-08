@@ -352,24 +352,26 @@ class SpotifyFacade {
         playlist: Playlist,
         newCover: Image
     ): Promise<Playlist> {
-        // download new cover image
-        const response = await axios.get(newCover.url, {
-            responseType: "arraybuffer",
-        });
-        let imageBuffer: Buffer = Buffer.from(response.data);
-        // reduce image size to 256 KB
-        let fileSize = imageBuffer.length;
-        // Set a starting compression quality
+        // Obtain the new cover. Hosted images are downloaded, while a base64
+        // data URL is decoded directly since it cannot be fetched over HTTP.
+        let imageBuffer: Buffer;
+        if (newCover.url.startsWith("data:")) {
+            imageBuffer = Buffer.from(newCover.url.split(",")[1], "base64");
+        } else {
+            const response = await axios.get(newCover.url, {
+                responseType: "arraybuffer",
+            });
+            imageBuffer = Buffer.from(response.data);
+        }
+        // Spotify only accepts JPEG, so always transcode rather than relying
+        // on the compression loop below to run.
         let quality = 90;
-        // Loop to keep adjusting the quality until the file size is under 256 KB
-        // In order for base 64 to be below 256, buffer must be below 192
-        while (fileSize > 180 * 1024 && quality > 5) {
-            // Prevent quality from going too low
-            imageBuffer = await sharp(imageBuffer)
-                .jpeg({ quality }) // Adjust quality to reduce size
-                .toBuffer();
-            fileSize = imageBuffer.length;
-            quality -= 5; // Decrease quality to reduce file size further
+        imageBuffer = await sharp(imageBuffer).jpeg({ quality }).toBuffer();
+        // Keep reducing quality until the base64 payload fits Spotify's
+        // 256 KB limit, which means the raw buffer must stay below ~192 KB.
+        while (imageBuffer.length > 180 * 1024 && quality > 5) {
+            quality -= 5;
+            imageBuffer = await sharp(imageBuffer).jpeg({ quality }).toBuffer();
         }
         let addCoverBody = {
             method: "put",

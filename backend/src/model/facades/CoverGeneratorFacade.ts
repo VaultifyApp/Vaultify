@@ -36,15 +36,23 @@ class CoverGeneratorFacade {
             // Generate image using OpenAI API
             const response = await this.client().images.generate({
                 prompt: prompt,
-                model: "dall-e-3",
+                // dall-e-2 and dall-e-3 were removed from the API on
+                // 2026-05-12. gpt-image-1 is a documented replacement.
+                model: "gpt-image-1",
                 n: 1,
                 size: "1024x1024",
             });
 
-            // Extract the URL of the generated image
-            let imageUrl = response.data[0].url;
+            const result = response.data?.[0];
+            // The dall-e models return a hosted URL, gpt-image-1 only base64.
+            // Normalise to a data URL so callers handle a single shape.
+            const imageUrl = result?.url
+                ? result.url
+                : result?.b64_json
+                  ? `data:image/png;base64,${result.b64_json}`
+                  : undefined;
             if (!imageUrl) {
-                imageUrl = "No Valid Url";
+                throw new Error("OpenAI returned no image data");
             }
 
             let image: Image = {
