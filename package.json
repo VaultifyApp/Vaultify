@@ -17,6 +17,9 @@
     },
     "author": "",
     "license": "ISC",
+    "engines": {
+        "node": ">=20 <21"
+    },
     "dependencies": {
         "concurrently": "^8.2.2",
         "eslint-config-prettier": "^9.1.0",
