@@ -34,10 +34,7 @@ class SpotifyFacade {
         try {
             response = await axios(request);
         } catch (error) {
-            if (
-                !isAxiosError(error) ||
-                (error.response && error.response.status === 401)
-            ) {
+            if (isAxiosError(error) && error.response?.status === 401) {
                 // Token expired, refresh token
                 user = await this.refreshToken(user);
                 request.headers.Authorization = `Bearer ${user.accessToken}`;
@@ -71,7 +68,11 @@ class SpotifyFacade {
             }
         );
         user.accessToken = response.data.access_token;
-        user.refreshToken = response.data.refresh_token;
+        // Spotify only sometimes issues a new refresh token. Overwriting
+        // unconditionally would set it to undefined and lock the user out.
+        if (response.data.refresh_token) {
+            user.refreshToken = response.data.refresh_token;
+        }
         return user;
     }
 

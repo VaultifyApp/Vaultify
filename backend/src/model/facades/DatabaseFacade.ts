@@ -186,9 +186,20 @@ class DatabaseFacade {
         if (!existingUser) {
             const added = await new this.UserModel(user).save();
             return added.toObject();
-        } else {
-            return existingUser.toObject();
         }
+        // A returning user just re-authenticated, so adopt the fresh tokens
+        // and profile data. Without this their stored tokens can never be
+        // replaced, and an expired refresh token locks them out permanently.
+        // Playlists, bio, and settings are deliberately preserved.
+        existingUser.accessToken = user.accessToken;
+        existingUser.refreshToken = user.refreshToken;
+        existingUser.username = user.username;
+        existingUser.href = user.href;
+        existingUser.uri = user.uri;
+        existingUser.spotifyID = user.spotifyID;
+        if (user.image) existingUser.image = user.image;
+        const saved = await existingUser.save();
+        return saved.toObject();
     }
 
     /**

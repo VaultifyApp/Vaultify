@@ -52,7 +52,6 @@ class Model {
     async getUserByCode(code: string): Promise<User> {
         let user: User = await this.spotify.getProfile(code);
         return await this.db.addUser(user);
-        // TODO : UPDATE USER IF THEY ALREADY EXISTS
     }
 
     /**

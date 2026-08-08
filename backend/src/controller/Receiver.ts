@@ -49,6 +49,18 @@ class Receiver {
     }
 
     /**
+     * @param err the thrown error
+     * @returns a message safe to return to the client
+     * @effects logs the full error server side
+     * Never serialize the error itself: an AxiosError carries its request
+     * config, which includes the Basic auth header and refresh token.
+     */
+    private clientError(err: unknown): string {
+        console.log(err);
+        return err instanceof Error ? err.message : "Unknown error";
+    }
+
+    /**
      *
      * @param user
      * @returns user object with tokens removed for client use
@@ -91,8 +103,9 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
-                    console.log(err);
-                    return res.status(400).json({ error: err });
+                    return res
+                        .status(400)
+                        .json({ error: this.clientError(err) });
                 }
             }
         );
@@ -119,8 +132,9 @@ class Receiver {
                         req.body.coverTheme
                     );
                 } catch (err) {
-                    console.log(err);
-                    return res.status(400).json({ error: err });
+                    return res
+                        .status(400)
+                        .json({ error: this.clientError(err) });
                 }
             }
         );
@@ -134,8 +148,7 @@ class Receiver {
             try {
                 this.model.updateBio(req.body._id, req.body.bio);
             } catch (err) {
-                console.log(err);
-                return res.status(400).json({ error: err });
+                return res.status(400).json({ error: this.clientError(err) });
             }
         });
     }
@@ -153,8 +166,7 @@ class Receiver {
                     Number(req.body.trackIndex)
                 );
             } catch (err) {
-                console.log(err);
-                return res.status(400).json({ error: err });
+                return res.status(400).json({ error: this.clientError(err) });
             }
         });
     }
@@ -179,8 +191,9 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
-                    console.log(err);
-                    return res.status(400).json({ error: err });
+                    return res
+                        .status(400)
+                        .json({ error: this.clientError(err) });
                 }
             }
         );
@@ -202,8 +215,9 @@ class Receiver {
                     );
                     res.json(this.removeTokens(user));
                 } catch (err) {
-                    console.log(err);
-                    return res.status(400).json({ error: err });
+                    return res
+                        .status(400)
+                        .json({ error: this.clientError(err) });
                 }
             }
         );
