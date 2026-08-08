@@ -37,8 +37,8 @@ class CoverGeneratorFacade {
             const response = await this.client().images.generate({
                 prompt: prompt,
                 // dall-e-2 and dall-e-3 were removed from the API on
-                // 2026-05-12. gpt-image-1 is a documented replacement.
-                model: "gpt-image-1",
+                // 2026-05-12. gpt-image-1-mini is a documented replacement.
+                model: "gpt-image-1-mini",
                 n: 1,
                 size: "1024x1024",
             });
